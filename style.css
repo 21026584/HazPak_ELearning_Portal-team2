@@ -1,0 +1,20 @@
+.RootLoginBackground {
+    background: linear-gradient(to right, #E13805, #FFDF00);
+}
+
+.RootLoginForm {
+    background: white;
+    width: 30%;
+    height: 50rem;
+    margin-top: 7em;
+    padding-top: 16em;
+}
+
+.Block {
+    display: block;
+}
+
+.TitleText {
+    text-align: center;
+    margin-bottom: 2em;
+}
