@@ -12,7 +12,7 @@
         <div class="Block">
             <h1 class="TitleText">Sign In</h1>
 
-            <form action="authentication.php" method="POST" class="">
+            <form action="authentication.php" method="POST" class="Forms">
                 <label for="username">Username:</label>
                 <br></br>
                 <input type="text" id="username" name="username" required placeholder="Enter Username"><br>
