@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $msg = "<h3>Succesful login</h3>";
         } else {
-            $msg = "<h3>Sorry, you must enter a valid username 
+            $msg = "<h3>Sorry, you must enter a valid username
                 and password to log in.</h3>";
         }
     }

@@ -18,3 +18,7 @@
     text-align: center;
     margin-bottom: 2em;
 }
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
