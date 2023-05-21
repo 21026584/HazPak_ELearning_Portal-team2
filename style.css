@@ -18,3 +18,17 @@
     text-align: center;
     margin-bottom: 2em;
 }
+
+.Forms{
+    text-align: center;   /* Center Align */
+    padding: 20px;
+ }
+ 
+ input{
+     margin-top: 15px;
+     margin-bottom: 15px;
+ }
+ 
+ body{
+     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ }
