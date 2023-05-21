@@ -1,33 +1,28 @@
-<?php
-// Database credentials
-$servername = "localhost";
-$username = "your_username";
-$password = "your_password";
-$dbname = "mydatabase";
+<!DOCTYPE html>
+<html>
 
-// Retrieve form data
-$enteredUsername = $_POST['username'];
-$enteredPassword = $_POST['password'];
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Login</title>
+</head>
 
-// Connect to the database
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+<body class="d-flex justify-content-center RootLoginBackground">
+    <div class="d-flex justify-content-center RootLoginForm">
+        <div class="Block">
+            <h1 class="TitleText">Sign In</h1>
+            <form action="authentication.php" method="POST" class="">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required><br>
 
-// Query the database for the entered credentials
-$query = "SELECT * FROM users WHERE username='$enteredUsername' AND password='$enteredPassword'";
-$result = $conn->query($query);
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required><br>
 
-if ($result->num_rows == 1) {
-    // Valid login credentials
-    // Start a session or set cookies to maintain login status
-    // Redirect to the dashboard page
-    header("Location: dashboard.html");
-} else {
-    // Invalid login credentials
-    echo "Invalid username or password.";
-}
+                <input type="submit" value="Login">
+            </form>
+        </div>
+    </div>
+</body>
 
-$conn->close();
-?>
+</html>
