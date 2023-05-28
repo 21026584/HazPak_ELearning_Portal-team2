@@ -1,3 +1,6 @@
+body{
+    background-color: #F2F2F2;
+}
 .RootLoginBackground {
     background: linear-gradient(to right, #E13805, #FFDF00);
 }
