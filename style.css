@@ -33,3 +33,69 @@ input {
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+/* Input container */
+.input-container {
+    position: relative;
+    margin: 20px;
+
+}
+
+/* Input field */
+.input-field {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    outline: none;
+    background-color: transparent;
+}
+
+/* Input label */
+.input-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 1em;
+    color: rgba(204, 204, 204, 0);
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+/* Input highlight */
+.input-highlight {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 0.1em;
+    width: 0;
+    background-color: #ff6600;
+    transition: all 0.3s ease;
+}
+
+/* Input field:focus styles */
+.input-field:focus+.input-label {
+    top: -1em;
+    font-size: 0.8em;
+    color: #ff6600;
+}
+
+.input-field:focus+.input-label+.input-highlight {
+    width: 100%;
+}
+
+/* Login button */
+.submit-button {
+    display: inline-block;
+    background-color: white;
+    border: solid 2px black;
+    color: black;
+    text-align: center;
+    font-size: 1em;
+    padding: 0.5em;
+    width: 12em;
+    transition: all 0.5s;
+    cursor: pointer;
+}
