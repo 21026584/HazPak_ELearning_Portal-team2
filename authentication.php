@@ -25,13 +25,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (mysqli_num_rows($result) == 1) {
             $row = mysqli_fetch_array($result);
             $_SESSION['user_id'] = $row['user_id'];
-            $_SESSION['role'] = $row['role_id'];
+            $_SESSION['role_id'] = $row['role_id'];
             $_SESSION['username'] = $row['username'];
 
             $msg = "<h3>Succesful login</h3>";
+            header("Location: index.php");
+            exit;
         } else {
             $msg = "<h3>Sorry, you must enter a valid username
                 and password to log in.</h3>";
+                header("Location: login.php");
+                exit;
         }
     }
 }
@@ -41,8 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <html>
 
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
     <title>authentication</title>
 </head>
 
@@ -50,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <?php
     echo $msg;
     echo $_SESSION['user_id'];
-    echo $_SESSION['role'];
+    echo $_SESSION['role_id'];
     echo $_SESSION['username'];
     ?>
 </body>

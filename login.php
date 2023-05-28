@@ -13,16 +13,18 @@
             <h1 class="TitleText">Sign In</h1>
 
             <form action="authentication.php" method="POST" class="Forms">
-                <label for="username">Username:</label>
-                <br></br>
-                <input type="text" id="username" name="username" required placeholder="Enter Username"><br>
-   
-                <label for="password">Password:</label>
-                <br></br>
-                <input type="password" id="password" name="password" required placeholder="Enter Password"><br>
-                <br></br>
-                <input type="submit" value="Login">
-                <!-- test -->
+                <div class="input-container">
+                    <input placeholder="Enter username" class="input-field" type="text" id="username" name="username" required>
+                    <label for="username" class="input-label">Username</label>
+                    <span class="input-highlight"></span>
+                </div>
+
+                <div class="input-container">
+                    <input placeholder="Enter password" class="input-field" type="password" id="password" name="password" required>
+                    <label for="password" class="input-label">Password</label>
+                    <span class="input-highlight"></span>
+                </div>
+                <input type="submit" value="Sign In" class="submit-button">
             </form>
         </div>
     </div>
