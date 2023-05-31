@@ -48,6 +48,9 @@
     <div class="container">
       <div class="block block-left">
         <h2>Available Assessments</h2>
+        <div class="scroll-menu">
+          <a><img class="image" src="images/image 2.jpeg" draggable="false" /><h4 class="i-caption">image 1</h4></a>
+        </div>
       </div>
       <div class="block block-right">
         <h2>Schedule</h2>
@@ -56,6 +59,9 @@
     <div class="container">
       <div class="block block-left">
         <h2>Available Exercises</h2>
+        <div class="scroll-menu">
+          <a><img class="image" src="images/image 2.jpeg" draggable="false" /><h4 class="i-caption">image 1</h4></a>
+        </div>
       </div>
       <div class="block block-right">
         <h2>Announcements</h2>
