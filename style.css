@@ -1,8 +1,12 @@
-body{
+body {
     background-color: #F2F2F2;
 }
-.RootLoginBackground {
-    background-image: "Images/Classroom.png";
+
+/* Login page background image */
+.RootBackground {
+    background-image: url('Images/Classroom.png');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .RootLoginForm {
