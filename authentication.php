@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Query 
         $query = "SELECT user_id, role_id, username FROM users 
               WHERE username='$entered_username' AND 
-              password = '$entered_password'";
+              password = SHA1('$entered_password')";
         $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
         // Fetching user info from database

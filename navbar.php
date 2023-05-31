@@ -26,7 +26,7 @@
 </div>
 -->
 
-<div class="d-flex flex-column flex-grow-0 p-3 shadow-lg" style="width: 280px; background: green;">
+<div class="d-flex flex-column flex-grow-0 p-3 shadow-lg" style="width: 280px; background: green; height: 100vh">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
       <span class="fs-4">Sidebar</span>
     </a>
