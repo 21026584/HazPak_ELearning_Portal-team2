@@ -8,7 +8,6 @@
 </head>
 
 <body class="d-flex justify-content-center RootLoginBackground">
-<img src="Images/Classroom">
     <div class="d-flex justify-content-center RootLoginForm">
         <div class="Block">
         <h1 class="TitleText">Sign In</h1>
