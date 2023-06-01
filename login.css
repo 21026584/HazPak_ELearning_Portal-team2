@@ -1,5 +1,7 @@
 body {
     background-color: #F2F2F2;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
 }
 
 /* Login page background image */

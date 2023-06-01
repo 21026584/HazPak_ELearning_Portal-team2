@@ -1,0 +1,46 @@
+/* Sidebar */
+.side-bar {
+    background: white;
+    color: black;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 280px;
+    height: 100vh;
+}
+
+.custom-nav-item {
+    background-color: white;
+    height: 4em;
+    text-align: left;
+    align-items: center;
+    display: flex;
+}
+
+.custom-nav-item-active {
+    background-color: #FADE1B;
+    height: 4em;
+    text-align: left;
+    align-items: center;
+    display: flex;
+}
+
+.custom-nav-link {
+    margin-left: 1em;
+    text-decoration: none;
+    color: #000;
+    font-weight: 600;
+    font-size: 1.2em;
+}
+
+.logoContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.logo {
+    height: 8em;
+}

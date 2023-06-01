@@ -3,7 +3,7 @@
 
 <head>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <link rel="stylesheet" href="navbar.css">
+  <link rel="stylesheet" href="sidebar.css">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="dashboard-style.css">
   <title>Dashboard</title>
@@ -24,16 +24,13 @@
 
   // Assign session user id to a variable
   $userRoleID = $_SESSION['user_id'];
-
-  // Navbar
-  include "navbar.php";
-
-  // Display session
-  echo 'User ID: ' . $_SESSION['user_id'] . '<br>';
-  echo 'Username: ' . $_SESSION['username'] . '<br>';
-  echo 'Role ID: ' . $_SESSION['role_id'];
   ?>
-  <div class='root'>
+  <div>
+    <?php
+    // Navbar
+    include "navbar.php";
+    ?></div>
+  <div style='margin-left: 240px'>
     <div class="container">
       <h1 class="header">
         Dashboard
@@ -49,7 +46,9 @@
       <div class="block block-left">
         <h2>Available Assessments</h2>
         <div class="scroll-menu">
-          <a><img class="image" src="images/image 2.jpeg" draggable="false" /><h4 class="i-caption">image 1</h4></a>
+          <a><img class="image" src="images/image 2.jpeg" draggable="false" />
+            <h4 class="i-caption">image 1</h4>
+          </a>
         </div>
       </div>
       <div class="block block-right">
@@ -60,16 +59,17 @@
       <div class="block block-left">
         <h2>Available Exercises</h2>
         <div class="scroll-menu">
-          <a><img class="image" src="images/image 2.jpeg" draggable="false" /><h4 class="i-caption">image 1</h4></a>
+          <a><img class="image" src="images/image 2.jpeg" draggable="false" />
+            <h4 class="i-caption">image 1</h4>
+          </a>
         </div>
       </div>
       <div class="block block-right">
         <h2>Announcements</h2>
       </div>
     </div>
-
-    <script src="script.js"></script>
   </div>
+  <script src="script.js"></script>
 </body>
 
 </html>
