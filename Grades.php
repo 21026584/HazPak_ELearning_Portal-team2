@@ -7,8 +7,17 @@ $link = mysqli_connect($db_host,$db_username,$db_password,$db_name) or
         die(mysqli_connect_error());
 
 
+ $queryMembers = "SELECT u.user_id, u.username, u.password, r.role_name
+        FROM users u, roles r
+        WHERE u.role_id = r.role_id";
 
-        
+$results = mysqli_query($link, $queryMembers) or die(mysqli_error($link));
+
+while ($row = mysqli_fetch_assoc($results)) {
+$arrItems[] = $row;
+}
+mysqli_close($link);
+
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +29,7 @@ $link = mysqli_connect($db_host,$db_username,$db_password,$db_name) or
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="style.css">
-    <title>Grades</title>
+    <title>grades</title>
 </head>
 
  <body>
@@ -50,7 +59,7 @@ $link = mysqli_connect($db_host,$db_username,$db_password,$db_name) or
           <div class="dropdown-container">
             <a href="#">Link 1</a>
             <a href="#">Link 2</a>
-      
+            <a href="#">Link 3</a>
           </div>
 <br>
 
@@ -85,7 +94,7 @@ for (i = 0; i < dropdown.length; i++) {
 
 
 const data = {
-labels: labels,
+labels: $queryMembers,
 datasets: [{
 label: 'My First Dataset',
 backgroundColor: 'rgb(255, 99, 132)',
