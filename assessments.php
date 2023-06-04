@@ -41,6 +41,7 @@
     // Navbar
     include "navbar.php";
     ?>
+    <!--
     <div class="assessmentRoot">
         <header class='assessmentHeader'>
             <h1>Assessments</h1>
@@ -53,12 +54,12 @@
                 Create Assessments
             </button>
         </div>
-        <!-- Datatable -->
+        //Datatable 
         <main class="assessmentMain">
             <table id='assessmentTable' class="display">
                 <thead>
                     <tr>
-                        <!-- Headers -->
+                        //Headers
                         <td>Course ID</td>
                         <td>Assessment Name</td>
                         <td>Release Datetime</td>
@@ -72,7 +73,28 @@
             </table>
         </main>
     </div>
-
+    -->
+    <div class="assess_container">
+            <select class="assessments" name="pets" id="pet-select">
+                <option  value="assessment1">Assessment 1</option>
+                <option value="assessment2">Assessment 2</option>
+                <option value="assessment3">Assessment 3</option>
+                <option value="assessment4">Assessment 4</option>
+                <option value="assessment5">Assessment 5</option>
+                <option value="assessment6">Assessment 6</option>
+                <option value="assessment7">Assessment 7</option>
+                <option value="assessment8">Assessment 8</option>
+            </select>
+        </div>
+        
+    <div class="acc_container">
+       <div class="account">
+            <h4>account</h4>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUXbmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA%3D">
+                <img id="circle" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
+            </a>
+        </div> 
+    </div>
     <!-- Datatable.js -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>

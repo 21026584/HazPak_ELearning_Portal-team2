@@ -36,23 +36,6 @@ h2{
     margin-right: 53vw;
 }
 
-.account{
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    width: 15vw;
-    height: 5vw;
-}
-
-#circle
- {
-   border-radius:50% 50% 50% 50%;  
-   width:5vw;
-   height:5vw;
-   margin: 10px;
-   position: relative;
-   right: 0%;
-}
 
 div.scrollmenu {
     background-color: #333;
