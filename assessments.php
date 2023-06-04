@@ -15,7 +15,7 @@
     include("dbFunctions.php");
 
     // Query 
-    $query = "SELECT assessment_id, assessment_name, instructions, release_date, release_time, username
+    $query = "SELECT assessment_id, assessment_name, instructions, release_datetime, username
     FROM assessments AS A
     INNER JOIN users AS U
     ON U.user_id = A.user_id";
@@ -53,13 +53,15 @@
                 Create Assessments
             </button>
         </div>
+        <!-- Datatable -->
         <main class="assessmentMain">
-            <table id='assessmentTable' class="table">
+            <table id='assessmentTable' class="display">
                 <thead>
                     <tr>
+                        <!-- Headers -->
                         <td>Course ID</td>
                         <td>Assessment Name</td>
-                        <td>Release Date</td>
+                        <td>Release Datetime</td>
                         <td>Created By</td>
                         <td>Edit</td>
                         <td>Delete</td>
@@ -78,6 +80,7 @@
     <script>
         // Initialise DataTable
         $(document).ready(function() {
+            // Compile database rows into json
             var jsonData = <?php echo $jsonData; ?>;
             $('#assessmentTable').DataTable({
                 data: jsonData,
@@ -90,13 +93,14 @@
                         data: 'assessment_name'
                     },
                     {
-                        title: 'Release Date',
-                        data: 'release_date'
+                        title: 'Release Datetime',
+                        data: 'release_datetime'
                     },
                     {
                         title: 'Created By',
                         data: 'username'
                     },
+                    // Use assessment_id to indicated assessment to edit
                     {
                         title: 'Edit',
                         data: null,
@@ -104,6 +108,7 @@
                             return '<a href="assessmentEdit.php?assessment_id=' + row.assessment_id + '">Edit</a>';
                         }
                     },
+                     // Use assessment_id to indicated assessment to delete
                     {
                         title: 'Delete',
                         data: null,
