@@ -6,7 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <title>Assessments</title>
+    <title>Exercises</title>
 </head>
 
 <body>
@@ -15,10 +15,10 @@
     include("dbFunctions.php");
 
     // Query 
-    $query = "SELECT assessment_id, assessment_name, instructions, release_datetime, username
-    FROM assessments AS A
+    $query = "SELECT E.exercise_id, E.exercise_name, E.instructions, E.release_datetime, U.username
+    FROM exercises AS E
     INNER JOIN users AS U
-    ON U.user_id = A.user_id";
+    ON U.user_id = E.user_id";
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
     // Initialise values
@@ -43,24 +43,24 @@
     ?>
     <div class="assessmentRoot">
         <header class='assessmentHeader'>
-            <h1>Assessments</h1>
+            <h1>Exercises</h1>
         </header>
         <div class="assessmentButtonContainer">
             <button>
-                Manage Assessments
+                Manage exercises
             </button>
             <button>
-                Create Assessments
+                Create exercises
             </button>
         </div>
         <!-- Datatable -->
         <main class="assessmentMain">
-            <table id='assessmentTable' class="display">
+            <table id='exerciseTable' class="display">
                 <thead>
                     <tr>
                         <!-- Headers -->
                         <td>Course ID</td>
-                        <td>Assessment Name</td>
+                        <td>exercise Name</td>
                         <td>Release Datetime</td>
                         <td>Created By</td>
                         <td>Edit</td>
@@ -82,15 +82,15 @@
         $(document).ready(function() {
             // Compile database rows into json
             var jsonData = <?php echo $jsonData; ?>;
-            $('#assessmentTable').DataTable({
+            $('#exerciseTable').DataTable({
                 data: jsonData,
                 columns: [{
-                        title: 'Assessment ID',
-                        data: 'assessment_id'
+                        title: 'Exercise ID',
+                        data: 'exercise_id'
                     },
                     {
-                        title: 'Assessment Name',
-                        data: 'assessment_name'
+                        title: 'Exercise Name',
+                        data: 'exercise_name'
                     },
                     {
                         title: 'Release Datetime',
@@ -100,20 +100,20 @@
                         title: 'Created By',
                         data: 'username'
                     },
-                    // Use assessment_id to indicated assessment to edit
+                    // Use exercise_id to indicated exercise to edit
                     {
                         title: 'Edit',
                         data: null,
                         render: function(data, type, row) {
-                            return '<a href="assessmentEdit.php?assessment_id=' + row.assessment_id + '">Edit</a>';
+                            return '<a href="exerciseEdit.php?exercise_id=' + row.exercise_id + '">Edit</a>';
                         }
                     },
-                     // Use assessment_id to indicated assessment to delete
+                     // Use exercise_id to indicated exercise to delete
                     {
                         title: 'Delete',
                         data: null,
                         render: function(data, type, row) {
-                            return '<a href="assessmentDelete.php?assessment_id=' + row.assessment_id + '">Delete</a>';
+                            return '<a href="exerciseDelete.php?exercise_id=' + row.exercise_id + '">Delete</a>';
                         }
                     }
                 ]
