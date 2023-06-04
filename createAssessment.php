@@ -25,6 +25,7 @@ if (!isset($_SESSION['user_id'])) {
             <input type="datetime-local" id="idTime" name="time" required/>	
             <p><label for="idQuestion">Questions:</label></p>
             <textarea id="idQuestion" name="question" rows="4" cols="50" required></textarea>
+            <input type="submit" value="Create" />	
         </form>
     </body>
 </html>
