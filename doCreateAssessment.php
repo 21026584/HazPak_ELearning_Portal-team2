@@ -31,7 +31,7 @@ if (!empty($_POST['name']) && !empty($_POST['instruction']) && !empty($_POST['ti
         $message = "Assessment created failed.";
     }
 } else {
-        $message = "All Item details have to be provided.";
+        $message = "All Assessment details have to be provided.";
 }
 
 // Closes the Database conection 
