@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $entered_username = $_POST['username'];
         $entered_password = $_POST['password'];
 
-        // Include database connectuin
+        // Include database connection
         include("dbFunctions.php");
 
         // Query 
@@ -40,6 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
+// Close database connection
+mysqli_close($link);
 ?>
 <!DOCTYPE html>
 <html>
