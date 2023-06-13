@@ -94,6 +94,15 @@ $jsonData = json_encode($data);
                 <option value="assessment8">Assessment 8</option>
             </select>
         </div>
+        <div class="assessmentOverview">
+            <div class="assessmentHeader">
+                DETAILS
+            </div>
+            <div class="assessmentBody">
+
+            </div>
+
+        </div>
     <?php } ?>
     <div class="acc_container">
         <div class="account">
@@ -106,7 +115,9 @@ $jsonData = json_encode($data);
 
     <div class="detail-container">
         <div class="A-header">Details</div>
-        <div class="A-details"><p></P><button class=""></button></div>
+        <div class="A-details">
+            <p></P><button class=""></button>
+        </div>
     </div>
     <!-- Datatable.js -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">

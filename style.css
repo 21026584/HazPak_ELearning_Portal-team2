@@ -318,3 +318,17 @@ body {
 .dataTables tbody tr {
     border-bottom: none !important;
 }
+
+.assessmentOverviewRoot {
+    background-color: #FFFFFF;
+}
+
+.assessmentHeader {
+    background-color: #FADE1B;
+    font-weight: bold;
+    font-size: medium;
+}
+
+.assessmentBody {
+
+}
