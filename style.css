@@ -2,6 +2,11 @@ body {
     background-color: #F2F2F2;
 }
 
+/* Margin left for sidebar */
+.root {
+    margin-left: 6em;
+}
+
 /* Login page background image */
 .RootBackground {
     background-image: url('Images/Classroom.png');
@@ -158,25 +163,23 @@ body {
 }
 
 /* CSS Styles for Assessment Root */
-.assessmentRoot {
+.tableRoot {
     height: 70vh;
     margin-left: 6em;
 }
 
 /* CSS Styles for Assessment Header */
-.assessmentHeader {
+.tableHeader {
     margin-right: 2em;
     margin-top: 3em;
     margin-bottom: 3em;
-    background-color: white;
 }
 
 /* CSS Styles for Assessment Main */
-.assessmentMain {
+.tableMain {
     margin-right: 6em;
     margin-top: 2em;
     margin-bottom: 6em;
-    background-color: white;
     height: 100%;
 }
 
@@ -185,21 +188,12 @@ body {
     display: flex;
 }
 
-/* CSS Styles for Table Header */
-.table thead th {
-    background-color: #ff0000;
-    color: #ffffff;
+.select-selected {
+    background-color: rgb(253, 255, 133);
 }
 
-
-
-  
-  .select-selected {
-    background-color: rgb(253, 255, 133);
-  }
-  
-  /*style the arrow inside the select element:*/
-  .select-selected:after {
+/*style the arrow inside the select element:*/
+.select-selected:after {
     position: absolute;
     content: "";
     top: 14px;
@@ -208,46 +202,49 @@ body {
     height: 0;
     border: 6px solid transparent;
     border-color: #fff transparent transparent transparent;
-  }
-  
-  /*point the arrow upwards when the select box is open (active):*/
-  .select-selected.select-arrow-active:after {
+}
+
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
     border-color: transparent transparent #fff transparent;
     top: 7px;
-  }
-  
-  /*style the items (options), including the selected item:*/
-  .select-items div,.select-selected {
+}
+
+/*style the items (options), including the selected item:*/
+.select-items div,
+.select-selected {
     color: #ffffff;
     padding: 8px 16px;
     border: 1px solid transparent;
     border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
     cursor: pointer;
     user-select: none;
-  }
-  
-  /*style items (options):*/
-  .select-items {
+}
+
+/*style items (options):*/
+.select-items {
     position: absolute;
     background-color: rgb(253, 255, 133);
     top: 100%;
     left: 0;
     right: 0;
     z-index: 99;
-  }
-  
-  /*hide the items when the select box is closed:*/
-  .select-hide {
+}
+
+/*hide the items when the select box is closed:*/
+.select-hide {
     display: none;
-  }
-  
-  .select-items div:hover, .same-as-selected {
+}
+
+.select-items div:hover,
+.same-as-selected {
     background-color: rgba(0, 0, 0, 0.1);
-  }
+}
 
 
 
-.start-assessment-button:link, .start-assessment-button:visited {
+.start-assessment-button:link,
+.start-assessment-button:visited {
     background-color: white;
     color: black;
     border: 2px solid yellow;
@@ -255,9 +252,10 @@ body {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-} 
+}
 
-.start-assessment-button:hover, .start-assessment-button:active {
+.start-assessment-button:hover,
+.start-assessment-button:active {
     background-color: white;
     color: black;
     border: 2px solid yellow;
@@ -265,7 +263,7 @@ body {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-} 
+}
 
 .acc_container {
     display: flex;
@@ -276,30 +274,47 @@ body {
     top: 5%;
 }
 
-.assess_container{
-    align-items: center; /* Vertically center the flex items */
+.assess_container {
+    align-items: center;
+    /* Vertically center the flex items */
     position: absolute;
     width: 50vw;
     height: 5vh;
     left: 25%;
     top: 5%;
 }
-  
-.account{
+
+.account {
     display: flex;
     align-items: center;
 }
 
-#circle{
+#circle {
     border-radius: 50% 50% 50% 50%;
     width: 5vmin;
     height: 5vmin;
     margin-left: 10px;
 }
 
-.assessments{
+.assessments {
     position: absolute;
     width: 50vw;
     height: 5vh;
-    
+
+}
+
+.dataTables thead {
+    background-color: #FADE1B !important;
+}
+
+.dataTables tbody tr:nth-child(odd) {
+    background-color: #EEEEEE !important;
+}
+
+.dataTables tbody tr:nth-child(even) {
+    background-color: #FFFFFF !important;
+}
+
+.dataTables tbody tr {
+    border-bottom: none !important;
 }
