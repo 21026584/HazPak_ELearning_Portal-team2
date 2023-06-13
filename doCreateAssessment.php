@@ -1,36 +1,36 @@
 <?php
 
-// Navbar
-include "navbar.php";
+    // Navbar
+    include "navbar.php";
 
-// php file that contains the common database connection code
-include "dbFunctions.php";
+    // php file that contains the common database connection code
+    include "dbFunctions.php";
 
-if (!empty($_POST['name']) && !empty($_POST['instruction']) && !empty($_POST['time']) && !empty($_POST['question'])) {
-    //Assign data retreived from form to the following variables below respectively to will input statement into SQL to make add in a new assessment into the assessment database
-    $name = $_POST['name'];
-    $instructions = $_POST['instruction'];
-    $time = $_POST['time'];
-    $questions = $_POST['question'];
+    if (!empty($_POST['name']) && !empty($_POST['instruction']) && !empty($_POST['time']) && !empty($_POST['question'])) {
+        //Assign data retreived from form to the following variables below respectively to will input statement into SQL to make add in a new assessment into the assessment database
+        $name = $_POST['name'];
+        $instructions = $_POST['instruction'];
+        $time = $_POST['time'];
+        $questions = $_POST['question'];
 
-    //unclear about the assessment id and course id for now.
-    $sql = "INSERT INTO assessments (assessment_name, instructions, release_datetime, user_id, questions) 
-            VALUES ('$name', '$instructions', '$time', $userID, '$questions')";
+        //unclear about the assessment id and course id for now.
+        $sql = "INSERT INTO assessments (assessment_name, instructions, release_datetime, user_id, questions) 
+                VALUES ('$name', '$instructions', '$time', $userID, '$questions')";
 
-    // Executes the SQL statement above to input it into database
-    $status = mysqli_query($link, $sql) or die(mysqli_error($link));
+        // Executes the SQL statement above to input it into database
+        $status = mysqli_query($link, $sql) or die(mysqli_error($link));
 
-    if ($status) {
-        $message = "Assessment created successfully.";
+        if ($status) {
+            $message = "Assessment created successfully.";
+        } else {
+            $message = "Assessment created failed.";
+        }
     } else {
-        $message = "Assessment created failed.";
+            $message = "All Assessment details have to be provided.";
     }
-} else {
-        $message = "All Assessment details have to be provided.";
-}
 
-// Closes the Database conection 
-mysqli_close($link);
+    // Closes the Database conection 
+    mysqli_close($link);
 ?>
 <!DOCTYPE HTML>
 <html>
