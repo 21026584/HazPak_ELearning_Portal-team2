@@ -3,10 +3,10 @@
 include("dbFunctions.php");
 
 // Query
-$query = "SELECT E.exercise_id, E.exercise_name, E.instructions, E.release_datetime, U.username
-    FROM exercises AS E
-    INNER JOIN users AS U
-    ON U.user_id = E.user_id";
+$query = "SELECT QB.question_id, QB.question_text, QT.type_name
+    FROM question_bank AS QB
+    INNER JOIN question_type AS QT
+    ON QB.question_type_id = QT.type_id";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
 // Initialise values
@@ -35,7 +35,7 @@ $jsonData = json_encode($data);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <title>Exercises</title>
+    <title>Question Bank</title>
 </head>
 
 <body>
@@ -43,19 +43,19 @@ $jsonData = json_encode($data);
     // Navbar
     include "navbar.php";
 
-    // Show the admin-specific Exercise Page 
+    // Show the Question Bank Page 
     if (($userRoleID == 0) || ($userRoleID == 1)) {
     ?>
         <div class="tableRoot">
             <header class='tableHeader'>
-                <h1>Exercises</h1>
+                <h1>Question Bank</h1>
             </header>
             <div class="assessmentButtonContainer">
-                <button>
-                    Manage exercises
+                <button onclick="redirectToPage('questionBank.php')">
+                    Manage questions
                 </button>
-                <button>
-                    Create exercises
+                <button onclick="redirectToPage('createQuestions.php')">
+                    Create questions
                 </button>
             </div>
             <!-- Datatable -->
@@ -64,10 +64,9 @@ $jsonData = json_encode($data);
                     <thead>
                         <tr>
                             <!-- Headers -->
-                            <td>Course ID</td>
-                            <td>exercise Name</td>
-                            <td>Release Datetime</td>
-                            <td>Created By</td>
+                            <td>Question ID</td>
+                            <td>Question Text</td>
+                            <td>Question Type</td>
                             <td>Edit</td>
                             <td>Delete</td>
                         </tr>
@@ -78,13 +77,12 @@ $jsonData = json_encode($data);
             </main>
         </div>
     <?php
-        // Show the trainee Exercise Page 
-    } else if ($userRoleID == 2) {
+        // If not admin/head admin role, 
+    } else {
+        header("Location: login.php");
+        exit;
+    }
     ?>
-
-        <!-- Input Trainee Exercise Page Here -->
-
-    <?php } ?>
     <!-- Datatable.js -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
@@ -97,27 +95,23 @@ $jsonData = json_encode($data);
             $('#exerciseTable').DataTable({
                 data: jsonData,
                 columns: [{
-                        title: 'Exercise ID',
-                        data: 'exercise_id'
+                        title: 'Question ID',
+                        data: 'question_id'
                     },
                     {
-                        title: 'Exercise Name',
-                        data: 'exercise_name'
+                        title: 'Question Text',
+                        data: 'question_text'
                     },
                     {
-                        title: 'Release Datetime',
-                        data: 'release_datetime'
-                    },
-                    {
-                        title: 'Created By',
-                        data: 'username'
+                        title: 'Question Type',
+                        data: 'type_name'
                     },
                     // Use exercise_id to indicated exercise to edit
                     {
                         title: 'Edit',
                         data: null,
                         render: function(data, type, row) {
-                            return '<a href="exerciseEdit.php?exercise_id=' + row.exercise_id + '">Edit</a>';
+                            return '<a href="questionEdit.php?question_id=' + row.question_id + '">Edit</a>';
                         }
                     },
                     // Use exercise_id to indicated exercise to delete
@@ -125,12 +119,16 @@ $jsonData = json_encode($data);
                         title: 'Delete',
                         data: null,
                         render: function(data, type, row) {
-                            return '<a href="exerciseDelete.php?exercise_id=' + row.exercise_id + '">Delete</a>';
+                            return '<a href="questionDelete.php?question_id=' + row.question_id + '">Delete</a>';
                         }
                     }
                 ]
             });
         });
+        // Redirects the user to the specified URL
+        function redirectToPage(url) {
+            window.location.href = url;
+        }
     </script>
 </body>
 

@@ -1,3 +1,32 @@
+<?php
+// Include database connection
+include("dbFunctions.php");
+
+// Query 
+$query = "SELECT assessment_id, assessment_name, instructions, release_datetime, username
+    FROM assessments AS A
+    INNER JOIN users AS U
+    ON U.user_id = A.user_id";
+$result = mysqli_query($link, $query) or die(mysqli_error($link));
+
+// Initialise values
+$data = array();
+
+// Fetching user info from database
+if (mysqli_num_rows($result) == 1) {
+    while ($row = $result->fetch_assoc()) {
+        // Add each row to the data array
+        $data[] = $row;
+    }
+}
+
+// Close the database connection
+mysqli_close($link);
+
+// Convert the data to JSON format
+$jsonData = json_encode($data);
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -10,73 +39,52 @@
 </head>
 
 <body>
+
     <?php
-    // Include database connection
-    include("dbFunctions.php");
-
-    // Query 
-    $query = "SELECT assessment_id, assessment_name, instructions, release_datetime, username
-    FROM assessments AS A
-    INNER JOIN users AS U
-    ON U.user_id = A.user_id";
-    $result = mysqli_query($link, $query) or die(mysqli_error($link));
-
-    // Initialise values
-    $data = array();
-
-    // Fetching user info from database
-    if (mysqli_num_rows($result) == 1) {
-        while ($row = $result->fetch_assoc()) {
-            // Add each row to the data array
-            $data[] = $row;
-        }
-    }
-
-    // Close the database connection
-    mysqli_close($link);
-
-    // Convert the data to JSON format
-    $jsonData = json_encode($data);
-
     // Navbar
     include "navbar.php";
+
+    // Show the admin-specific Assessment Page 
+    if (($userRoleID == 0) || ($userRoleID == 1)) {
     ?>
-    <!--
-    <div class="assessmentRoot">
-        <header class='assessmentHeader'>
-            <h1>Assessments</h1>
-        </header>
-        <div class="assessmentButtonContainer">
-            <button>
-                Manage Assessments
-            </button>
-            <button>
-                Create Assessments
-            </button>
+        <div class="tableRoot">
+            <header class='tableHeader'>
+                <h1>Assessments</h1>
+            </header>
+            <div class="assessmentButtonContainer">
+                <button href="assessments.php">
+                    Manage Assessments
+                </button>
+                <button href="createAssessment.php">
+                    Create Assessments
+                </button>
+            </div>
+            <!-- Datatable -->
+            <main class="tableMain">
+                <table id='assessmentTable' class="">
+                    <thead>
+                        <tr>
+                            <!-- Headers -->
+                            <td>Course ID</td>
+                            <td>Assessment Name</td>
+                            <td>Release Datetime</td>
+                            <td>Created By</td>
+                            <td>Edit</td>
+                            <td>Delete</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </main>
         </div>
-        //Datatable 
-        <main class="assessmentMain">
-            <table id='assessmentTable' class="display">
-                <thead>
-                    <tr>
-                        //Headers
-                        <td>Course ID</td>
-                        <td>Assessment Name</td>
-                        <td>Release Datetime</td>
-                        <td>Created By</td>
-                        <td>Edit</td>
-                        <td>Delete</td>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </main>
-    </div>
-    -->
-    <div class="assess_container">
+    <?php
+        // Show the trainee Assessment Page 
+    } else if ($userRoleID == 2) {
+    ?>
+        <div class="assess_container">
             <select class="assessments" name="pets" id="pet-select">
-                <option  value="assessment1">Assessment 1</option>
+                <option value="assessment1">Assessment 1</option>
                 <option value="assessment2">Assessment 2</option>
                 <option value="assessment3">Assessment 3</option>
                 <option value="assessment4">Assessment 4</option>
@@ -86,15 +94,16 @@
                 <option value="assessment8">Assessment 8</option>
             </select>
         </div>
-        
-    <div class="acc_container">
-       <div class="account">
-            <h4>account</h4>
-            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUXbmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA%3D">
-                <img id="circle" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
-            </a>
-        </div> 
-    </div>
+        <div class="acc_container">
+            <div class="account">
+                <h4>account</h4>
+                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUXbmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA%3D">
+                    <img id="circle" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
+                </a>
+            </div>
+        </div>
+    <?php } ?>
+
     <!-- Datatable.js -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
@@ -122,15 +131,15 @@
                         title: 'Created By',
                         data: 'username'
                     },
-                    // Use assessment_id to indicated assessment to edit
+                    // Use assessment_id for indicated assessment to edit
                     {
                         title: 'Edit',
                         data: null,
                         render: function(data, type, row) {
-                            return '<a href="assessmentEdit.php?assessment_id=' + row.assessment_id + '">Edit</a>';
+                            return '<a href="assessmentEdit.php?assessment_id=' + row.assessment_id + '" class="">Edit</a>';
                         }
                     },
-                     // Use assessment_id to indicated assessment to delete
+                    // Use assessment_id for indicated assessment to delete
                     {
                         title: 'Delete',
                         data: null,

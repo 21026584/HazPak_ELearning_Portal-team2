@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Assign session user id to a variable
-$userRoleID = $_SESSION['user_id'];
+$userRoleID = $_SESSION['role_id'];
 ?>
 <!-- Store current page url -->
 <?php $currentPage = basename($_SERVER['PHP_SELF']); ?>
@@ -32,7 +32,7 @@ $userRoleID = $_SESSION['user_id'];
     </li>
     <!-- Check if user is Head Admin/Admin, before assigning specific nav items -->
     <?php
-    if ($_SESSION['role_id'] == 0 || $_SESSION['role_id'] == 1) {
+    if ($userRoleID == 0 || $userRoleID == 1) {
     ?>
       <!-- Check if current page matches navigation item then sets class to active -->
       <li <?php if ($currentPage == 'questionBank.php') {
@@ -72,7 +72,7 @@ $userRoleID = $_SESSION['user_id'];
   </ul>
   <?php
   echo 'user_id: ' . $_SESSION['user_id'] . '<br>';
-  echo 'role_id: ' . $_SESSION['role_id'] . '<br>';
+  echo 'role_id: ' . $userRoleID . '<br>';
   echo 'username: ' . $_SESSION['username'];
   ?>
 </div>

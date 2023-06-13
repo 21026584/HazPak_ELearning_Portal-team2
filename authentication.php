@@ -6,7 +6,7 @@ session_start();
 $enteredUsername = $_POST['username'];
 $enteredPassword = $_POST['password'];
 
-// Check if post
+// Check if post from login page else bring back to login
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST['username'])) {
         $entered_username = $_POST['username'];
@@ -34,10 +34,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } else {
             $msg = "<h3>Sorry, you must enter a valid username
                 and password to log in.</h3>";
-                header("Location: login.php");
-                exit;
+            header("Location: login.php");
+            exit;
         }
     }
+} else {
+    header("Location: login.php");
+    exit;
 }
 
 // Close database connection

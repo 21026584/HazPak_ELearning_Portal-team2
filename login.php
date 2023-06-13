@@ -10,7 +10,7 @@
 <body class="d-flex justify-content-center RootBackground">
     <div class="d-flex justify-content-center RootLoginForm">
         <div class="Block">
-        <h1 class="TitleText">Sign In</h1>
+            <h1 class="TitleText">Sign In</h1>
 
             <form action="authentication.php" method="POST" class="Forms">
                 <div class="input-container">
