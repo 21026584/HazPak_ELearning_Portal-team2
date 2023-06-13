@@ -35,6 +35,7 @@ $jsonData = json_encode($data);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
     <title>Question Bank</title>
 </head>
 
@@ -60,8 +61,8 @@ $jsonData = json_encode($data);
             </div>
             <!-- Datatable -->
             <main class="tableMain">
-                <table id='exerciseTable' class="display">
-                    <thead>
+                <table id='exerciseTable' class="display table-striped">
+                    <thead class="table-header">
                         <tr>
                             <!-- Headers -->
                             <td>Question ID</td>
@@ -86,6 +87,8 @@ $jsonData = json_encode($data);
     <!-- Datatable.js -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         // Initialise DataTable

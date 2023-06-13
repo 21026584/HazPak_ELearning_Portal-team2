@@ -319,6 +319,9 @@ body {
     border-bottom: none !important;
 }
 
+.table-header{
+    background-color: #fbff00 
+}
 .assessmentOverviewRoot {
     background-color: #FFFFFF;
 }

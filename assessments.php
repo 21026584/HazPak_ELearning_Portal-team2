@@ -115,9 +115,7 @@ $jsonData = json_encode($data);
 
     <div class="detail-container">
         <div class="A-header">Details</div>
-        <div class="A-details">
-            <p></P><button class=""></button>
-        </div>
+        <div class="A-details"><p></P><button class="start-assessment-button"></button></div>
     </div>
     <!-- Datatable.js -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
