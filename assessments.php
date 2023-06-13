@@ -52,10 +52,10 @@ $jsonData = json_encode($data);
                 <h1>Assessments</h1>
             </header>
             <div class="assessmentButtonContainer">
-                <button href="assessments.php">
+                <button onclick="redirectToPage('assessments.php')">
                     Manage Assessments
                 </button>
-                <button href="createAssessment.php">
+                <button onclick="redirectToPage('createAssessment.php')">
                     Create Assessments
                 </button>
             </div>
@@ -150,6 +150,10 @@ $jsonData = json_encode($data);
                 ]
             });
         });
+        // Redirects the user to the specified URL
+        function redirectToPage(url) {
+            window.location.href = url;
+        }
     </script>
 </body>
 

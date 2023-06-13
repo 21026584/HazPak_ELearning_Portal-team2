@@ -54,7 +54,7 @@ $jsonData = json_encode($data);
                 <button onclick="redirectToPage('questionBank.php')">
                     Manage questions
                 </button>
-                <button onclick="redirectToPage('createQuestions.php')">
+                <button onclick="redirectToPage('createQuestion.php')">
                     Create questions
                 </button>
             </div>

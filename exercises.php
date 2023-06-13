@@ -51,10 +51,10 @@ $jsonData = json_encode($data);
                 <h1>Exercises</h1>
             </header>
             <div class="assessmentButtonContainer">
-                <button>
+                <button onclick="redirectToPage('exercises.php')">
                     Manage exercises
                 </button>
-                <button>
+                <button onclick="redirectToPage('createExercise.php')">
                     Create exercises
                 </button>
             </div>
@@ -131,6 +131,10 @@ $jsonData = json_encode($data);
                 ]
             });
         });
+        // Redirects the user to the specified URL
+        function redirectToPage(url) {
+            window.location.href = url;
+        }
     </script>
 </body>
 
