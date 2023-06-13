@@ -103,6 +103,11 @@ $jsonData = json_encode($data);
             </a>
         </div>
     </div>
+
+    <div class="detail-container">
+        <div class="A-header">Details</div>
+        <div class="A-details"><p></P><button class=""></button></div>
+    </div>
     <!-- Datatable.js -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
