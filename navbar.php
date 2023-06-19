@@ -10,6 +10,19 @@ if (!isset($_SESSION['user_id'])) {
   exit;
 }
 
+// Check if the user clicked the log out button
+if (isset($_POST['logout'])) {
+  // Clear all session variables
+  session_unset();
+
+  // Destroy the session
+  session_destroy();
+
+  // Redirect the user to the login page
+  header("Location: login.php");
+  exit();
+}
+
 // Assign session user id to a variable
 $userRoleID = $_SESSION['role_id'];
 ?>
@@ -68,6 +81,12 @@ $userRoleID = $_SESSION['role_id'];
           echo 'class="custom-nav-item"';
         } ?>>
       <a href="exercises.php" class="custom-nav-link">Exercises</a>
+    </li>
+    <!-- TEMPORARY LOG OUT -->
+    <li class="custom-nav-item">
+      <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <input type="submit" name="logout" value="Log Out">
+      </form>
     </li>
   </ul>
   <?php

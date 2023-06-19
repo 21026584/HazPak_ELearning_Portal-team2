@@ -241,7 +241,11 @@ body {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
-
+.assessment-details-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20%;
+}
 
 .start-assessment-button:link,
 .start-assessment-button:visited {
@@ -274,17 +278,6 @@ body {
     top: 5%;
 }
 
-.assessmentContainer {
-    align-items: center;
-    /* Vertically center the flex items */
-    position: relative;
-    width: 50vw;
-    height: 5vh;
-    left: 5%;
-    margin-top: 5vh;
-    margin-bottom: 5vh;
-}
-
 .account {
     display: flex;
     align-items: center;
@@ -296,13 +289,6 @@ body {
     height: 5vmin;
     margin-left: 10px;
 }
-
-.assessmentDropdown {
-    position: relative;
-    width: 50vw;
-    height: 5vh;
-}
-
 .dataTables thead {
     background-color: #FADE1B !important;
 }
@@ -319,23 +305,49 @@ body {
     border-bottom: none !important;
 }
 
-.table-header{
+.table-header {
     background-color: #fbff00 
 }
 
-.assessmentOverview {
-    background-color: #FFFFFF;
-    left: 5%;
+.assessment-details-dropdown-container {
+    align-items: center;
+    /* Vertically center the flex items */
+    position: relative;
+    width: 50vw;
+    height: 5vh;
+    left: 2vw;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
 }
 
-.assessmentHeader {
+.assessment-details-dropdown {
+    position: relative;
+    width: 50vw;
+    height: 5vh;
+}
+
+.assessment-details-root {
+    background-color: #FFFFFF;
+    margin-left: 2vw;
+    margin-right: 2vw;
+    height: 80vh;
+}
+
+.assessment-details-header {
     background-color: #FADE1B;
     font-weight: bold;
-    font-size: medium;
+    font-size: 2.2em;
+    padding-left: 2vw;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
 }
 
-.assessmentBody {
-
+.assessment-details-body {
+    display: block;
+    padding: 2em;
+    gap: 4em;
+    font-weight: bold;
+    font-size: 1.3em;
 }
 
 .collapsible {
