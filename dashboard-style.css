@@ -5,33 +5,11 @@ h2{
 .container {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end; /* Horizontally center the flex items */
     align-items: center; /* Vertically center the flex items */
 }
 
-/* Styling for the blocks */
-.block {
-    background-color: #f1f1f1; /* Set the background color of the blocks */
-    border: 1px solid #ccc; /* Add a border around the blocks */
-    margin: 10px; /* Add some margin around the blocks */
-    padding: 20px; /* Add padding inside the blocks */
-    display: flex; /* Enable flex properties for the blocks */
-}
-
-/* Styling for the left blocks */
-.block-left {
-    width: 50vw;
-    height: 30vh;
-    margin-right: 2vw;
-}
-
-/* Styling for the right blocks */
-.block-right {
-    width: 18vw;
-    height: 35vh;
-}
-
 .header{
+    position: relative;
     display: flex;
     margin-right: 53vw;
 }
