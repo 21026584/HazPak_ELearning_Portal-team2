@@ -82,8 +82,8 @@ $jsonData = json_encode($data);
         // Show the trainee Assessment Page 
     } else if ($userRoleID == 2) {
     ?>
-        <div class="assess_container">
-            <select class="assessments" name="pets" id="pet-select">
+        <div class="assessmentContainer">
+            <select class="assessmentDropdown" name="pets" id="pet-select">
                 <option value="assessment1">Assessment 1</option>
                 <option value="assessment2">Assessment 2</option>
                 <option value="assessment3">Assessment 3</option>
@@ -103,20 +103,23 @@ $jsonData = json_encode($data);
             </div>
 
         </div>
-    <?php } ?>
-    <div class="acc_container">
-        <div class="account">
-            <h4>account</h4>
-            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUXbmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA%3D">
-                <img id="circle" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
-            </a>
+        <div class="acc_container">
+            <div class="account">
+                <h4>Account</h4>
+                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUXbmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA%3D">
+                    <img id="circle" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
+                </a>
+            </div>
         </div>
-    </div>
 
-    <div class="detail-container">
-        <div class="A-header">Details</div>
-        <div class="A-details"><p></P><button class="start-assessment-button"></button></div>
-    </div>
+        <div class="detail-container">
+            <div class="A-header">Details</div>
+            <div class="A-details">
+                <p></P>
+                <button class="start-assessment-button"></button>
+            </div>
+        </div>
+    <?php } ?>
     <!-- Datatable.js -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>

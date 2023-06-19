@@ -283,14 +283,15 @@ body {
     top: 5%;
 }
 
-.assess_container {
+.assessmentContainer {
     align-items: center;
     /* Vertically center the flex items */
-    position: absolute;
+    position: relative;
     width: 50vw;
     height: 5vh;
-    left: 25%;
-    top: 5%;
+    left: 5%;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
 }
 
 .account {
@@ -305,11 +306,10 @@ body {
     margin-left: 10px;
 }
 
-.assessments {
-    position: absolute;
+.assessmentDropdown {
+    position: relative;
     width: 50vw;
     height: 5vh;
-
 }
 
 .dataTables thead {
@@ -331,8 +331,10 @@ body {
 .table-header{
     background-color: #fbff00 
 }
-.assessmentOverviewRoot {
+
+.assessmentOverview {
     background-color: #FFFFFF;
+    left: 5%;
 }
 
 .assessmentHeader {
