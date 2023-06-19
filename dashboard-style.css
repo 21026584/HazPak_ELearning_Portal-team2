@@ -5,51 +5,40 @@ h2{
 .container {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end; /* Horizontally center the flex items */
     align-items: center; /* Vertically center the flex items */
+    margin-top: 2vh;
+    margin-left: 0;
 }
 
-/* Styling for the blocks */
-.block {
-    background-color: #f1f1f1; /* Set the background color of the blocks */
-    border: 1px solid #ccc; /* Add a border around the blocks */
-    margin: 10px; /* Add some margin around the blocks */
-    padding: 20px; /* Add padding inside the blocks */
-    display: flex; /* Enable flex properties for the blocks */
-}
-
-/* Styling for the left blocks */
-.block-left {
-    width: 50vw;
-    height: 30vh;
-    margin-right: 2vw;
-}
-
-/* Styling for the right blocks */
-.block-right {
-    width: 18vw;
-    height: 35vh;
-}
 
 .header{
+    position: relative;
     display: flex;
-    margin-right: 53vw;
+    left: 5%;
+}
+
+.account{
+    position: relative;
+    display: flex;
+    left: 90%;
 }
 
 
-div.scrollmenu {
-    background-color: #333;
-    overflow: auto;
-    white-space: nowrap;
+.collapsible {
+    background-color: #FADE1B;
+    color: black;
+    cursor: pointer;
+    margin-top: 2vh;
+    padding: 1vmin;
+    width: 60vw;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    position: relative;
+    left: 5%
   }
-  
-  div.scrollmenu a {
-    display: inline-block;
-    text-align: center;
-    padding: 14px;
-    text-decoration: none;
-  }
-  
-  div.scrollmenu a:hover {
-    background-color: #777;
-  }
+
+.side-section{
+    width: 20vh;
+}

@@ -269,6 +269,15 @@ body {
     display: inline-block;
 }
 
+.submit-assessment-button{
+    background-color: #F3DB2E;
+    border: 0;
+    padding: 10px 20px;
+    position: relative;
+    left: 70%;
+    
+}
+
 .acc_container {
     display: flex;
     position: absolute;
