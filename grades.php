@@ -1,5 +1,5 @@
 <?php
-include("dashboard-style.css");
+include "navbar.php";
 $db_host = "localhost";
 $db_username = "root";
 $db_password = "";
@@ -28,45 +28,49 @@ mysqli_close($link);
  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
-     <!-- <link rel="stylesheet" href="style.css"> -->
+ 
+     <link rel="stylesheet" href="dashboard-style.css">
+     <link rel="stylesheet" href="style.css">
     <title> grades </title>
 </head>
 
  <body>
 
+ <div class="grades">
 
-    <div class="sidenav">
+ <div class="dropdown">
+  <button class="dropbtn">Assessment 1       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"/>
+</svg> </i> </button>
 
-        <button class="dropdown-btn">Assessment 1
-            <i class="fa-sharp fa-regular fa-arrow-down"></i>
-        </button>
-        <div class="dropdown-container">
-          <a href="#">Link 1</a>
-          <a href="#">Link 2</a>
-          <a href="#">Link 3</a>
-        </div>
+  <div class="dropdown-content">
+  <a href="#">Pass</a>
+  </div>
+</div>
 <br>
-        <button class="dropdown-btn">Assessment 2
-            <i class="fa-sharp fa-solid fa-arrow-down"></i>
-          </button>
-          <div class="dropdown-container">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-          </div>
-<br>
-          <button class="dropdown-btn">Assessment 3
-            <i class="fa-sharp fa-solid fa-arrow-down"></i>
-          </button>
-          <div class="dropdown-container">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-          </div>
 <br>
 
-      </div>
+<div class="dropdown">
+  <button class="dropbtn">Assessment 2   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"/>
+</svg></button>
+  <div class="dropdown-content">
+  <a href="#">Pass</a>
+  </div>
+</div>
 
+<br>
+<br>
+
+<div class="dropdown">
+  <button class="dropbtn">Assessment 3      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"/>
+</svg></button>
+  <div class="dropdown-content">
+  <a href="#">Fail</a>
+  </div>
+</div>
+</div>
 
 <div>
 <canvas id="myChart"></canvas> 
@@ -74,9 +78,9 @@ mysqli_close($link);
 
 </body>
 
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
 
 
