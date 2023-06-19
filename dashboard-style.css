@@ -6,28 +6,39 @@ h2{
     display: flex;
     flex-direction: row;
     align-items: center; /* Vertically center the flex items */
+    margin-top: 2vh;
+    margin-left: 0;
 }
+
 
 .header{
     position: relative;
     display: flex;
-    margin-right: 53vw;
+    left: 5%;
+}
+
+.account{
+    position: relative;
+    display: flex;
+    left: 90%;
 }
 
 
-div.scrollmenu {
-    background-color: #333;
-    overflow: auto;
-    white-space: nowrap;
+.collapsible {
+    background-color: #FADE1B;
+    color: black;
+    cursor: pointer;
+    margin-top: 2vh;
+    padding: 1vmin;
+    width: 60vw;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    position: relative;
+    left: 5%
   }
-  
-  div.scrollmenu a {
-    display: inline-block;
-    text-align: center;
-    padding: 14px;
-    text-decoration: none;
-  }
-  
-  div.scrollmenu a:hover {
-    background-color: #777;
-  }
+
+.side-section{
+    width: 20vh;
+}
