@@ -351,8 +351,6 @@ body {
     padding-bottom: 2vh;
 }
 
-<<<<<<< HEAD
-=======
 .assessment-details-body {
     display: block;
     padding: 2em;
@@ -360,7 +358,6 @@ body {
     font-weight: bold;
     font-size: 1.3em;
 }
->>>>>>> 9924992a28728b5c708639387020241f99a89c0e
 
 .collapsible {
     background-color: #FADE1B;
@@ -407,10 +404,6 @@ body {
   }
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 9924992a28728b5c708639387020241f99a89c0e
 /*  Css for grades page */
   .dropbtn {
     background-color: #afac4c;
