@@ -5,6 +5,10 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="dashboard-style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Font Link for Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <script src="script.js" defer></script>
   <title>Dashboard</title>
 </head>
 
@@ -29,7 +33,28 @@
     <div class="content">
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
     </div>
-    <div class="side-section"></div>
+  </div>
+    <div class="wrapper">
+      <header>
+        <p class="current-date"></p>
+        <div class="icons">
+          <span id="prev" class="material-symbols-rounded">chevron_left</span>
+          <span id="next" class="material-symbols-rounded">chevron_right</span>
+        </div>
+      </header>
+      <div class="calendar">
+        <ul class="weeks">
+          <li>Sun</li>
+          <li>Mon</li>
+          <li>Tue</li>
+          <li>Wed</li>
+          <li>Thu</li>
+          <li>Fri</li>
+          <li>Sat</li>
+        </ul>
+        <ul class="days"></ul>
+      </div>
+    </div>
   </div>
   
   <script src="script.js"></script>
