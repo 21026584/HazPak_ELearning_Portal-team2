@@ -3,7 +3,7 @@
 include("dbFunctions.php");
 
 // Query 
-$query = "SELECT assessment_id, assessment_name, instructions, release_datetime, username
+$query = "SELECT A.assessment_id, A.assessment_name, A.instructions, A.release_datetime, U.username
     FROM assessments AS A
     INNER JOIN users AS U
     ON U.user_id = A.user_id";
@@ -13,18 +13,17 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
 $data = array();
 
 // Fetching user info from database
-if (mysqli_num_rows($result) == 1) {
+if (mysqli_num_rows($result) > 0) {
     while ($row = $result->fetch_assoc()) {
         // Add each row to the data array
         $data[] = $row;
     }
 }
 
-// Close the database connection
-mysqli_close($link);
-
 // Convert the data to JSON format
 $jsonData = json_encode($data);
+
+$result->data_seek(0);
 ?>
 
 <!DOCTYPE html>
@@ -82,27 +81,6 @@ $jsonData = json_encode($data);
         // Show the trainee Assessment Page 
     } else if ($userRoleID == 2) {
     ?>
-        <div class="assessmentContainer">
-            <select class="assessmentDropdown" name="pets" id="pet-select">
-                <option value="assessment1">Assessment 1</option>
-                <option value="assessment2">Assessment 2</option>
-                <option value="assessment3">Assessment 3</option>
-                <option value="assessment4">Assessment 4</option>
-                <option value="assessment5">Assessment 5</option>
-                <option value="assessment6">Assessment 6</option>
-                <option value="assessment7">Assessment 7</option>
-                <option value="assessment8">Assessment 8</option>
-            </select>
-        </div>
-        <div class="assessmentOverview">
-            <div class="assessmentHeader">
-                DETAILS
-            </div>
-            <div class="assessmentBody">
-
-            </div>
-
-        </div>
         <div class="acc_container">
             <div class="account">
                 <h4>Account</h4>
@@ -111,15 +89,53 @@ $jsonData = json_encode($data);
                 </a>
             </div>
         </div>
-
-        <div class="detail-container">
-            <div class="A-header">Details</div>
-            <div class="A-details">
-                <p></P>
-                <button class="start-assessment-button"></button>
+        <div class="assessment-details-dropdown-container">
+            <select class="assessment-details-dropdown" name="pets" id="pet-select">
+                <?php
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        $assessmentName = $row["assessment_name"];
+                        $assessmentId = $row["assessment_id"];
+                        echo "<option value='$assessmentId'>$assessmentName</option>";
+                    }
+                }
+                ?>
+            </select>
+        </div>
+        <div id="assessmentDetails" class="assessment-details-root">
+            <div class="assessment-details-header">
+                DETAILS
+            </div>
+            <div class="assessment-details-body">
+                <div style="display: flex; justify-content: space-between;">
+                    <div>
+                        Start Time: 12:00
+                    </div>
+                    <div>
+                        Time Taken: -
+                    </div>
+                </div>
+                <div style="margin-top: 3em;">
+                    Description:
+                </div>
+                <div style="font-weight: normal;">
+                    This is an example of how the assignment will look like for the student
+                    when they access an assignment
+                </div>
+                <div style="margin-top: 3em;">
+                    Created by: Admin A
+                </div>
+                <div class="assessment-details-button-container">
+                    <button class="start-assessment-button">Start</button>
+                </div>
             </div>
         </div>
-    <?php } ?>
+    <?php
+    }
+    // Close the database connection
+    $result->data_seek(0);
+    mysqli_close($link);
+    ?>
     <!-- Datatable.js -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
@@ -170,6 +186,29 @@ $jsonData = json_encode($data);
         function redirectToPage(url) {
             window.location.href = url;
         }
+
+        $(document).ready(function() {
+            $('#pet-select').change(function() {
+                var assessmentId = $(this).val();
+
+                // Send an AJAX request to a PHP script that retrieves assessment details
+                $.ajax({
+                    url: 'getAssessmentDetails.php',
+                    type: 'POST',
+                    data: {
+                        assessmentId: assessmentId
+                    },
+                    success: function(response) {
+                        // Update the content of the assessmentDetailsContainer with the response
+                        $('#assessmentDetails').html(response);
+                    },
+
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
     </script>
 </body>
 

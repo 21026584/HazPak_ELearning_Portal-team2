@@ -2,9 +2,17 @@
 // php file that contains the common database connection code
 include "dbFunctions.php";
 
-if (!empty($_POST['quType'])) {
+if ($_POST['quType'] > -1) {
     //Assign data retreived from form to the following variables below respectively to will input statement into SQL to make add in a new assessment into the assessment database
-    $name = $_POST['quType'];
+    $selectedType = $_POST['quType'];
+
+    if ($selectedType == 0){
+        $msg = "MCQ";
+    } else if ($selectedType == 1){
+        $msg = "FIB";
+    } else if ($selectedType ==2){
+        $msg = "Dropdown";
+    }
 }
 // Closes the Database conection 
 mysqli_close($link);
@@ -21,7 +29,7 @@ mysqli_close($link);
 <body>
     <p>
         <?php 
-        echo $name;
+        echo $msg;
         ?>
     </p>
 </body>

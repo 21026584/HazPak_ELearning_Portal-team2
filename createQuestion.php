@@ -20,8 +20,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link href="stylesheets/style.css" rel="stylesheet" type="text/css"/>
         <title>Create Question</title>    
-        <script>
-        </script>
     </head>   
     <body>
 
@@ -29,7 +27,7 @@
 
         <form id="postForm" method="post"  action="doCreateQuestion.php">
             Question Type:
-            <select name="quType" id="quType">
+            <select name="quType" id="quType" onchange="myFunction()">
                 <option value="" selected="selected">Select subject</option>
                 <?php
                     for ($i = 0; $i < count($arrItems); $i++) {
@@ -40,10 +38,22 @@
                 <?php }; ?>
             </select>
             <!-- going to require some scripting on the form page since choosing a question type will change how the form will look like -->
+            <!-- Make take a while gotta frshen up on some topics -->
             <br><br>
             
             <input type="submit" value="Submit">  
         </form>
 
+        <p id = "checking"></p>
+
+        <script>
+        function myFunction() {
+            var x = document.getElementById("quType").value;
+            <?php
+            $selectedType = $_GET['x'];
+            ?>
+            document.getElementById("checking").innerHTML = "You selected: " + x;
+        }
+        </script>
     </body>
 </html>
