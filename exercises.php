@@ -20,11 +20,10 @@ if (mysqli_num_rows($result) > 0) {
     }
 }
 
-// Close the database connection
-mysqli_close($link);
-
 // Convert the data to JSON format
 $jsonData = json_encode($data);
+
+$result->data_seek(0);
 ?>
 
 <!DOCTYPE html>
@@ -79,12 +78,66 @@ $jsonData = json_encode($data);
         </div>
     <?php
         // Show the trainee Exercise Page 
-    } else if ($userRoleID == 2) {
+    } else if ($userRoleID == 2) { ?>
+        <div class="acc_container">
+            <div class="account">
+                <h4>Account</h4>
+                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUXbmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA%3D">
+                    <img id="circle" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
+                </a>
+            </div>
+        </div>
+        <div class="assessment-details-dropdown-container">
+            <select class="assessment-details-dropdown" name="pets" id="pet-select">
+                <?php
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        $exerciseName = $row["exercise_name"];
+                        $exerciseId = $row["exercise_id"];
+                        echo "<option value='$exerciseId'>$exerciseName</option>";
+                    }
+                }
+                if (!empty($data)) {
+                    $firstRow = $data[0];
+                    $exerciseId = $firstRow['exercise_id'];
+                    $exerciseName = $firstRow['exercise_name'];
+                    $instructions = $firstRow['instructions'];
+                    $releaseTime = $firstRow['release_datetime'];
+                    $createdBy = $firstRow['username'];
+                } else {
+                    echo "No rows found in the data array.";
+                }
+                ?>
+            </select>
+        </div>
+        <div id="exerciseDetails" class="assessment-details-root">
+            <div class="assessment-details-header">
+                <?php echo $exerciseName; ?>
+            </div>
+            <div class="assessment-details-body">
+                <div>
+                    Start Time: <?php echo $releaseTime; ?>
+                </div>
+                <div style="margin-top: 3em;">
+                    Description:
+                </div>
+                <div style="font-weight: normal;">
+                    <?php echo $instructions; ?>
+                </div>
+                <div style="margin-top: 3em;">
+                    Created by: <?php echo $createdBy; ?>
+                </div>
+                <div class="assessment-details-button-container">
+                    <button class="start-assessment-button">Start</button>
+                </div>
+            </div>
+        </div>
+    <?php
+    }
+    // Close the database connection
+    $result->data_seek(0);
+    mysqli_close($link);
     ?>
-
-        <!-- Input Trainee Exercise Page Here -->
-
-    <?php } ?>
     <!-- Datatable.js -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
@@ -135,6 +188,29 @@ $jsonData = json_encode($data);
         function redirectToPage(url) {
             window.location.href = url;
         }
+
+        $(document).ready(function() {
+            $('#pet-select').change(function() {
+                var exerciseId = $(this).val();
+
+                // Send an AJAX request to a PHP script that retrieves assessment details
+                $.ajax({
+                    url: 'getExerciseDetails.php',
+                    type: 'POST',
+                    data: {
+                        exerciseId: exerciseId
+                    },
+                    success: function(response) {
+                        // Update the content of the assessmentDetailsContainer with the response
+                        $('#exerciseDetails').html(response);
+                    },
+
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
     </script>
 </body>
 

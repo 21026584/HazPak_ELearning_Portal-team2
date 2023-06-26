@@ -99,17 +99,27 @@ $result->data_seek(0);
                         echo "<option value='$assessmentId'>$assessmentName</option>";
                     }
                 }
+                if (!empty($data)) {
+                    $firstRow = $data[0];
+                    $assessmentName = $firstRow['assessment_name'];
+                    $assessmentId = $firstRow['assessment_id'];
+                    $instructions = $firstRow['instructions'];
+                    $releaseTime = $firstRow['release_datetime'];
+                    $createdBy = $firstRow['username'];
+                } else {
+                    echo "No rows found in the data array.";
+                }
                 ?>
             </select>
         </div>
         <div id="assessmentDetails" class="assessment-details-root">
             <div class="assessment-details-header">
-                DETAILS
+                <?php echo $assessmentName; ?>
             </div>
             <div class="assessment-details-body">
                 <div style="display: flex; justify-content: space-between;">
                     <div>
-                        Start Time: 12:00
+                        Start Time: <?php echo $releaseTime; ?>
                     </div>
                     <div>
                         Time Taken: -
@@ -119,11 +129,10 @@ $result->data_seek(0);
                     Description:
                 </div>
                 <div style="font-weight: normal;">
-                    This is an example of how the assignment will look like for the student
-                    when they access an assignment
+                    <?php echo $instructions; ?>
                 </div>
                 <div style="margin-top: 3em;">
-                    Created by: Admin A
+                    Created by: <?php echo $createdBy; ?>
                 </div>
                 <div class="assessment-details-button-container">
                     <button class="start-assessment-button">Start</button>
