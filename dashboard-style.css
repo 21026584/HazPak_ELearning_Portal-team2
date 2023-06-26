@@ -18,7 +18,7 @@ h2{
 }
 
 .account{
-    position: relative;
+    position: absolute;
     display: flex;
     left: 90%;
 }
@@ -36,7 +36,7 @@ h2{
     outline: none;
     font-size: 15px;
     position: relative;
-    left: 5%
+    left: 2%
   }
 
 .side-section{
@@ -57,15 +57,18 @@ body{
   min-height: 100vh;
 }
 .wrapper{
-  width: 450px;
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+  margin-left: 950px;
+ width: 28%
+
 }
 .wrapper header{
   display: flex;
   align-items: center;
-  padding: 25px 30px 10px;
+  padding: 25px 20px 10px; 
+  /* padding: 25px 30px 10px;  */
   justify-content: space-between;
 }
 header .icons{
