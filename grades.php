@@ -8,17 +8,18 @@ $link = mysqli_connect($db_host,$db_username,$db_password,$db_name) or
         die(mysqli_connect_error());
 
 
-/*  $queryMembers = "SELECT u.user_id, u.username, u.password, r.role_name
-        FROM users u, roles r
-        WHERE u.role_id = r.role_id"; */
+ $query = "SELECT G.description, G.grade
+    FROM grades AS G
+    INNER JOIN users AS U
+    INNER JOIN courses AS C
+    ON U.user_id = G.user_id AND C.course_id = G.course_id"
+    ;
+$result = mysqli_query($link, $query) or die(mysqli_error($link));
 
-/* $results = mysqli_query($link, $queryMembers) or die(mysqli_error($link));
-
-while ($row = mysqli_fetch_assoc($results)) {
-$arrItems[] = $row;
+while ($row = mysqli_fetch_assoc($result)) {
+  $arrItems[] = $row;
 }
 mysqli_close($link);
- */
 ?>
 
 <!DOCTYPE html>
@@ -37,38 +38,45 @@ mysqli_close($link);
 
  <div class="grades">
 
- <div class="dropdown">
-  <button class="dropbtn">Assessment 1       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"/>
-</svg> </i> </button>
 
-  <div class="dropdown-content">
-  <a href="#">Pass</a>
+<div class="Course1">
+    <button type="button" class="collapsible">Assessment 1</button>
+    <div class="content">
+      <a class="assessment-anchor" href="">
+
+      </a>
+      <a class="assessment-anchor" href="">
+
+      </a>
+    </div>
   </div>
-</div>
-<br>
-<br>
 
-<div class="dropdown">
-  <button class="dropbtn">Assessment 2   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"/>
-</svg></button>
-  <div class="dropdown-content">
-  <a href="#">Pass</a>
+  <div class="Assessment2">
+    <button type="button" class="collapsible">Assessment 2</button>
+    <div class="content">
+      <a class="assessment-anchor" href="">
+        
+      </a>
+      <a class="assessment-anchor" href="">
+ 
+      </a>
+    </div>
   </div>
-</div>
 
-<br>
-<br>
 
-<div class="dropdown">
-  <button class="dropbtn">Assessment 3      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"/>
-</svg></button>
-  <div class="dropdown-content">
-  <a href="#">Fail</a>
+  <div class="Assessment3">
+    <button type="button" class="collapsible">Assessment 3</button>
+    <div class="content">
+      <a class="assessment-anchor" href="">
+
+      </a>
+      <a class="assessment-anchor" href="">
+
+      </a>
+    </div>
   </div>
-</div>
+
+
 </div>
 
 <div>
@@ -79,25 +87,9 @@ mysqli_close($link);
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
-
+<script src="script.js"></script>
 <script>
-
-
-  var dropdown = document.getElementsByClassName("dropdown-btn");
-var i;
-
-for (i = 0; i < dropdown.length; i++) {
-  dropdown[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var dropdownContent = this.nextElementSibling;
-    if (dropdownContent.style.display === "block") {
-      dropdownContent.style.display = "none";
-    } else {
-      dropdownContent.style.display = "block";
-    }
-  });
-}
-
+  
 
 
 const labels = [

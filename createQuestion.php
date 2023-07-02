@@ -19,16 +19,19 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link href="stylesheets/style.css" rel="stylesheet" type="text/css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <title>Create Question</title>    
     </head>   
     <body>
 
         <h1>Create Question</h1>
 
-        <form id="postForm" method="post"  action="doCreateQuestion.php">
+        <form id="postForm" method="post" class="questionForm" action="doCreateQuestion.php">
             Question Type:
-            <select name="quType" id="quType" onchange="myFunction()">
-                <option value="" selected="selected">Select subject</option>
+            <select name="questionType" name="quType" id="quType" class="question-type">
+                <option value="" selected="selected">Select Question Type</option>
                 <?php
                     for ($i = 0; $i < count($arrItems); $i++) {
                         $name = $arrItems[$i]['type_name'];
@@ -37,23 +40,52 @@
                 <option value="<?php echo $idType?>"><?php echo $name?></option>
                 <?php }; ?>
             </select>
-            <!-- going to require some scripting on the form page since choosing a question type will change how the form will look like -->
-            <!-- Make take a while gotta frshen up on some topics -->
             <br><br>
-            
+            <div id="questionDetails" class="question-root-details">
+                <h6>Select question type before continuing</h6>
+            </div>
             <input type="submit" value="Submit">  
         </form>
 
-        <p id = "checking"></p>
+        
 
         <script>
-        function myFunction() {
-            var x = document.getElementById("quType").value;
-            <?php
-            $selectedType = $_GET['x'];
-            ?>
-            document.getElementById("checking").innerHTML = "You selected: " + x;
-        }
+            function redirectToPage(url) {
+                window.location.href = url;
+            }
+
+            $(document).ready(function() {
+                $('#quType').change(function() {
+                    var questionId = $(this).val();
+                    // Send an AJAX request to a PHP script that changes the form's question details
+                    $.ajax({
+                        url: 'getQuestionDetails.php',
+                        type: 'POST',
+                        data: {
+                            questionId: questionId
+                        },
+                        success: function(response) {
+                            // Update the content of the questionDetails container with the response
+                            $('#questionDetails').html(response);
+                        },
+
+                        error: function(xhr, status, error) {
+                            console.log(xhr.responseText);
+                        }
+                    });
+                });
+            });
+        </script>
+
+        <script>
+            var moreIds = 0;
+            $("#add-input").click(function () {
+                moreIds = moreIds + 1;
+                $("#input-container").append('<input type="text" id="'moreIds'" class="ansOptions" name="options"/><button class="remove-input">-</button><br>');
+            });
+            $(".remove-input").click(function () {//this removes the entire form entirely
+                $(this).parent().remove();
+            });
         </script>
     </body>
 </html>

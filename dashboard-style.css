@@ -18,7 +18,7 @@ h2{
 }
 
 .account{
-    position: relative;
+    position: absolute;
     display: flex;
     left: 90%;
 }
@@ -36,36 +36,64 @@ h2{
     outline: none;
     font-size: 15px;
     position: relative;
-    left: 5%
+    left: 2%
+  }
+
+  .content {
+    padding-left: 1vw;
+    padding-right: 1vw;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+    margin-bottom: 5vh;
+    width: 58vw;
+    position: relative;
+    left: 5%;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .assessment-anchor{
+    height: 10vh;
+    width: 10vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 3vh;
+    margin-right: 1vw;
+  }
+
+  #assessment-img{
+    height: 10vh;
+    width: 10vw;
+    object-fit: cover;
   }
 
 .side-section{
     width: 20vh;
 }
 
-/* Import Google font - Poppins */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
 body{
   display: flex;
   padding: 0 10px;
   min-height: 100vh;
 }
 .wrapper{
-  width: 450px;
+  position:absolute;
+  width: 350px;
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+  margin-left: 980px;
+ width: 28%
+
 }
 .wrapper header{
   display: flex;
   align-items: center;
-  padding: 25px 30px 10px;
+  padding: 25px 20px 10px; 
+  /* padding: 25px 30px 10px;  */
   justify-content: space-between;
 }
 header .icons{
