@@ -8,17 +8,18 @@ $link = mysqli_connect($db_host,$db_username,$db_password,$db_name) or
         die(mysqli_connect_error());
 
 
-/*  $queryMembers = "SELECT u.user_id, u.username, u.password, r.role_name
-        FROM users u, roles r
-        WHERE u.role_id = r.role_id"; */
+ $query = "SELECT G.description, G.grade
+    FROM grades AS G
+    INNER JOIN users AS U
+    INNER JOIN courses AS C
+    ON U.user_id = G.user_id AND C.course_id = G.course_id"
+    ;
+$result = mysqli_query($link, $query) or die(mysqli_error($link));
 
-/* $results = mysqli_query($link, $queryMembers) or die(mysqli_error($link));
-
-while ($row = mysqli_fetch_assoc($results)) {
-$arrItems[] = $row;
+while ($row = mysqli_fetch_assoc($result)) {
+  $arrItems[] = $row;
 }
 mysqli_close($link);
- */
 ?>
 
 <!DOCTYPE html>
