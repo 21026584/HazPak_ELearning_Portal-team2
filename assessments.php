@@ -135,7 +135,7 @@ $result->data_seek(0);
                     Created by: <?php echo $createdBy; ?>
                 </div>
                 <div class="assessment-details-button-container">
-                    <button class="start-assessment-button">Start</button>
+                    <a href="takeAssessment.php?assessment_id=<?php echo $assessmentId; ?>" class="start-assessment-button">Start</a>
                 </div>
             </div>
         </div>

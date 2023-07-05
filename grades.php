@@ -18,8 +18,14 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
 while ($row = mysqli_fetch_assoc($result)) {
   $arrItems[] = $row;
+  $grade = $row['grade'];
+  $course = $row=['course_id'];
+  $user = $row=['user_id'];
 }
+
+
 mysqli_close($link);
+
 ?>
 
 <!DOCTYPE html>
@@ -38,40 +44,58 @@ mysqli_close($link);
 
  <div class="grades">
 
- <div class="dropdown">
-  <button class="dropbtn">Assessment 1       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"/>
-</svg> </i> </button>
 
-  <div class="dropdown-content">
-  <a href="#">Pass</a>
+<div class="Course1">
+    <button type="button" class="collapsible">Assessment 1</button>
+    <div class="content">
+      <a class="assessment-anchor" href="">
+      <?php
+      $course = $_GET['course_id'];
+      if($course = "C01" || $user = "T01"){
+        echo $grade;
+      }
+      else{
+        
+      }
+      ?>
+      </a>
+      <a class="assessment-anchor" href="">
+
+      </a>
+    </div>
   </div>
-</div>
-<br>
-<br>
 
-<div class="dropdown">
-  <button class="dropbtn">Assessment 2   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"/>
-</svg></button>
-  <div class="dropdown-content">
-  <a href="#">Pass</a>
+  <div class="Assessment2">
+    <button type="button" class="collapsible">Assessment 2</button>
+    <div class="content">
+      <a class="assessment-anchor" href="">
+      <?php  
+      if($course = "C02"){
+        echo $grade;
+      }
+      else{
+echo"";
+      }
+      ?>
+      </a>
+      <a class="assessment-anchor" href="">
+ 
+      </a>
+    </div>
   </div>
-</div>
 
-<br>
-<br>
 
-<div class="dropdown">
-  <button class="dropbtn">Assessment 3      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"/>
-</svg></button>
-  <div class="dropdown-content">
-  <a href="#">Fail</a>
+  <div class="Assessment3">
+    <button type="button" class="collapsible">Assessment 3</button>
+    <div class="content">
+      <a class="assessment-anchor" href="">
+      <?php  ?>
+      </a>
+      <a class="assessment-anchor" href="">
+
+      </a>
+    </div>
   </div>
-</div>
-
-
 
 
 </div>
@@ -84,23 +108,9 @@ mysqli_close($link);
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
-
+<script src="script.js"></script>
 <script>
-  var dropdown = document.getElementsByClassName("dropdown-btn");
-var i;
-
-for (i = 0; i < dropdown.length; i++) {
-  dropdown[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var dropdownContent = this.nextElementSibling;
-    if (dropdownContent.style.display === "block") {
-      dropdownContent.style.display = "none";
-    } else {
-      dropdownContent.style.display = "block";
-    }
-  });
-}
-
+  
 
 
 const labels = [

@@ -44,7 +44,7 @@ if ($row = mysqli_fetch_assoc($result)) {
                     Created by: ' . $createdBy . '
                 </div>
                 <div class="assessment-details-button-container">
-                    <button class="start-assessment-button">Start</button>
+                    <a href="takeAssessment.php?assessment_id=' . $assessmentId . '" class="start-assessment-button">Start</a>
                 </div>
             </div>';
 
@@ -52,7 +52,7 @@ if ($row = mysqli_fetch_assoc($result)) {
     echo $updatedContent;
 } else {
     // In case the assessment ID is not found or an error occurs, you can return an error message or default content
-    echo '<div class="assessment-details-header">Assessment Details Not Found, ID: '. $assessmentId . '</div>';
+    echo '<div class="assessment-details-header">Assessment Details Not Found, ID: ' . $assessmentId . '</div>';
 }
 
 // Close the database connection

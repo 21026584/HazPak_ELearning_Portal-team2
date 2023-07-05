@@ -42,8 +42,6 @@
     </div>
   </div>
 
-
-
   <div class="row-container">
     <button type="button" class="collapsible">Available Assessments</button>
     <div class="content">
@@ -57,8 +55,6 @@
       </a>
     </div>
   </div>
-
-
 
     <div class="wrapper">
       <header>

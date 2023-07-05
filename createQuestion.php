@@ -21,22 +21,7 @@
         <link href="stylesheets/style.css" rel="stylesheet" type="text/css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                    //should allow user to add more options for dropdown questions
-                    $(".add-row").click(function(){
-                        //clone method isn't working so trying out the echo method instead
-                        var $clone = <?php $input = '<input type="text" id="idOptions" class="ansOptions" name="options" required/><br>';
-                        echo $input;?>
-                        $clone.append("<button type='button' class='remove-row'>-</button>");
-                        $clone.insertBefore(".add-row");
-                    });
-                    
-                    $(".questionForm").on("click", ".remove-row", function(){
-                        $(this).parent().remove();
-                    });
-            });
-        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <title>Create Question</title>    
     </head>   
     <body>
@@ -45,7 +30,7 @@
 
         <form id="postForm" method="post" class="questionForm" action="doCreateQuestion.php">
             Question Type:
-            <select name="questionType" id="quType" class="question-type">
+            <select name="questionType" name="quType" id="quType" class="question-type">
                 <option value="" selected="selected">Select Question Type</option>
                 <?php
                     for ($i = 0; $i < count($arrItems); $i++) {
@@ -62,7 +47,7 @@
             <input type="submit" value="Submit">  
         </form>
 
-        <p id = "checking"></p>
+        
 
         <script>
             function redirectToPage(url) {
@@ -89,6 +74,17 @@
                         }
                     });
                 });
+            });
+        </script>
+
+        <script>
+            var moreIds = 0;
+            $("#add-input").click(function () {
+                moreIds = moreIds + 1;
+                $("#input-container").append('<input type="text" id="'moreIds'" class="ansOptions" name="options"/><button class="remove-input">-</button><br>');
+            });
+            $(".remove-input").click(function () {//this removes the entire form entirely
+                $(this).parent().remove();
             });
         </script>
     </body>
