@@ -379,15 +379,15 @@ body {
   }
 
   .collapsible:after {
-    content: '\002B';
-    color: white;
+    content: '\2B9B';
+    color: black;
     font-weight: bold;
     float: right;
     margin-left: 5px;
   }
 
   .active:after {
-    content: "\2212";
+    content: "\2B99";
   }
 
   .content {
