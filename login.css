@@ -13,10 +13,10 @@ body {
 
 .RootLoginForm {
     background: white;
-    width: 40%;
-    height: 50rem;
+    width: 30%;
+    height: 38rem;
     margin-top: 7em;
-    padding-top: 12em;
+    padding-top: 7em;
 }
 
 .Block {
@@ -31,11 +31,10 @@ body {
 .Forms {
     text-align: center;
     /* Center Align */
-    padding: 20px;
 }
 
 input {
-    margin-top: 15px;
+    margin-top: 20px;
     margin-bottom: 15px;
 }
 
@@ -110,21 +109,4 @@ body {
 }
 
 
-
-/* .start-button{
-
-}
-
-.h3{
-
-}
-
-.h4{
-
-}
-
-.options{
-
-}
- */
 
