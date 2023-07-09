@@ -82,6 +82,17 @@ $userRoleID = $_SESSION['role_id'];
         } ?>>
       <a href="exercises.php" class="custom-nav-link">Exercises</a>
     </li>
+
+
+    <li <?php if ($currentPage == 'courses.php') {
+            echo 'class="custom-nav-item-active"';
+          } else {
+            echo 'class="custom-nav-item"';
+          } ?>>
+        <a href="courses.php" class="custom-nav-link">Courses</a>
+      </li>
+
+
     <!-- TEMPORARY LOG OUT -->
     <li class="custom-nav-item">
       <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
