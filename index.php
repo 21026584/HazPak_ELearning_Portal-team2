@@ -17,45 +17,50 @@
   // Navbar
   include "navbar.php";
   ?>
-  <div class="container">
+    
+  
+  
+  <div class="left_panel">
     <h1 class="header">
       Dashboard
     </h1>
+    <div class="row-container">
+        <button type="button" class="collapsible">Available Assessments</button>
+        <div class="content">
+          <a class="assessment-anchor" href="">
+            <img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
+            <p>Assessment 1</p>
+          </a>
+          <a class="assessment-anchor" href="">
+            <img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
+            <p>Assessment 2</p>
+          </a>
+        </div>
+      </div>
+
+      <div class="row-container">
+        <button type="button" class="collapsible">Available Assessments</button>
+        <div class="content">
+          <a class="assessment-anchor" href="">
+            <img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
+            <p>Assessment 1</p>
+          </a>
+          <a class="assessment-anchor" href="">
+            <img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
+            <p>Assessment 2</p>
+          </a>
+        </div>
+      </div>
+
+
+  </div>
+  <div class="right_panel">
     <div class="account">
       <h4>account</h4>
       <a>
         <img id="circle" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
       </a>
     </div>
-  </div>
-  <div class="row-container">
-    <button type="button" class="collapsible">Available Assessments</button>
-    <div class="content">
-      <a class="assessment-anchor" href="">
-        <img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
-        <p>Assessment 1</p>
-      </a>
-      <a class="assessment-anchor" href="">
-        <img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
-        <p>Assessment 2</p>
-      </a>
-    </div>
-  </div>
-
-  <div class="row-container">
-    <button type="button" class="collapsible">Available Assessments</button>
-    <div class="content">
-      <a class="assessment-anchor" href="">
-        <img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
-        <p>Assessment 1</p>
-      </a>
-      <a class="assessment-anchor" href="">
-        <img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
-        <p>Assessment 2</p>
-      </a>
-    </div>
-  </div>
-
     <div class="wrapper">
       <header>
         <p class="current-date"></p>
@@ -79,6 +84,8 @@
     </div>
   </div>
   
+    
+    
 
 
 

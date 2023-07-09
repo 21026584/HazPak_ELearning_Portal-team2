@@ -95,4 +95,4 @@ $userRoleID = $_SESSION['role_id'];
   echo 'username: ' . $_SESSION['username'];
   ?>
 </div>
-<div style='margin-left: 280px'>
+<div style='margin-left: 280px; width:100%'>
