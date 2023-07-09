@@ -62,7 +62,7 @@ $jsonData = json_encode($data);
                             <td>Student ID</td>
                             <td>Student Name</td>
                             <td>Intake</td>
-                            <td>Delete</td>
+                            <td>Add</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -103,7 +103,13 @@ $jsonData = json_encode($data);
                         title: 'Intake',
                         data: 'intake'
                     },
- 
+                    {
+                        title: 'Add',
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<a href="doAddTrainee.php?user_id=' + row.user_id + '">Add</a>';
+                        }
+                    }
 
                 ]
             });
