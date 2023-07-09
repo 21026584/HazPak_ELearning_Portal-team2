@@ -373,7 +373,7 @@ body {
     left: 5%
   }
 
-  .active,
+  .collapsible_active,
   .collapsible:hover {
     background-color: #F3DB2E;
   }
@@ -386,7 +386,7 @@ body {
     margin-left: 5px;
   }
 
-  .active:after {
+  .collapsible_active:after {
     content: "\2B99";
   }
 
@@ -397,7 +397,7 @@ body {
     padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;
-    width: 1%;
+    width: 100%;
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
@@ -409,7 +409,7 @@ body {
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 40%;
+    width: 40% !important;
   }
   
   /* The Close Button */
@@ -493,7 +493,4 @@ body {
   }
 
 
-.wrapper{
-width: 5%
-}
   
