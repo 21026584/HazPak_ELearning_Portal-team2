@@ -94,6 +94,25 @@
 
 
   <script src="script.js"></script>
+  <!-- Add the link for Tippy.js here -->
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
+  <script>
+    const lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(); // getting last date of month
+
+    for (let i = 1; i <= lastDateofMonth; i++) { // creating li of all days of current month
+        tippy(`#my_day${i}`, {
+            placement: 'right', //place tippy to the right
+            interactive: true, //allow interaction in tippy (e.g. click and select text)
+            content: `day ${i}`,
+            allowHTML: true, //allow HTML in tippy content
+            delay: 200, //delay tippy showing and hiding (in milliseconds)
+            followCursor: true //get tippy to follow mouse cursor
+        });
+    }
+
+        
+    </script>
 </body>
 
 </html>
