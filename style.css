@@ -397,8 +397,7 @@ body {
     padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
+    width: 1%;
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
@@ -406,11 +405,11 @@ body {
 
 /* Modal Content */
 .modal-content {
-    background-color: #fefefe;
+    background-color: #ffffff;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 40%;
   }
   
   /* The Close Button */
