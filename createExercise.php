@@ -1,3 +1,7 @@
+<?php
+// Check user session
+include("checkSession.php");
+?>
 <!DOCTYPE html>
 <html>
 

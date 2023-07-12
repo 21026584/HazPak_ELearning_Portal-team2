@@ -1,5 +1,9 @@
 <?php
-include "navbar.php";
+// Check user session
+include("checkSession.php");
+// Include navbar
+include("navbar.php");
+
 $db_host = "localhost";
 $db_username = "root";
 $db_password = "";

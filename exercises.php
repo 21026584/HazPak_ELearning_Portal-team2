@@ -1,4 +1,6 @@
 <?php
+// Check user session
+include("checkSession.php");
 // Include database connection
 include("dbFunctions.php");
 
