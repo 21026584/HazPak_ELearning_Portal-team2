@@ -49,15 +49,8 @@ $userRoleID = $_SESSION['role_id'];
       </li>
 
 
-    <?php } else if ($userRoleID == 2){ ?>
+    <?php } else { ?>
       <!-- Check if current page matches navigation item then sets class to active -->
-      <li <?php if ($currentPage == 'index.php') {
-          echo 'class="custom-nav-item-active"';
-        } else {
-          echo 'class="custom-nav-item"';
-        } ?>>
-      <a href="index.php" class="custom-nav-link">Dashboard</a>
-    </li>
 
       
     <li <?php if ($currentPage == 'grades.php') {
@@ -67,12 +60,20 @@ $userRoleID = $_SESSION['role_id'];
           } ?>>
         <a href="grades.php" class="custom-nav-link">Grades</a>
       </li>
-      
+
     <?php }
     ?>
     <!-- Check if current page matches navigation item then sets class to active -->
 
     <!-- Check if current page matches navigation item then sets class to active -->
+
+    <li <?php if ($currentPage == 'index.php') {
+          echo 'class="custom-nav-item-active"';
+        } else {
+          echo 'class="custom-nav-item"';
+        } ?>>
+      <a href="index.php" class="custom-nav-link">Dashboard</a>
+    </li>
     
     <li <?php if ($currentPage == 'exercises.php') {
           echo 'class="custom-nav-item-active"';
