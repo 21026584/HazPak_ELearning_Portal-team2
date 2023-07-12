@@ -22,8 +22,14 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
 while ($row = mysqli_fetch_assoc($result)) {
   $arrItems[] = $row;
+  $grade = $row['grade'];
+  $course = $row=['course_id'];
+  $user = $row=['user_id'];
 }
+
+
 mysqli_close($link);
+
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +53,15 @@ mysqli_close($link);
     <button type="button" class="collapsible">Assessment 1</button>
     <div class="content">
       <a class="assessment-anchor" href="">
-
+      <?php
+      $course = $_GET['course_id'];
+      if($course = "C01" || $user = "T01"){
+        echo $grade;
+      }
+      else{
+        
+      }
+      ?>
       </a>
       <a class="assessment-anchor" href="">
 
@@ -59,7 +73,14 @@ mysqli_close($link);
     <button type="button" class="collapsible">Assessment 2</button>
     <div class="content">
       <a class="assessment-anchor" href="">
-        
+      <?php  
+      if($course = "C02"){
+        echo $grade;
+      }
+      else{
+echo"";
+      }
+      ?>
       </a>
       <a class="assessment-anchor" href="">
  
@@ -72,7 +93,7 @@ mysqli_close($link);
     <button type="button" class="collapsible">Assessment 3</button>
     <div class="content">
       <a class="assessment-anchor" href="">
-
+      <?php  ?>
       </a>
       <a class="assessment-anchor" href="">
 

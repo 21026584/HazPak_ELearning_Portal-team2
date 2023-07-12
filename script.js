@@ -3,7 +3,7 @@ var coll = document.getElementsByClassName("collapsible");
 
     for (i = 0; i < coll.length; i++) {
       coll[i].addEventListener("click", function() {
-        this.classList.toggle("active");
+        this.classList.toggle("collapsible_active");
         var content = this.nextElementSibling;
         if (content.style.maxHeight) {
           content.style.maxHeight = null;
@@ -41,7 +41,7 @@ const renderCalendar = () => {
         // adding active class to li if the current day, month, and year matched
         let isToday = i === date.getDate() && currMonth === new Date().getMonth() 
                      && currYear === new Date().getFullYear() ? "active" : "";
-        liTag += `<li class="${isToday}">${i}</li>`;
+        liTag += `<li class="${isToday}" id="my_day${i}" >${i}</li>`;
     }
 
     for (let i = lastDayofMonth; i < 6; i++) { // creating li of next month first days

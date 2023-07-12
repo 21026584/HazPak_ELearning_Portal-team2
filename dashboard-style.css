@@ -12,14 +12,13 @@ h2{
 
 .header{
     position: relative;
-    display: flex;
-    left: 5%;
+    left: 2%;
 }
 
 .account{
-    position: absolute;
-    display: flex;
-    left: 90%;
+  position: relative;
+  display: flex;
+  left:50%;
 }
 
 
@@ -69,6 +68,16 @@ h2{
     object-fit: cover;
   }
 
+  .left_panel{
+    float: left;
+    width: 80%;
+  }
+  
+  .right_panel{
+    float: right;
+    width: 20%;
+  }
+
 .side-section{
     width: 20vh;
 }
@@ -79,13 +88,11 @@ body{
   min-height: 100vh;
 }
 .wrapper{
-  position:absolute;
+  position:relative;
   width: 350px;
   background: #fff;
   border-radius: 10px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-  margin-left: 980px;
- width: 28%
+  margin-top: 1vh;
 
 }
 .wrapper header{

@@ -52,9 +52,6 @@ $result->data_seek(0);
                 <h1>Exercises</h1>
             </header>
             <div class="assessmentButtonContainer">
-                <button onclick="redirectToPage('exercises.php')">
-                    Manage exercises
-                </button>
                 <button onclick="redirectToPage('createExercise.php')">
                     Create exercises
                 </button>

@@ -53,9 +53,6 @@ $result->data_seek(0);
                 <h1>Assessments</h1>
             </header>
             <div class="assessmentButtonContainer">
-                <button onclick="redirectToPage('assessments.php')">
-                    Manage Assessments
-                </button>
                 <button onclick="redirectToPage('createAssessment.php')">
                     Create Assessments
                 </button>
