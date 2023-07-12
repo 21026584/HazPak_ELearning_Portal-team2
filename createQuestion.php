@@ -1,91 +1,116 @@
 <?php
-    session_start();
-    // php file that contains the common database connection code
-    include "dbFunctions.php";
+// Check user session
+include("checkSession.php");
+// php file that contains the common database connection code
+include "dbFunctions.php";
 
-    $typeQuestion = "SELECT * From question_type";
+$query = "SELECT * FROM question_type";
+$result = mysqli_query($link, $query) or die(mysqli_error($link));
+while ($row = mysqli_fetch_assoc($result)) {
+    $questionArr[] = $row;
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Retrieve the answer options from the form
+        $question_type_id = $_POST['questionType'];
+        $question_text = $_POST['inputText'];
+        $answer_options = $_POST['inputOptions'];
 
-    $resultItems = mysqli_query($link, $typeQuestion) or die(mysqli_error($link));
+        // Convert the array to a JSON string
+        $jsonAnswerOptions = json_encode($answer_options);
 
-    while ($row = mysqli_fetch_assoc($resultItems)) {
-        $arrItems[] = $row;
+        // Prepare and execute the query
+        $questionQuery = "INSERT INTO question_bank (question_type_id, question_text, answer_options, question_answer VALUES ('$question_type_id', '$question_text', '$jsonAnswerOptions')";
     }
-    mysqli_close($link);
-    // SQL statement will make arraylist and input it into dropdown list for user to chose question type
-    // Can be use if the amount of question type is change or the name is updated
+}
+mysqli_close($link);
 ?>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link href="stylesheets/style.css" rel="stylesheet" type="text/css"/>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <title>Create Question</title>    
-    </head>   
-    <body>
 
-        <h1>Create Question</h1>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="stylesheets/style.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <title>Create Question</title>
+</head>
 
-        <form id="postForm" method="post" class="questionForm" action="doCreateQuestion.php">
-            Question Type:
-            <select name="questionType" name="quType" id="quType" class="question-type">
-                <option value="" selected="selected">Select Question Type</option>
-                <?php
-                    for ($i = 0; $i < count($arrItems); $i++) {
-                        $name = $arrItems[$i]['type_name'];
-                        $idType = $arrItems[$i]['type_id'];
-                ?>
-                <option value="<?php echo $idType?>"><?php echo $name?></option>
-                <?php }; ?>
-            </select>
-            <br><br>
-            <div id="questionDetails" class="question-root-details">
-                <h6>Select question type before continuing</h6>
-            </div>
-            <input type="submit" value="Submit">  
-        </form>
-
-        
-
-        <script>
-            function redirectToPage(url) {
-                window.location.href = url;
+<body>
+    <h1>Create Question</h1>
+    <div>Choose the question type</div>
+    <form id="questionForm" class="questionForm" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <select id='questionType' name='questionType'>
+            <?php
+            for ($i = 0; $i < count($questionArr); $i++) {
+                $name = $questionArr[$i]['type_name'];
+                $idType = $questionArr[$i]['type_id'];
+                echo "<option value=$idType>$name</option>";
             }
+            ?>
+        </select>
+        <div id="questionDetails" class="question-root-details">
+            <br><br>
+            <div class="form-group" id="inputFields">
+                <label for="inputText" id='inputText'>Question Text:</label><br>
+                <textarea class="inputText" name="inputText"></textarea><br><br>
+                <label for="inputOptions" id='inputOptionsLabel'><?php echo $questionArr[0]['type_name']; ?> Options:</label><br>
+                <input id='inputOptions' type="text" class="inputOptions" name="inputOptions[]" />
+                <input type="radio" name="answer" value="0"><br>
+                <input id='inputOptions' type="text" class="inputOptions" name="inputOptions[]" />
+                <input type="radio" name="answer" value="1"><br>
+            </div>
+            <button type="button" id="addField">Add new option</button>
+            <br><br>
+            <label for="myFile">Files:</label>
+            <input type="file" id="myFile" name="filename">
+            <br><br>
+            <button type="submit" name="submit">Submit</button>
+        </div>
+    </form>
 
-            $(document).ready(function() {
-                $('#quType').change(function() {
-                    var questionId = $(this).val();
-                    // Send an AJAX request to a PHP script that changes the form's question details
-                    $.ajax({
-                        url: 'getQuestionDetails.php',
-                        type: 'POST',
-                        data: {
-                            questionId: questionId
-                        },
-                        success: function(response) {
-                            // Update the content of the questionDetails container with the response
-                            $('#questionDetails').html(response);
-                        },
+    <script>
+        function redirectToPage(url) {
+            window.location.href = url;
+        }
+        $(document).ready(function() {
+            // Update form content based on the selected dropdown option
+            $("#questionType").change(function() {
+                var selectedOption = $(this).val();
+                var inputFieldLabel = "";
+                var inputFieldType = "";
 
-                        error: function(xhr, status, error) {
-                            console.log(xhr.responseText);
-                        }
-                    });
-                });
-            });
-        </script>
+                if (selectedOption == 0) {
+                    inputFieldLabel = "<?php echo $questionArr[0]['type_name']; ?>";
+                    inputFieldType = "text";
+                } else if (selectedOption == 1) {
+                    inputFieldLabel = "<?php echo $questionArr[1]['type_name']; ?>";
+                    inputFieldType = "text";
+                } else if (selectedOption == 2) {
+                    inputFieldLabel = "<?php echo $questionArr[2]['type_name']; ?>";
+                    inputFieldType = "text";
+                }
 
-        <script>
-            var moreIds = 0;
-            $("#add-input").click(function () {
-                moreIds = moreIds + 1;
-                $("#input-container").append('<input type="text" id="'moreIds'" class="ansOptions" name="options"/><button class="remove-input">-</button><br>');
+                // Reset input options
+                var inputField = document.getElementById("inputOptions");
+                inputField.innerHTML = '<input id="inputOptions" type="text" type="text" class="inputOptions" name="inputOptions[]"/><input type="radio" name="answer"><br>';
+
+                // Set label name
+                var inputFieldLabelText = document.getElementById("inputOptionsLabel");
+                inputFieldLabelText.innerHTML = inputFieldLabel + ' Options:';
             });
-            $(".remove-input").click(function () {//this removes the entire form entirely
-                $(this).parent().remove();
+
+            // Add new input field
+            $("#addField").click(function() {
+                var questionType = $("#questionType").val();
+                var inputFieldHtml = '<div><input type="text" name="inputOptions[]" placeholder=""><input type="radio" name="answer"><button type="button" class="removeField">Remove</button></div>';
+                $("#inputFields").append(inputFieldHtml);
             });
-        </script>
-    </body>
+
+            // Remove the selected input field
+            $(document).on("click", ".removeField", function() {
+                $(this).parent('div').remove();
+            });
+        });
+    </script>
+</body>
+
 </html>

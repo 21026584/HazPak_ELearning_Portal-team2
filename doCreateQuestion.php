@@ -1,6 +1,15 @@
 <?php
-// php file that contains the common database connection code
-include "dbFunctions.php";
+// Check user session
+include("checkSession.php");
+// Include database connection
+include("dbFunctions.php");
+// Query to fetch assessment details based on the ID
+$query = "SELECT A.assessment_name, A.instructions, A.release_datetime, U.username
+FROM assessments AS A
+INNER JOIN users AS U
+ON U.user_id = A.user_id
+WHERE assessment_id = '$assessmentId'";
+$result = mysqli_query($link, $query) or die(mysqli_error($link));
 
 if ($_POST['quType'] > -1) {
     //Assign data retreived from form to the following variables below respectively to will input statement into SQL to make add in a new assessment into the assessment database

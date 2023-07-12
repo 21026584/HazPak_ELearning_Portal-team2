@@ -40,14 +40,16 @@ $jsonData = json_encode($data);
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="dashboard-style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Google Font Link for Icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
-    <script src="script.js" defer></script>
+  <!-- Google Font Link for Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+  <script src="script.js" defer></script>
   <title>Dashboard</title>
 </head>
 
 <body>
   <?php
+  // Check user session
+  include("checkSession.php");
   // Navbar
   include "navbar.php";
   ?>
@@ -86,15 +88,6 @@ $jsonData = json_encode($data);
         </div>
       </div>
 
-
-  </div>
-  <div class="right_panel">
-    <div class="account">
-      <h4>account</h4>
-      <a>
-        <img id="circle" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
-      </a>
-    </div>
     <div class="wrapper">
       <header>
         <p class="current-date"></p>
@@ -121,15 +114,6 @@ $jsonData = json_encode($data);
     </div>
   </div>
   
-    
-    
-
-
-
-
-
-
-
   <script src="script.js"></script>
   <!-- Add the link for Tippy.js here -->
   <script src="https://unpkg.com/@popperjs/core@2"></script>

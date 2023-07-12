@@ -107,7 +107,7 @@ $jsonData = json_encode($data);
                         title: 'Add',
                         data: null,
                         render: function(data, type, row) {
-                            return '<a href="doAddTrainee.php?user_id=' + row.user_id + '">Add</a>';
+                            return '<a href="AddTrainee.php?user_id=' + row.user_id + '">Add</a>';
                         }
                     }
 
