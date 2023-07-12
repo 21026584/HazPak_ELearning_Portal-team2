@@ -23,6 +23,13 @@ if (isset($_POST['logout'])) {
   exit();
 }
 
+// check if user logins in for the first time
+if ($_SESSION['firstLogin'] == 1) {
+  //redirects them to a separate page to change their password
+  header("Location: changePassword.php");
+  exit;
+}
+
 // Assign session user id to a variable
 $userRoleID = $_SESSION['role_id'];
 ?>
@@ -102,6 +109,7 @@ $userRoleID = $_SESSION['role_id'];
   </ul>
   <?php
   echo 'user_id: ' . $_SESSION['user_id'] . '<br>';
+  echo 'firstLogin: ' . $_SESSION['firstLogin'] . '<br>';
   echo 'role_id: ' . $userRoleID . '<br>';
   echo 'username: ' . $_SESSION['username'];
   ?>

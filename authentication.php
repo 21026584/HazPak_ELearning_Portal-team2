@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         include("dbFunctions.php");
 
         // Query 
-        $query = "SELECT user_id, role_id, username FROM users 
+        $query = "SELECT user_id, role_id, username, firstLogin FROM users 
               WHERE username='$entered_username' AND 
               password = SHA1('$entered_password')";
         $result = mysqli_query($link, $query) or die(mysqli_error($link));
@@ -27,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION['user_id'] = $row['user_id'];
             $_SESSION['role_id'] = $row['role_id'];
             $_SESSION['username'] = $row['username'];
+            $_SESSION['firstLogin'] = $row['firstLogin'];
 
             $msg = "<h3>Succesful login</h3>";
             header("Location: index.php");
@@ -59,6 +60,7 @@ mysqli_close($link);
     echo $_SESSION['user_id'];
     echo $_SESSION['role_id'];
     echo $_SESSION['username'];
+    echo $_SESSION['firstLogin'];
     ?>
 </body>
 
