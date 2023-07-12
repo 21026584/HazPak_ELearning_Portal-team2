@@ -21,6 +21,12 @@
         <br>
         <textarea id="traineeID" name="traineeID" rows="5" cols="30" required></textarea>
         <br>
+
+        <label for="traineeID">Trainee ID:</label>
+        <br>
+        <textarea id="traineeID" name="traineeID" rows="5" cols="30" required></textarea>
+        <br>
+
         <p><label for="intake">Intake:</label></p>
         <textarea id="intake" name="intake" rows="4" cols="50" required></textarea>
         <br>

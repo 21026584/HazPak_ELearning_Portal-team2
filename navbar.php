@@ -49,10 +49,13 @@ $userRoleID = $_SESSION['role_id'];
       </li>
 
 
+
     <?php } else { ?>
       <!-- Check if current page matches navigation item then sets class to active -->
 
       
+
+
     <li <?php if ($currentPage == 'grades.php') {
             echo 'class="custom-nav-item-active"';
           } else {
