@@ -1,9 +1,9 @@
 <?php
 include("dbFunctions.php");
 
-$query = "SELECT U.user_id, U.username, U.intake
+$query = "SELECT U.user_id, U.username, U.intake, U.role_id
     FROM users AS U
-    WHERE role_id=2";
+    WHERE role_id = 2";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
 // Initialise values
@@ -63,6 +63,7 @@ $jsonData = json_encode($data);
                             <td>Student Name</td>
                             <td>Intake</td>
                             <td>Add</td>
+                            <td>Edit</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -107,7 +108,14 @@ $jsonData = json_encode($data);
                         title: 'Add',
                         data: null,
                         render: function(data, type, row) {
-                            return '<a href="doAddTrainee.php?user_id=' + row.user_id + '">Add</a>';
+                            return '<a href="AddTrainee.php?user_id=' + row.user_id + '">Add</a>';
+                        }
+                    },
+                    {
+                        title: 'Edit',
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<a href="EditTrainee.php?user_id=' + row.user_id + '">Edit</a>';
                         }
                     }
 
