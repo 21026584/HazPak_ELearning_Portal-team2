@@ -27,7 +27,7 @@ if (!empty($_POST['name']) && !empty($_POST['instruction']) && !empty($_POST['ti
         $message = "Assessment created failed.";
     }
 } else {
-    $message = "All Assessment details have to be provided.";
+    $message = "All Assessment details have to be provided. <a href='createAssessment.php'>Return</a>";
 }
 
 // Closes the Database conection 
@@ -39,6 +39,7 @@ mysqli_close($link);
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+    <link rel="stylesheet" href="style.css">
     <title>Create Assessment</title>
 </head>
 
