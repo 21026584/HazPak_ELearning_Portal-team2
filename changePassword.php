@@ -1,3 +1,6 @@
+<?php
+    include("checkSession.php");
+?>
 <!DOCTYPE html>
 <html>
 
@@ -15,13 +18,13 @@
 
             <form action="updatingPassword.php" method="POST" class="Forms">
                 <div class="input-container">
-                    <input placeholder="Enter new Password" class="input-field" type="password" id="passwordA" name="passwordA" required>
+                    <input placeholder="Enter new Password" class="input-field" type="password" id="passwordA" name="passwordA" required maxlength="6">
                     <label for="passwordA" class="input-label">Password</label>
                     <span class="input-highlight"></span>
                 </div>
 
                 <div class="input-container">
-                    <input placeholder="Reconfirm new password" class="input-field" type="password" id="passwordB" name="passwordB" required>
+                    <input placeholder="Reconfirm new password" class="input-field" type="password" id="passwordB" name="passwordB" required maxlength="6">
                     <span class="input-highlight"></span>
                 </div>
                 <input type="submit" value="Submit" class="submit-button">

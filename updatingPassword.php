@@ -7,8 +7,8 @@ $newPassA = $_POST['passwordA'];
 $newPassB = $_POST['passwordB'];
 //opens up database for website to access
 include("dbFunctions.php");
-
-// Check if post from login page else bring back to changePassword page
+include("checkSession.php");
+// Check if post from changePassword page else bring back to changePassword page
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //checks if passwords are the exact same else brink back to changePassword page
 
@@ -26,16 +26,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             header("Location: index.php");
             exit;
         } else {
-            echo "Tere is an error";
+            echo "There was an error during the SQL phase to change password";
         }
         
     } else {
-        echo "There is an error";
+        echo "The entered password are not similar";
     }
 } else {
     // header("Location: changePassword.php");
     // exit;
-    echo "There more an error";
+    echo "There is an error with the post form inputs";
+    header("Location: changePassword.php");
+    exit();
 }
 
 // Close database connection
