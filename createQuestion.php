@@ -8,18 +8,26 @@ $query = "SELECT * FROM question_type";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 while ($row = mysqli_fetch_assoc($result)) {
     $questionArr[] = $row;
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // Retrieve the answer options from the form
-        $question_type_id = $_POST['questionType'];
-        $question_text = $_POST['inputText'];
-        $answer_options = $_POST['inputOptions'];
+}
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Retrieve the image file data
+    $image = $_FILES["image"]["tmp_name"];
 
-        // Convert the array to a JSON string
-        $jsonAnswerOptions = json_encode($answer_options);
+    // Read the image file content
+    $question_image = addslashes(file_get_contents($image));
 
-        // Prepare and execute the query
-        $questionQuery = "INSERT INTO question_bank (question_type_id, question_text, answer_options, question_answer VALUES ('$question_type_id', '$question_text', '$jsonAnswerOptions')";
-    }
+    // Retrieve form data
+    $question_type_id = $_POST['questionType'];
+    $question_text = $_POST['questionText'];
+    $question_answer = $_POST['questionAnswer'];
+    $answer_options = $_POST['inputField'];
+
+    // Convert the answer_options array to a JSON string
+    $answer_options_JSON = json_encode($answer_options);
+
+    $questionQuery = "INSERT INTO questions (question_type_id, question_text, question_answer, answer_options, question_image) VALUES ('$question_type_id', '$question_text', '$question_answer', '$answer_options_JSON', '$question_image')";
+    $questionResult = mysqli_query($link, $questionQuery) or die(mysqli_error($link));
 }
 mysqli_close($link);
 ?>
@@ -27,7 +35,6 @@ mysqli_close($link);
 <html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="stylesheets/style.css" rel="stylesheet" type="text/css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -35,10 +42,9 @@ mysqli_close($link);
 </head>
 
 <body>
-    <h1>Create Question</h1>
-    <div>Choose the question type</div>
     <form id="questionForm" class="questionForm" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-        <select id='questionType' name='questionType'>
+        <label for="questionType">Question Type:</label>
+        <select id="questionType" name="questionType" onchange="changeQuestionType()">
             <?php
             for ($i = 0; $i < count($questionArr); $i++) {
                 $name = $questionArr[$i]['type_name'];
@@ -47,69 +53,112 @@ mysqli_close($link);
             }
             ?>
         </select>
-        <div id="questionDetails" class="question-root-details">
-            <br><br>
-            <div class="form-group" id="inputFields">
-                <label for="inputText" id='inputText'>Question Text:</label><br>
-                <textarea class="inputText" name="inputText"></textarea><br><br>
-                <label for="inputOptions" id='inputOptionsLabel'><?php echo $questionArr[0]['type_name']; ?> Options:</label><br>
-                <input id='inputOptions' type="text" class="inputOptions" name="inputOptions[]" />
-                <input type="radio" name="answer" value="0"><br>
-                <input id='inputOptions' type="text" class="inputOptions" name="inputOptions[]" />
-                <input type="radio" name="answer" value="1"><br>
+        <br>
+        <textarea class="inputText" name="questionText"></textarea>
+        <br>
+        <button type="button" onclick="addInputField()">Add Field</button>
+        <br>
+        <div id="inputFieldsContainer">
+            <!-- The dynamically created input fields will be appended here -->
+            <input type="file" name="imageFiles[]" accept="image/*" multiple>
+            <div class="field-container">
+                <input type="text" name="inputField[]" placeholder="Enter option">
+                <input type="radio" name="selectedField" value="inputField0">
             </div>
-            <button type="button" id="addField">Add new option</button>
-            <br><br>
-            <label for="myFile">Files:</label>
-            <input type="file" id="myFile" name="filename">
-            <br><br>
-            <button type="submit" name="submit">Submit</button>
+            <div class="field-container">
+                <input type="text" name="inputField[]" placeholder="Enter option">
+                <input type="radio" name="selectedField" value="inputField1">
+            </div>
         </div>
+        <button type="submit">Submit</button>
     </form>
 
     <script>
         function redirectToPage(url) {
             window.location.href = url;
         }
-        $(document).ready(function() {
-            // Update form content based on the selected dropdown option
-            $("#questionType").change(function() {
-                var selectedOption = $(this).val();
-                var inputFieldLabel = "";
-                var inputFieldType = "";
 
-                if (selectedOption == 0) {
-                    inputFieldLabel = "<?php echo $questionArr[0]['type_name']; ?>";
-                    inputFieldType = "text";
-                } else if (selectedOption == 1) {
-                    inputFieldLabel = "<?php echo $questionArr[1]['type_name']; ?>";
-                    inputFieldType = "text";
-                } else if (selectedOption == 2) {
-                    inputFieldLabel = "<?php echo $questionArr[2]['type_name']; ?>";
-                    inputFieldType = "text";
-                }
+        let currentQuestionType = '<?php echo $questionArr[0]['type_id'] ?>'; // Default question type
 
-                // Reset input options
-                var inputField = document.getElementById("inputOptions");
-                inputField.innerHTML = '<input id="inputOptions" type="text" type="text" class="inputOptions" name="inputOptions[]"/><input type="radio" name="answer"><br>';
+        function changeQuestionType() {
+            const inputFieldsContainer = document.getElementById("inputFieldsContainer");
 
-                // Set label name
-                var inputFieldLabelText = document.getElementById("inputOptionsLabel");
-                inputFieldLabelText.innerHTML = inputFieldLabel + ' Options:';
-            });
+            // Clear the container
+            inputFieldsContainer.innerHTML = '';
 
-            // Add new input field
-            $("#addField").click(function() {
-                var questionType = $("#questionType").val();
-                var inputFieldHtml = '<div><input type="text" name="inputOptions[]" placeholder=""><input type="radio" name="answer"><button type="button" class="removeField">Remove</button></div>';
-                $("#inputFields").append(inputFieldHtml);
-            });
+            // Get the selected question type
+            const questionTypeSelect = document.getElementById("questionType");
+            const selectedQuestionType = questionTypeSelect.value;
 
-            // Remove the selected input field
-            $(document).on("click", ".removeField", function() {
-                $(this).parent('div').remove();
-            });
-        });
+            if (selectedQuestionType == '<?php echo $questionArr[0]['type_id'] ?>') { // Multiple Choice
+                inputFieldsContainer.innerHTML += '<input type="file" name="imageFiles[]" accept="image/*" multiple>'; // Image upload
+
+                inputFieldsContainer.innerHTML += '<div class="field-container">'; // Input field container
+                inputFieldsContainer.innerHTML += '<input type="text" name="inputField[]" placeholder="Enter option" required>'; // Input field
+                inputFieldsContainer.innerHTML += '<input type="radio" name="selectedField" value="inputField0">'; // Radio button
+                inputFieldsContainer.innerHTML += '</div>';
+
+                inputFieldsContainer.innerHTML += '<div class="field-container">'; // Input field container
+                inputFieldsContainer.innerHTML += '<input type="text" name="inputField[]" placeholder="Enter option" required>'; // Input field
+                inputFieldsContainer.innerHTML += '<input type="radio" name="selectedField" value="inputField1">'; // Radio button
+                inputFieldsContainer.innerHTML += '</div>';
+            } else if (selectedQuestionType === '<?php echo $questionArr[1]['type_id'] ?>') { // Fill in the blank
+                inputFieldsContainer.innerHTML = '<input type="file" name="imageFiles[]" accept="image/*" multiple><div class="field-container"><input type="text" name="inputField[]" placeholder="Enter option" required><input type="radio" name="selectedField" value="inputField0"></div><div class="field-container"><input type="text" name="inputField[]" placeholder="Enter option" required><input type="radio" name="selectedField" value="inputField1"></div>';
+            } else if (selectedQuestionType === '<?php echo $questionArr[2]['type_id'] ?>') {
+                inputFieldsContainer.innerHTML = '<input type="file" name="imageFiles[]" accept="image/*" multiple><div class="field-container"><input type="text" name="inputField[]" placeholder="Enter option" required><input type="radio" name="selectedField" value="inputField0"></div><div class="field-container"><input type="text" name="inputField[]" placeholder="Enter option" required><input type="radio" name="selectedField" value="inputField1"></div>';
+            }
+
+            // Update the current question type
+            currentQuestionType = selectedQuestionType;
+        }
+
+        let fieldCounter = 2; // Counter for unique field IDs
+
+        function addInputField() {
+            const inputFieldsContainer = document.getElementById("inputFieldsContainer");
+
+            // Create a new input field container
+            const fieldContainer = document.createElement("div");
+            fieldContainer.id = "fieldContainer" + fieldCounter;
+            fieldContainer.classList.add("field-container");
+
+            // Create the input field
+            const inputField = document.createElement("input");
+            inputField.type = "text";
+            inputField.name = "inputField";
+            inputField.id = "inputField" + fieldCounter;
+            inputField.placeholder = "Enter option";
+
+            // Create the radio button
+            const radioButton = document.createElement("input");
+            radioButton.type = "radio";
+            radioButton.name = "selectedField";
+            radioButton.value = "inputField" + fieldCounter;
+
+            // Create the remove button
+            const removeButton = document.createElement("button");
+            removeButton.type = "button";
+            removeButton.textContent = "Remove";
+            removeButton.onclick = function() {
+                removeInputField(fieldContainer.id);
+            };
+
+            // Append the input field, radio button, and remove button to the field container
+            fieldContainer.appendChild(inputField);
+            fieldContainer.appendChild(radioButton);
+            fieldContainer.appendChild(removeButton);
+
+            // Append the field container to the input fields container
+            inputFieldsContainer.appendChild(fieldContainer);
+
+            fieldCounter++;
+        }
+
+        function removeInputField(fieldContainerId) {
+            const fieldContainer = document.getElementById(fieldContainerId);
+            fieldContainer.remove();
+            fieldCounter--;
+        }
     </script>
 </body>
 
