@@ -18,10 +18,10 @@ if (mysqli_num_rows($result) > 0) {
     while ($row = $result->fetch_assoc()) {
         // Add each row to the data array
         $data[] = $row;
-        $assessmentName = $row["A.assessment_name"];
-        $assessmentRelease = $row["A.release_datetime"];
-        $exerciseName = $row["E.exercise_name"];
-        $exerciseRelease = $row["E.release_datetime"];
+        $assessmentName = $row["assessment_name"];
+        $assessmentRelease = $row["release_datetime"];
+        $exerciseName = $row["exercise_name"];
+        $exerciseRelease = $row["release_datetime"];
     }
 }
 

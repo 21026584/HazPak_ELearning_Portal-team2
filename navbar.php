@@ -16,7 +16,7 @@ if (isset($_POST['logout'])) {
 if ($_SESSION['firstLogin'] == 1) {
   //redirects them to a separate page to change their password
   header("Location: changePassword.php");
-  exit;
+  exit();
 }
 
 // Assign session user id to a variable
