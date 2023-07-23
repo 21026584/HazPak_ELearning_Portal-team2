@@ -1,4 +1,5 @@
 <?php
+include("checkSession.php");
 include("dbFunctions.php");
 
 $query = "SELECT U.user_id, U.username, U.intake, U.role_id
@@ -36,7 +37,9 @@ $jsonData = json_encode($data);
     
     <title>Courses</title>
 </head>
-
+<style>
+    
+    </style>
 <body>
     <?php
     // Navbar
@@ -53,6 +56,20 @@ $jsonData = json_encode($data);
                 <button id="Add_Button">Add student button</button>
             </div>
 
+            <div class="w3-container">
+  <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black">Add Student</button>
+
+  <div id="id01" class="w3-modal">
+    <div class="w3-modal-content">
+      <div class="w3-container">
+        <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+        <p>Some text. Some text. Some text.</p>
+        <p>Some text. Some text. Some text.</p>
+      </div>
+    </div>
+  </div>
+</div>
+        
             <!-- Datatable -->
             <main class="tableMain">
                 <table id='exerciseTable' class="display table-striped">
@@ -62,7 +79,6 @@ $jsonData = json_encode($data);
                             <td>Student ID</td>
                             <td>Student Name</td>
                             <td>Intake</td>
-                            <td>Add</td>
                             <td>Edit</td>
                         </tr>
                     </thead>
@@ -105,13 +121,6 @@ $jsonData = json_encode($data);
                         data: 'intake'
                     },
                     {
-                        title: 'Add',
-                        data: null,
-                        render: function(data, type, row) {
-                            return '<a href="AddTrainee.php?user_id=' + row.user_id + '">Add</a>';
-                        }
-                    },
-                    {
                         title: 'Edit',
                         data: null,
                         render: function(data, type, row) {
@@ -122,6 +131,44 @@ $jsonData = json_encode($data);
                 ]
             });
         });
+
+
+
+
+        function redirectToPage(url) {
+            window.location.href = url;
+        }
+
+                // Get the modal
+        var modal = document.getElementById("id01");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("id01");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal 
+        btn.onclick = function() {
+        modal.style.display = "block";
+        
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+        modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+        }
+
+
+
+
        
     </script>
 </body>
