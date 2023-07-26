@@ -1,20 +1,3 @@
-<html>
-<style>
-  
-  .logout{
-        background-color: #4CAF50;
-        border: none;
-        color: white;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
-      }
-  </style>
-</html>
 
 
 <?php
@@ -127,9 +110,10 @@ $userRoleID = $_SESSION['role_id'];
 
     <!-- TEMPORARY LOG OUT -->
     <li class="custom-nav-item">
-      <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-        <input type="submit" name="logout" value="Log Out">
-      </form>
+       <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+         <input type="submit" class="button" name="logout" value="Log Out">
+  
+      </form> 
     </li>
   </ul>
   <?php
@@ -141,3 +125,26 @@ $userRoleID = $_SESSION['role_id'];
 </div>
 
 <div style='margin-left: 280px; width:100%'>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<style>
+  .button{
+        background-color: #f44336;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+</style>
