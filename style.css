@@ -492,3 +492,13 @@ body {
   .myChart{
     width:20%
   }
+
+  .question-table{
+    width: 75vw !important;
+    margin-left: 0 !important;
+  }
+
+  .tableMain{
+    width: 75vw;
+    overflow: hidden;
+  }
