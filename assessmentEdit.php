@@ -21,7 +21,7 @@ $resultItem = mysqli_query($link, $queryItem) or
 $rowItem = mysqli_fetch_array($resultItem);
 
 //Getting the questions from json file
-$question =  json_decode($rowItem['questions']);
+$questionArr =  json_decode($rowItem['questions'], true);
 
 //getting the course id
 $query = "SELECT * FROM courses";
@@ -45,6 +45,8 @@ mysqli_close($link);
     <h3>Edit Assessment</h3>
 
     <form id="postForm" method="post" action="doAssessmentEdit.php">
+        <!-- Ensure that assessment ID is carried over -->
+        <input type="hidden" name="idAssessment" value="<?php echo $rowItem['assessment_id'] ?>"/>
         <label for="idName">Assessment Name:</label>
         <input type="text" id="idName" name="name" value="<?php echo $rowItem['assessment_name']?>" required />
         <br><br>
@@ -73,8 +75,15 @@ mysqli_close($link);
         <input type="datetime-local" id="idTime" name="time" value="<?php echo $rowItem['release_datetime']?>" required />
         <p><label for="inputQuestion">Questions:</label></p>
         <div class="form-group" id="inputQuestion">
-                <input id='questionID' type="text" class="questionID" name="inputQuestion[]" placeholder="Enter Question ID" required/>
-            </div>
+            <input id='questionID' type="text" class="questionID" name="inputQuestion[]" placeholder="Enter Question ID" value="<?php echo $questionArr[0]?>" required/>
+            <?php
+                for ($i = 1; $i < count($questionArr); $i++) {
+                    ?>
+                    <div><input type="text" name="inputQuestion[]" placeholder="Enter Question ID" value="<?php echo $questionArr[$i]; ?>" required><button type="button" class="removeField">Remove</button></div>
+                    <?php
+                }
+            ?>
+        </div>
             <button type="button" id="addField">Add new questions</button>
             <br>
         <br><br>
