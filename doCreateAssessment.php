@@ -62,7 +62,8 @@
     </head>
 
     <body>
-        <h3>Create Assessment</h3>
+        <p> Create more <a href="createAssessment.php" class="custom-nav-link">Assessments</a>?</p>
+        <p> Return to <a href="assessment.php" class="custom-nav-link">Assessments</a> page?</p>
     </body>
 
 </html>

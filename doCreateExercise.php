@@ -1,58 +1,69 @@
 <?php
-// Check user session
-include("checkSession.php");
+    // php file that contains the common database connection code
+    include "dbFunctions.php";
+    // Check user session
+    include("checkSession.php");
+    // Navbar
+    include "navbar.php";
+
+
+    if (!empty($_POST['name']) && !empty($_POST['instruction']) && !empty($_POST['time']) && !empty($_POST['inputQuestion'])&& !empty($_POST['idCourse'])) {
+        
+        try {
+            $conn = new PDO("mysql:host=$host;dbname=$database", $username, $password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            echo "Connection failed: " . $e->getMessage();
+        }
+
+        try {
+            // Assume $foreign_key_value is the foreign key value you want to use
+            $foreign_key_value = $_SESSION['user_id'];; 
+        
+            // Prepare the SQL statement
+            $stmt = $conn->prepare("INSERT INTO exercises (course_id, exercise_name, instructions, release_datetime, user_id, questions) VALUES (:value0, :value1, :value2, :value3, :foreign_key, :value4)");
+        
+            // Bind parameters
+            //Assign data retreived from form to the following variables below respectively to will input statement into SQL to make add in a new assessment into the assessment database
+            $name = $_POST['name'];
+            $instructions = $_POST['instruction'];
+            $time = $_POST['time'];
+            $course = $_POST['idCourse'];
+            $userID = $_SESSION['user_id'];
+            $questions = $_POST['inputQuestion'];
+            $question_JSON = json_encode($questions);
+            $stmt->bindParam(':value0', $course);
+            $stmt->bindParam(':value1', $name);
+            $stmt->bindParam(':value2', $instructions);
+            $stmt->bindParam(':value3', $time);
+            $stmt->bindParam(':value4', $question_JSON);
+            $stmt->bindParam(':foreign_key', $foreign_key_value);
+        
+            // Execute the query
+            $stmt->execute();
+        
+            echo "Exercise inserted successfully!";
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+    // Closes the Database conection 
+    mysqli_close($link);
 ?>
 <!DOCTYPE HTML>
 <html>
+
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <title>Create Exercise</title>
     </head>
-    <body>
-        <?php
-        session_start();
 
-        if (!isset($_SESSION['user_id'])) {
-            header("location: login.php"); // auto redirect to login.php if user is not login in
-        }
-        
-        $userID = $_SESSION['user_id'];
-        
-        // php file that contains the common database connection code
-        include "dbFunctions.php";
-        
-        if (!empty($_POST['name']) && !empty($_POST['instruction']) && !empty($_POST['time']) && !empty($_POST['question'])) 
-        {
-            //Assign data retreived from form to the following variables below respectively to will input statement into SQL to make add in a new assessment into the assessment database
-            $ExName =$_POST['name'];
-            $ExIncstru = $_POST['instruction'];
-            $ExTime = $_POST['time'];
-            $ExQuestion = $_POST['question'];
-        
-            //unclear about the assessment id and course id for now.
-            $sql = "INSERT INTO exercises (exercise_name, instructions, release_datetime, user_id, questions) 
-                    VALUES ('$ExName', '$ExIncstru', '$ExTime', $userID, '$ExQuestion')";
-            
-            // Executes the SQL statement above to input it into database
-            $status = mysqli_query($link, $sql) or die(mysqli_error($link));
-            
-            if ($status) {
-                $message = "Exercise created successfully.";
-            } else {
-                $message = "Exercise created failed.";
-            }
-        } else {
-                $message = "All Exercise details have to be provided.";
-        }
-        
-        // Closes the Database conection 
-        mysqli_close($link);
-        include "navbar.php" 
-        ?>
-        <h3>Create Exercise</h3>
-        <p>
-            <?php echo $message; ?>
-        </p>
+    <body>
+        <p> Create more <a href="createExercise.php" class="custom-nav-link">Exercises</a>?</p>
+        <p> Return to <a href="exercises.php" class="custom-nav-link">Exercise</a> page?</p>
     </body>
+
 </html>

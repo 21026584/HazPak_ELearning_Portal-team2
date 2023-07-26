@@ -11,13 +11,6 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
 while ($row = mysqli_fetch_assoc($result)) {
     $course[] = $row;
 }
-
-// Creating an array so that question added will be recorded and placed into the SQL assessment datatable
-// $arr = array('a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5);
-
-// echo json_encode($arr);
-
-// $questions = array();
 ?>
 <!DOCTYPE html>
 <html>
@@ -80,20 +73,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         $(document).on("click", ".removeField", function() {
             $(this).parent('div').remove();
         });
-        // const questionList = [];
-        // var nameValue = document.getElementById("inputQuestion").value;
-        // questionList.push();
-        // document.getElementById("demo2").innerHTML = questionList;       
-    //     public function addQuestion($array, int $id) {
-    //         if (isset($_SESSION[$array])) {
-    //             $_SESSION[$array][] = array(
-    //                 'id' => $id
-    //             );
-    //             return true;
-    //         }
-    //         return false;
-    //     }      
-    // </script>
+       </script>
 </body>
 
 </html>
