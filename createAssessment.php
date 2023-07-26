@@ -1,6 +1,16 @@
 <?php
+// php file that contains the common database connection code
+include "dbFunctions.php";
 // Check user session
 include("checkSession.php");
+// Navbar
+include "navbar.php";
+
+$query = "SELECT * FROM courses";
+$result = mysqli_query($link, $query) or die(mysqli_error($link));
+while ($row = mysqli_fetch_assoc($result)) {
+    $course[] = $row;
+}
 
 // Creating an array so that question added will be recorded and placed into the SQL assessment datatable
 // $arr = array('a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5);
@@ -31,7 +41,14 @@ include("checkSession.php");
         <input type="text" id="idName" name="name" required />
         <br><br>
         <label for="idCourse">Course:</label>
-        <input type="text" id="idCourse" name="coures" required />
+        <select id="idCourse" name="idCourse" required>
+            <?php
+            for ($i = 0; $i < count($course); $i++) {
+                $selectCourse = $course[$i]['course_id'];
+                echo "<option>$selectCourse</option>";
+            }
+            ?>
+        </select>
         <br><br>
         <label for="idInstuc">Instructions:</label>
         <br>
@@ -41,8 +58,8 @@ include("checkSession.php");
         <br>
         <input type="datetime-local" id="idTime" name="time" required />
         <p><label for="inputQuestion">Questions:</label></p>
-        <div class="form-group" id="inputFields">
-                <input id='inputQuestion' type="text" class="inputQuestion" name="inputQuestion[]" placeholder="Enter Question ID" required/>
+        <div class="form-group" id="inputQuestion">
+                <input id='questionID' type="text" class="questionID" name="inputQuestion[]" placeholder="Enter Question ID" required/>
             </div>
             <button type="button" id="addField">Add new questions</button>
             <br>
@@ -56,7 +73,7 @@ include("checkSession.php");
         $("#addField").click(function() {
             var questionType = $("#questionType").val();
             var inputFieldHtml = '<div><input type="text" name="inputQuestion[]" placeholder="Enter Question ID" required><button type="button" class="removeField">Remove</button></div>';
-            $("#inputFields").append(inputFieldHtml);
+            $("#inputQuestion").append(inputFieldHtml);
         });
 
         // Remove the selected input field
