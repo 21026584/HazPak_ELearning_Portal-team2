@@ -494,6 +494,16 @@ body {
     width:20%
   }
 
+  .question-table{
+    width: 75vw !important;
+    margin-left: 0 !important;
+  }
+
+  .tableMain{
+    width: 75vw;
+    overflow: hidden;
+  }
+
   .questionForm{
     width: 100%;
     padding: 12px 20px;

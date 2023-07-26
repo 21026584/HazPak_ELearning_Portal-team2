@@ -6,11 +6,14 @@ include("checkSession.php");
 // Navbar
 include "navbar.php";
 
+//getting the course id
 $query = "SELECT * FROM courses";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 while ($row = mysqli_fetch_assoc($result)) {
     $course[] = $row;
 }
+
+mysqli_close($link);
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,9 +27,6 @@ while ($row = mysqli_fetch_assoc($result)) {
 </head>
 
 <body>
-    <?php
-    include "navbar.php"
-    ?>
     <h3>Create Assessment</h3>
 
     <form id="postForm" method="post" action="doCreateAssessment.php">
@@ -59,7 +59,6 @@ while ($row = mysqli_fetch_assoc($result)) {
         <br><br>
         <input type="submit" value="Create" />
     </form>
-    <p id="demo2"></p>
 
     <script>
     // Add new input question field
@@ -73,7 +72,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         $(document).on("click", ".removeField", function() {
             $(this).parent('div').remove();
         });
-       </script>
+    </script>
 </body>
 
 </html>

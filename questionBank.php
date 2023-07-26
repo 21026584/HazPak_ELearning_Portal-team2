@@ -108,6 +108,7 @@ mysqli_close($link);
                         <br>
                         <br>
                         <textarea class="inputText" name="questionText"></textarea>
+                        <textarea class="inputText" name="questionText" required></textarea>
                         <br>
                         <button type="button" class="questionFormButton"  onclick="addInputField()">Add Field</button>
                         <br>
@@ -116,12 +117,12 @@ mysqli_close($link);
                             <input type="file" name="image" accept="image/*">
                             <br>
                             <div id="fieldContainer0" class="field-container">
-                                <input type="text" name="inputField[]" placeholder="Enter option">
-                                <input type="radio" name="selectedField" value="0">
+                                <input type="text" name="inputField[]" placeholder="Enter option" required>
+                                <input type="radio" name="selectedField" value="0" required>
                             </div>
                             <div id="fieldContainer1" class="field-container">
-                                <input type="text" name="inputField[]" placeholder="Enter option">
-                                <input type="radio" name="selectedField" value="1">
+                                <input type="text" name="inputField[]" placeholder="Enter option" required>
+                                <input type="radio" name="selectedField" value="1" required>
                             </div>
                         </div>
                         <br>
@@ -131,7 +132,7 @@ mysqli_close($link);
             </div>
             <!-- Datatable -->
             <main class="tableMain">
-                <table id='exerciseTable' class="display table-striped">
+                <table id='exerciseTable' class="display table-striped question-table">
                     <thead class="table-header">
                         <tr>
                             <!-- Headers -->
@@ -246,36 +247,36 @@ mysqli_close($link);
 
                 inputFieldsContainer.innerHTML += '<div id="fieldContainer0" class="field-container">'; // Input field container
                 inputFieldsContainer.innerHTML += '<input type="text" name="inputField[]" placeholder="Enter option" required>'; // Input field
-                inputFieldsContainer.innerHTML += '<input type="radio" name="selectedField" value="0">'; // Radio button
+                inputFieldsContainer.innerHTML += '<input type="radio" name="selectedField" value="0" required>'; // Radio button
                 inputFieldsContainer.innerHTML += '</div>';
 
                 inputFieldsContainer.innerHTML += '<div id="fieldContainer1" class="field-container">'; // Input field container
                 inputFieldsContainer.innerHTML += '<input type="text" name="inputField[]" placeholder="Enter option" required>'; // Input field
-                inputFieldsContainer.innerHTML += '<input type="radio" name="selectedField" value="1">'; // Radio button
+                inputFieldsContainer.innerHTML += '<input type="radio" name="selectedField" value="1" required>'; // Radio button
                 inputFieldsContainer.innerHTML += '</div>';
             } else if (selectedQuestionType === '<?php echo $questionArr[1]['type_id'] ?>') { // Fill in the blank
                 inputFieldsContainer.innerHTML += '<input type="file" name="image" accept="image/*">'; // Image upload
 
                 inputFieldsContainer.innerHTML += '<div id="fieldContainer0" class="field-container">'; // Input field container
                 inputFieldsContainer.innerHTML += '<input type="text" name="inputField[]" placeholder="Enter option" required>'; // Input field
-                inputFieldsContainer.innerHTML += '<input type="radio" name="selectedField" value="0">'; // Radio button
+                inputFieldsContainer.innerHTML += '<input type="radio" name="selectedField" value="0" required>'; // Radio button
                 inputFieldsContainer.innerHTML += '</div>';
 
                 inputFieldsContainer.innerHTML += '<div id="fieldContainer1" class="field-container">'; // Input field container
                 inputFieldsContainer.innerHTML += '<input type="text" name="inputField[]" placeholder="Enter option" required>'; // Input field
-                inputFieldsContainer.innerHTML += '<input type="radio" name="selectedField" value="1">'; // Radio button
+                inputFieldsContainer.innerHTML += '<input type="radio" name="selectedField" value="1" required>'; // Radio button
                 inputFieldsContainer.innerHTML += '</div>';
             } else if (selectedQuestionType === '<?php echo $questionArr[2]['type_id'] ?>') {
                 inputFieldsContainer.innerHTML += '<input type="file" name="image" accept="image/*">'; // Image upload
 
                 inputFieldsContainer.innerHTML += '<div id="fieldContainer0" class="field-container">'; // Input field container
                 inputFieldsContainer.innerHTML += '<input type="text" name="inputField[]" placeholder="Enter option" required>'; // Input field
-                inputFieldsContainer.innerHTML += '<input type="radio" name="selectedField" value="0">'; // Radio button
+                inputFieldsContainer.innerHTML += '<input type="radio" name="selectedField" value="0" required>'; // Radio button
                 inputFieldsContainer.innerHTML += '</div>';
 
                 inputFieldsContainer.innerHTML += '<div id="fieldContainer1" class="field-container">'; // Input field container
                 inputFieldsContainer.innerHTML += '<input type="text" name="inputField[]" placeholder="Enter option" required>'; // Input field
-                inputFieldsContainer.innerHTML += '<input type="radio" name="selectedField" value="1">'; // Radio button
+                inputFieldsContainer.innerHTML += '<input type="radio" name="selectedField" value="1" required>'; // Radio button
                 inputFieldsContainer.innerHTML += '</div>';
             }
 
@@ -298,12 +299,14 @@ mysqli_close($link);
             inputField.type = "text";
             inputField.name = "inputField[]";
             inputField.placeholder = "Enter option";
+            inputField.required = true;
 
             // Create the radio button
             const radioButton = document.createElement("input");
             radioButton.type = "radio";
             radioButton.name = "selectedField";
             radioButton.value = fieldCounter;
+            radioButton.required = true;
 
             // Create the remove button
             const removeButton = document.createElement("button");
