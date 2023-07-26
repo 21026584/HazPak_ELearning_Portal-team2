@@ -38,8 +38,14 @@ $jsonData = json_encode($data);
     <title>Courses</title>
 </head>
 <style>
-    
-    </style>
+.tableMain{
+    width: 110%;
+}
+
+body{
+    position: fixed;
+}
+</style>
 <body>
     <?php
     // Navbar
@@ -52,9 +58,9 @@ $jsonData = json_encode($data);
             <header class='tableHeader'>
                 <h1>Courses</h1>
             </header>
-            <div class="assessmentButtonContainer">
+<!--             <div class="assessmentButtonContainer">
                 <button id="Add_Button">Add student button</button>
-            </div>
+            </div> -->
 
             <div class="w3-container">
   <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black">Add Student</button>
@@ -63,7 +69,6 @@ $jsonData = json_encode($data);
     <div class="w3-modal-content">
       <div class="w3-container">
         <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-        <p>Some text. Some text. Some text.</p>
         <p>Some text. Some text. Some text.</p>
       </div>
     </div>
@@ -79,6 +84,7 @@ $jsonData = json_encode($data);
                             <td>Student ID</td>
                             <td>Student Name</td>
                             <td>Intake</td>
+                            <td>Add</td>
                             <td>Edit</td>
                         </tr>
                     </thead>
@@ -119,6 +125,13 @@ $jsonData = json_encode($data);
                     {
                         title: 'Intake',
                         data: 'intake'
+                    },
+                    {
+                        title: 'Add',
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<a href="AddTrainee.php?user_id=' + row.user_id + '">Add</a>';
+                        }
                     },
                     {
                         title: 'Edit',

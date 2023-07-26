@@ -1,5 +1,10 @@
+<?php
+    include("checkSession.php");
+    ?>
+
 <!DOCTYPE html>
 <html>
+
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -9,7 +14,7 @@
 
 <body>
     <?php
-    include "navbar.php"
+    include "navbar.php";
     ?>
     <h3>Add trainee</h3>
 
