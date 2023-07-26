@@ -20,6 +20,9 @@ $resultItem = mysqli_query($link, $queryItem) or
 // fetch the execution result to an array
 $rowItem = mysqli_fetch_array($resultItem);
 
+//Getting the questions from json file
+$question =  json_decode($rowItem['questions']);
+
 //getting the course id
 $query = "SELECT * FROM courses";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
@@ -41,7 +44,7 @@ mysqli_close($link);
     <body>
     <h3>Edit Assessment</h3>
 
-    <form id="postForm" method="post" action="doCreateAssessment.php">
+    <form id="postForm" method="post" action="doAssessmentEdit.php">
         <label for="idName">Assessment Name:</label>
         <input type="text" id="idName" name="name" value="<?php echo $rowItem['assessment_name']?>" required />
         <br><br>
@@ -75,9 +78,9 @@ mysqli_close($link);
             <button type="button" id="addField">Add new questions</button>
             <br>
         <br><br>
-        <input type="submit" value="Create" />
+        <input type="submit" value="Finish Edit" />
     </form>
-
+    
     <script>
     // Add new input question field
         $("#addField").click(function() {
