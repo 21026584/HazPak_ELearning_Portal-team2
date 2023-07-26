@@ -181,6 +181,7 @@ body {
     margin-top: 2em;
     margin-bottom: 6em;
     height: 100%;
+
 }
 
 /* CSS Styles for Assessment Button Container */
@@ -491,4 +492,14 @@ body {
 
   .myChart{
     width:20%
+  }
+
+  .question-table{
+    width: 75vw !important;
+    margin-left: 0 !important;
+  }
+
+  .tableMain{
+    width: 75vw;
+    overflow: hidden;
   }

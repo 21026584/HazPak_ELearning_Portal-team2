@@ -127,7 +127,7 @@ mysqli_close($link);
             </div>
             <!-- Datatable -->
             <main class="tableMain">
-                <table id='exerciseTable' class="display table-striped">
+                <table id='exerciseTable' class="display table-striped question-table">
                     <thead class="table-header">
                         <tr>
                             <!-- Headers -->
