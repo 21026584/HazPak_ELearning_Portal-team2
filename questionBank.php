@@ -107,7 +107,6 @@ mysqli_close($link);
                         </select>
                         <br>
                         <br>
-                        <textarea class="inputText" name="questionText"></textarea>
                         <textarea class="inputText" name="questionText" required></textarea>
                         <br>
                         <button type="button" class="questionFormButton"  onclick="addInputField()">Add Field</button>
