@@ -20,6 +20,7 @@ FROM question_bank AS QB
 ORDER BY question_type_id ASC";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 ?>
+
 <!DOCTYPE html>
 <html>
 

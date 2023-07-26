@@ -9,10 +9,10 @@
 </head>
 <style>
 .logo{
-    width:9%;
-    height:9%;
-    margin-right: 28px;
-    margin-top: 25px;
+    height:12%;
+    position: fixed;
+    margin:auto;
+    margin-top: 15vh;
 }
 </style>
 
