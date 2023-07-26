@@ -61,33 +61,34 @@ $jsonData = json_encode($data);
       Dashboard
     </h1>
     <div class="row-container">
-        <button type="button" class="collapsible">Available Assessments</button>
-        <div class="collapsible-content">
-          <a class="assessment-anchor" href="">
-            <img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
-            <p>Assessment 1</p>
-          </a>
-          <a class="assessment-anchor" href="">
-            <img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
-            <p>Assessment 2</p>
-          </a>
-        </div>
+      <button type="button" class="collapsible">Available Assessments</button>
+      <div class="collapsible-content">
+        <a class="assessment-anchor" href="">
+          <img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
+          <p>Assessment 1</p>
+        </a>
+        <a class="assessment-anchor" href="">
+          <img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
+          <p>Assessment 2</p>
+        </a>
       </div>
+    </div>
 
-      <div class="row-container">
-        <button type="button" class="collapsible">Completed Assessments</button>
-        <div class="collapsible-content">
-          <a class="assessment-anchor" href="">
-            <img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
-            <p>Assessment 1</p>
-          </a>
-          <a class="assessment-anchor" href="">
-            <img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
-            <p>Assessment 2</p>
-          </a>
-        </div>
+    <div class="row-container">
+      <button type="button" class="collapsible">Available Exercises</button>
+      <div class="collapsible-content ">
+        <a class="assessment-anchor" href="">
+          <img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
+          <p>Exercise 1</p>
+        </a>
+        <a class="assessment-anchor" href="">
+          <img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
+          <p>Exercise 2</p>
+        </a>
       </div>
-
+    </div>
+  </div>
+  <div class="right_panel">
     <div class="wrapper">
       <header>
         <p class="current-date"></p>
@@ -113,41 +114,42 @@ $jsonData = json_encode($data);
       </div>
     </div>
   </div>
+</div> 
+
+<script src="script.js"></script>
+<!-- Add the link for Tippy.js here -->
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+<script src="https://unpkg.com/tippy.js@6"></script>
+<script>
+  const lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(); // getting last date of month
+  let current_day = new Date();
+  let assessmentN = " ";
+
+    for (let i = 1; i <= lastDateofMonth; i++) { // creating li of all days of current month
+      current_day = new Date(currYear, currMonth,i);
+      if(current_day == `<?php $assessmentRelease ?>${[i]}`){
+        assessmentN = "<?php $assessmentName ?>";
+      }
+        
+      
+      tippy(`#my_day${i}`, {
+          placement: 'right', //place tippy to the right
+          interactive: true, //allow interaction in tippy (e.g. click and select text)
+          content: `${current_day}`,
+          allowHTML: true, //allow HTML in tippy content
+          delay: 200, //delay tippy showing and hiding (in milliseconds)
+          followCursor: true //get tippy to follow mouse cursor
+      });
+      console.log(current_day);
+      
+
+  }
+
   
-  <script src="script.js"></script>
-  <!-- Add the link for Tippy.js here -->
-  <script src="https://unpkg.com/@popperjs/core@2"></script>
-  <script src="https://unpkg.com/tippy.js@6"></script>
-  <script>
-    const lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(); // getting last date of month
-    let current_day = new Date();
-    let assessmentN = " ";
+  
 
-      for (let i = 1; i <= lastDateofMonth; i++) { // creating li of all days of current month
-        current_day = new Date(currYear, currMonth,i);
-        if(current_day == `<?php $assessmentRelease ?>${[i]}`){
-          assessmentN = "<?php $assessmentName ?>";
-        }
-          
-        
-        tippy(`#my_day${i}`, {
-            placement: 'right', //place tippy to the right
-            interactive: true, //allow interaction in tippy (e.g. click and select text)
-            content: `${current_day}`,
-            allowHTML: true, //allow HTML in tippy content
-            delay: 200, //delay tippy showing and hiding (in milliseconds)
-            followCursor: true //get tippy to follow mouse cursor
-        });
-        console.log(current_day);
-        
-
-    }
-
-    
-    
-
-        
-    </script>
+      
+  </script>
 </body>
 
 </html>

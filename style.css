@@ -363,14 +363,14 @@ body {
     background-color: #FADE1B;
     color: black;
     cursor: pointer;
-    padding: 18px;
+    padding: 1vh;
     width: 60vw;
     border: none;
     text-align: left;
     outline: none;
     font-size: 15px;
     position: relative;
-    left: 5%;
+    left: 2%;
   }
 
   .collapsible_active,
@@ -429,17 +429,16 @@ body {
     cursor: pointer;
   }
 
-  .content {
-    padding-left: 1vw;
+  .collapsible-content {
+    display: flex;
     padding-right: 1vw;
     max-height: 0;
-     overflow: hidden; 
+    overflow: hidden; 
     transition: max-height 0.2s ease-out;
-    background-color: #ffffff;
     margin-bottom: 5vh;
-    width: 58vw;
+    width: 60vw;
     position: relative;
-    left: 5%
+    left: 2%
   } 
 
 
