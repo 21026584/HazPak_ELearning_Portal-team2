@@ -21,35 +21,7 @@ h2{
 }
 
 
-.collapsible {
-    background-color: #FADE1B;
-    color: black;
-    cursor: pointer;
-    margin-top: 2vh;
-    padding: 1vmin;
-    width: 60vw;
-    border: none;
-    text-align: left;
-    outline: none;
-    font-size: 15px;
-    position: relative;
-    left: 2%
-  }
 
-  .content {
-    padding-left: 1vw;
-    padding-right: 1vw;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.2s ease-out;
-    background-color: #f1f1f1;
-    margin-bottom: 5vh;
-    width: 58vw;
-    position: relative;
-    left: 5%;
-    display: flex;
-    flex-direction: row;
-  }
 
   .assessment-anchor{
     height: 10vh;
@@ -69,13 +41,13 @@ h2{
 
   .left_panel{
     float: left;
-    width: 80%;
+    width: 75%;
     overflow: hidden;
   }
   
   .right_panel{
     float: right;
-    width: 20%;
+    width: 25%;
     overflow: hidden;
   }
 
@@ -90,10 +62,11 @@ body{
 }
 .wrapper{
   position:relative;
-  width: 250px;
+  width: 15vw;
   background: #fff;
   border-radius: 10px;
-  margin-top: 1vh;
+  margin-top: 5vh !important;
+  margin:auto;
 
 }
 .wrapper header{
@@ -183,17 +156,4 @@ header .current-date{
 
 .assignments{
   padding: 10px;
-}
-
-.logout{
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
 }
