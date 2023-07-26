@@ -16,7 +16,8 @@ if (isset($_POST['logout'])) {
 }
 
 // check if user logins in for the first time
-if (($_SESSION['firstLogin'] == 1) && (($_SESSION['role_id']== 2))||($_SESSION['role_id']== 1)) {
+// ($_SESSION['role_id']== 1))|| for admin to change password
+if (($_SESSION['firstLogin'] == 1) && ($_SESSION['role_id']== 2)) {
   //redirects them to a separate page to change their password
   header("Location: changePassword.php");
   exit();
