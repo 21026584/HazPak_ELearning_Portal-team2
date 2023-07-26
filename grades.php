@@ -13,18 +13,15 @@ $link = mysqli_connect($db_host,$db_username,$db_password,$db_name) or
 
 
  $query = "SELECT G.description, G.grade
-    FROM grades AS G
-    INNER JOIN users AS U
-    INNER JOIN courses AS C
-    ON U.user_id = G.user_id AND C.course_id = G.course_id"
+    FROM grades AS G"
     ;
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
 while ($row = mysqli_fetch_assoc($result)) {
   $arrItems[] = $row;
   $grade = $row['grade'];
-  $course = $row=['course_id'];
-  $user = $row=['user_id'];
+  // $course = $row['course_id'];
+  // $user = $row['user_id'];
 }
 
 

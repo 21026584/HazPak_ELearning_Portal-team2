@@ -1,4 +1,24 @@
+<html>
+<style>
+  
+  .logout{
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+  </style>
+</html>
+
+
 <?php
+
 // Check if the user clicked the log out button
 if (isset($_POST['logout'])) {
   // Clear all session variables
@@ -13,11 +33,11 @@ if (isset($_POST['logout'])) {
 }
 
 // check if user logins in for the first time
-if ($_SESSION['firstLogin'] == 1) {
+if (($_SESSION['firstLogin'] == 1) && (($_SESSION['role_id']== 2))||($_SESSION['role_id']== 1)) {
   //redirects them to a separate page to change their password
   header("Location: changePassword.php");
   exit();
-}
+} 
 
 // Assign session user id to a variable
 $userRoleID = $_SESSION['role_id'];
@@ -118,4 +138,5 @@ $userRoleID = $_SESSION['role_id'];
   echo 'username: ' . $_SESSION['username'];
   ?>
 </div>
+
 <div style='margin-left: 280px; width:100%'>

@@ -62,7 +62,7 @@ $jsonData = json_encode($data);
     </h1>
     <div class="row-container">
         <button type="button" class="collapsible">Available Assessments</button>
-        <div class="content">
+        <div class="collapsible-content">
           <a class="assessment-anchor" href="">
             <img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
             <p>Assessment 1</p>
@@ -75,8 +75,8 @@ $jsonData = json_encode($data);
       </div>
 
       <div class="row-container">
-        <button type="button" class="collapsible">Available Assessments</button>
-        <div class="content">
+        <button type="button" class="collapsible">Completed Assessments</button>
+        <div class="collapsible-content">
           <a class="assessment-anchor" href="">
             <img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
             <p>Assessment 1</p>

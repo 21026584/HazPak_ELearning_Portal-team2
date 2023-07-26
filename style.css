@@ -370,7 +370,7 @@ body {
     outline: none;
     font-size: 15px;
     position: relative;
-    left: 5%
+    left: 5%;
   }
 
   .collapsible_active,
@@ -379,7 +379,7 @@ body {
   }
 
   .collapsible:after {
-    content: '\2B9B';
+    content: '\2B9B'; 
     color: black;
     font-weight: bold;
     float: right;
@@ -389,6 +389,8 @@ body {
   .collapsible_active:after {
     content: "\2B99";
   }
+
+
 
   .modal {
     display: none; /* Hidden by default */
@@ -431,14 +433,14 @@ body {
     padding-left: 1vw;
     padding-right: 1vw;
     max-height: 0;
-    overflow: hidden;
+     overflow: hidden; 
     transition: max-height 0.2s ease-out;
     background-color: #ffffff;
     margin-bottom: 5vh;
     width: 58vw;
     position: relative;
     left: 5%
-  }
+  } 
 
 
 /*  Css for grades page */
@@ -491,6 +493,3 @@ body {
   .myChart{
     width:20%
   }
-
-
-  

@@ -1,6 +1,13 @@
 <?php
 // Check user session
 include("checkSession.php");
+
+// Creating an array so that question added will be recorded and placed into the SQL assessment datatable
+// $arr = array('a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5);
+
+// echo json_encode($arr);
+
+// $questions = array();
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,6 +30,9 @@ include("checkSession.php");
         <label for="idName">Assessment Name:</label>
         <input type="text" id="idName" name="name" required />
         <br><br>
+        <label for="idCourse">Course:</label>
+        <input type="text" id="idCourse" name="coures" required />
+        <br><br>
         <label for="idInstuc">Instructions:</label>
         <br>
         <textarea id="idInstuc" name="instruction" rows="5" cols="30" required></textarea>
@@ -30,29 +40,43 @@ include("checkSession.php");
         <label for="idTime">Enter in release Time:</label>
         <br>
         <input type="datetime-local" id="idTime" name="time" required />
-        <p><label for="idQuestion">Questions:</label></p>
+        <p><label for="inputQuestion">Questions:</label></p>
         <div class="form-group" id="inputFields">
-                <input id='inputOptions' type="text" class="inputOptions" name="inputOptions[]" placeholder="Enter Question ID" required/>
+                <input id='inputQuestion' type="text" class="inputQuestion" name="inputQuestion[]" placeholder="Enter Question ID" required/>
             </div>
             <button type="button" id="addField">Add new questions</button>
-            <br><br>
+            <br>
         <br><br>
         <input type="submit" value="Create" />
     </form>
+    <p id="demo2"></p>
 
     <script>
-    // Add new input field
-            $("#addField").click(function() {
-                var questionType = $("#questionType").val();
-                var inputFieldHtml = '<div><input type="text" name="inputOptions[]" placeholder="Enter Question ID" required><button type="button" class="removeField">Remove</button></div>';
-                $("#inputFields").append(inputFieldHtml);
-            });
+    // Add new input question field
+        $("#addField").click(function() {
+            var questionType = $("#questionType").val();
+            var inputFieldHtml = '<div><input type="text" name="inputQuestion[]" placeholder="Enter Question ID" required><button type="button" class="removeField">Remove</button></div>';
+            $("#inputFields").append(inputFieldHtml);
+        });
 
-            // Remove the selected input field
-            $(document).on("click", ".removeField", function() {
-                $(this).parent('div').remove();
-            });
-    </script>
+        // Remove the selected input field
+        $(document).on("click", ".removeField", function() {
+            $(this).parent('div').remove();
+        });
+        // const questionList = [];
+        // var nameValue = document.getElementById("inputQuestion").value;
+        // questionList.push();
+        // document.getElementById("demo2").innerHTML = questionList;       
+    //     public function addQuestion($array, int $id) {
+    //         if (isset($_SESSION[$array])) {
+    //             $_SESSION[$array][] = array(
+    //                 'id' => $id
+    //             );
+    //             return true;
+    //         }
+    //         return false;
+    //     }      
+    // </script>
 </body>
 
 </html>
