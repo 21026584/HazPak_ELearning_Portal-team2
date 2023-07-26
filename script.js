@@ -1,6 +1,7 @@
-function expandAllCollapsibles() {
-  var coll = document.getElementsByClassName("collapsible");
+ var coll = document.getElementsByClassName("collapsible");
+ var i;
 
+function expandAllCollapsibles() {
   for (var i = 0; i < coll.length; i++) {
     coll[i].classList.add("collapsible_active");
     var content = coll[i].nextElementSibling;
@@ -13,9 +14,8 @@ window.onload = function() {
   expandAllCollapsibles();
 };
 
- var coll = document.getElementsByClassName("collapsible");
- 
-    var i;
+
+    
     
     for (i = 0; i < coll.length; i++) {
       coll[i].addEventListener("click", function() {
