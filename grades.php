@@ -12,16 +12,15 @@ $link = mysqli_connect($db_host,$db_username,$db_password,$db_name) or
         die(mysqli_connect_error());
 
 
- $query = "SELECT G.description, G.grade
-    FROM grades AS G"
+ $query = "SELECT * FROM grades "
     ;
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
 while ($row = mysqli_fetch_assoc($result)) {
   $arrItems[] = $row;
   $grade = $row['grade'];
-  // $course = $row['course_id'];
-  // $user = $row['user_id'];
+   $course = $row['course_id'];
+   $user = $row['user_id'];
 }
 
 
@@ -49,9 +48,8 @@ mysqli_close($link);
 <div class="Course1">
     <button type="button" class="collapsible">Assessment 1</button>
     <div class="content">
-      <a class="assessment-anchor" href="">
+
       <?php
-      $course = $_GET['course_id'];
       if($course = "C01" || $user = "T01"){
         echo $grade;
       }
@@ -59,17 +57,17 @@ mysqli_close($link);
         
       }
       ?>
-      </a>
-      <a class="assessment-anchor" href="">
 
-      </a>
+
     </div>
   </div>
+
+
+
 
   <div class="Assessment2">
     <button type="button" class="collapsible">Assessment 2</button>
     <div class="content">
-      <a class="assessment-anchor" href="">
       <?php  
       if($course = "C02"){
         echo $grade;
@@ -78,10 +76,7 @@ mysqli_close($link);
 echo"";
       }
       ?>
-      </a>
-      <a class="assessment-anchor" href="">
- 
-      </a>
+      
     </div>
   </div>
 
@@ -142,6 +137,24 @@ const labels = [
       document.getElementById('myChart'),
         config
      );
+
+
+
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+
 
 
 </script>

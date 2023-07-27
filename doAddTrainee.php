@@ -1,7 +1,8 @@
 <?php
 
     // Navbar
-    include "navbar.php";
+
+    include("checkSession.php");
 
     // php file that contains the common database connection code
     include "dbFunctions.php";
@@ -11,10 +12,11 @@
        $username = $_POST['username'];
         $id = $_POST['traineeID'];
         $intake = $_POST['intake'];
+        $password = $_POST['traineePassword'];
 
         //unclear about the assessment id and course id for now.
-        $sql = "INSERT INTO users (user_id, username, intake) 
-                VALUES ('$id', '$username', '$intake')";
+        $sql = "INSERT INTO users (password, user_id, username, intake, role_id) 
+                VALUES (SHA1('$password'), '$id', '$username', '$intake', 2)";
 
         // Executes the SQL statement above to input it into database
         $status = mysqli_query($link, $sql) or die(mysqli_error($link));

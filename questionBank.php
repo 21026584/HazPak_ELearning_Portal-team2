@@ -74,6 +74,7 @@ mysqli_close($link);
     <title>Question Bank</title>
 </head>
 
+
 <body>
     <?php
     // Navbar
@@ -105,13 +106,15 @@ mysqli_close($link);
                             ?>
                         </select>
                         <br>
+                        <br>
                         <textarea class="inputText" name="questionText" required></textarea>
                         <br>
-                        <button type="button" onclick="addInputField()">Add Field</button>
+                        <button type="button" class="questionFormButton"  onclick="addInputField()">Add Field</button>
                         <br>
                         <div id="inputFieldsContainer">
                             <!-- The dynamically created input fields will be appended here -->
                             <input type="file" name="image" accept="image/*">
+                            <br>
                             <div id="fieldContainer0" class="field-container">
                                 <input type="text" name="inputField[]" placeholder="Enter option" required>
                                 <input type="radio" name="selectedField" value="0" required>
@@ -121,13 +124,14 @@ mysqli_close($link);
                                 <input type="radio" name="selectedField" value="1" required>
                             </div>
                         </div>
-                        <button type="submit" name="submit">Submit</button>
+                        <br>
+                        <button type="submit" class="questionFormButton" name="submit">Submit</button>
                     </form>
                 </div>
             </div>
             <!-- Datatable -->
             <main class="tableMain">
-                <table id='exerciseTable' class="display table-striped question-table">
+                <table id='exerciseTable' class="display table-striped data-table">
                     <thead class="table-header">
                         <tr>
                             <!-- Headers -->
