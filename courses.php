@@ -132,7 +132,7 @@ body{
         
             <!-- Datatable -->
             <main class="tableMain">
-                <table id='exerciseTable' class="display table-striped">
+                <table id='exerciseTable' class="display table-striped data-table">
                     <thead class="table-header">
                         <tr>
                             <!-- Headers -->
@@ -140,6 +140,7 @@ body{
                             <td>Student Name</td>
                             <td>Intake</td>
                             <td>Edit</td>
+                            <td>Delete</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -184,7 +185,14 @@ body{
                         title: 'Edit',
                         data: null,
                         render: function(data, type, row) {
-                            return '<a href="EditTrainee.php?user_id=' + row.user_id + '">Edit</a>';
+                            return '<a href="AddTrainee.php?user_id=' + row.user_id + '">Edit</a>';
+                        }
+                    },
+                    {
+                        title: 'Delete',
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<a href="deleteTrainee.php?user_id=' + row.user_id + '">Delete</a>';
                         }
                     }
 
@@ -192,7 +200,31 @@ body{
             });
         });
 
+        // Event listener for the "Delete" links
+        $(document).on('click', 'a[data-action="delete"]', function(event) {
+            event.preventDefault();
+            var url = $(this).attr('href');
 
+            // Send AJAX request to deleteTrainee.php
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        // Refresh the DataTable after successful deletion
+                        $('#exerciseTable').DataTable().ajax.reload();
+                    } else {
+                        // Handle deletion error, show an alert or message if needed
+                        alert('Failed to delete trainee. Please try again.');
+                    }
+                },
+                error: function() {
+                    // Handle AJAX error, show an alert or message if needed
+                    alert('An error occurred while processing your request. Please try again.');
+                }
+            });
+        });
 
 
 // Get the modal
