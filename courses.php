@@ -77,15 +77,15 @@ body{
         
             <!-- Datatable -->
             <main class="tableMain">
-                <table id='exerciseTable' class="display table-striped">
+                <table id='exerciseTable' class="display table-striped data-table">
                     <thead class="table-header">
                         <tr>
                             <!-- Headers -->
                             <td>Student ID</td>
                             <td>Student Name</td>
                             <td>Intake</td>
-                            <td>Add</td>
                             <td>Edit</td>
+                            <td>Delete</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -127,17 +127,17 @@ body{
                         data: 'intake'
                     },
                     {
-                        title: 'Add',
-                        data: null,
-                        render: function(data, type, row) {
-                            return '<a href="AddTrainee.php?user_id=' + row.user_id + '">Add</a>';
-                        }
-                    },
-                    {
                         title: 'Edit',
                         data: null,
                         render: function(data, type, row) {
-                            return '<a href="EditTrainee.php?user_id=' + row.user_id + '">Edit</a>';
+                            return '<a href="AddTrainee.php?user_id=' + row.user_id + '">Edit</a>';
+                        }
+                    },
+                    {
+                        title: 'Delete',
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<a href="EditTrainee.php?user_id=' + row.user_id + '">Delete</a>';
                         }
                     }
 
