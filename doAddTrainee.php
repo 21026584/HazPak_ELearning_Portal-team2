@@ -16,7 +16,7 @@
 
         //unclear about the assessment id and course id for now.
         $sql = "INSERT INTO users (password, user_id, username, intake, role_id) 
-                VALUES ('$password', '$id', '$username', '$intake', 2)";
+                VALUES (SHA1('$password'), '$id', '$username', '$intake', 2)";
 
         // Executes the SQL statement above to input it into database
         $status = mysqli_query($link, $sql) or die(mysqli_error($link));
