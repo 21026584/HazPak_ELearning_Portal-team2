@@ -137,7 +137,7 @@ body{
                         title: 'Delete',
                         data: null,
                         render: function(data, type, row) {
-                            return '<a href="EditTrainee.php?user_id=' + row.user_id + '">Delete</a>';
+                            return '<a href="deleteTrainee.php?user_id=' + row.user_id + '">Delete</a>';
                         }
                     }
 
@@ -145,7 +145,31 @@ body{
             });
         });
 
+        // Event listener for the "Delete" links
+        $(document).on('click', 'a[data-action="delete"]', function(event) {
+            event.preventDefault();
+            var url = $(this).attr('href');
 
+            // Send AJAX request to deleteTrainee.php
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        // Refresh the DataTable after successful deletion
+                        $('#exerciseTable').DataTable().ajax.reload();
+                    } else {
+                        // Handle deletion error, show an alert or message if needed
+                        alert('Failed to delete trainee. Please try again.');
+                    }
+                },
+                error: function() {
+                    // Handle AJAX error, show an alert or message if needed
+                    alert('An error occurred while processing your request. Please try again.');
+                }
+            });
+        });
 
 
         function redirectToPage(url) {
