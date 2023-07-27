@@ -6,46 +6,63 @@
     // Navbar
     include "navbar.php";
 
-
-    if (!empty($_POST['name']) && !empty($_POST['instruction']) && !empty($_POST['time']) && !empty($_POST['inputQuestion'])&& !empty($_POST['idCourse'])) {
-        
-        try {
-            $conn = new PDO("mysql:host=$host;dbname=$database", $username, $password);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            echo "Connection failed: " . $e->getMessage();
-        }
-
-        try {
-            // Assume $foreign_key_value is the foreign key value you want to use
-            $foreign_key_value = $_SESSION['user_id'];; 
-        
-            // Prepare the SQL statement
-            $stmt = $conn->prepare("INSERT INTO assessments (course_id, assessment_name, instructions, release_datetime, user_id, questions) VALUES (:value0, :value1, :value2, :value3, :foreign_key, :value4)");
-        
-            // Bind parameters
-            //Assign data retreived from form to the following variables below respectively to will input statement into SQL to make add in a new assessment into the assessment database
-            $name = $_POST['name'];
-            $instructions = $_POST['instruction'];
-            $time = $_POST['time'];
-            $course = $_POST['idCourse'];
-            $userID = $_SESSION['user_id'];
-            $questions = $_POST['inputQuestion'];
-            $question_JSON = json_encode($questions);
-            $stmt->bindParam(':value0', $course);
-            $stmt->bindParam(':value1', $name);
-            $stmt->bindParam(':value2', $instructions);
-            $stmt->bindParam(':value3', $time);
-            $stmt->bindParam(':value4', $question_JSON);
-            $stmt->bindParam(':foreign_key', $foreign_key_value);
-        
-            // Execute the query
-            $stmt->execute();
-        
-            echo "Assessment inserted successfully!";
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
+    // && !empty($_POST['instruction']) && !empty($_POST['time']) && isset($_POST['inputQuestion'])&& !empty($_POST['idCourse'])
+    if (!empty($_POST['name']) ) {
+        if (!empty($_POST['instruction'])){
+            if (!empty($_POST['time'])){
+                if (!empty($_POST['inputQuestion'])){
+                    if (!empty($_POST['idCourse'])){
+                        try {
+                            $conn = new PDO("mysql:host=$host;dbname=$database", $username, $password);
+                            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                        } catch (PDOException $e) {
+                            echo "Connection failed: " . $e->getMessage();
+                        }
+                
+                        try {
+                            // Assume $foreign_key_value is the foreign key value you want to use
+                            $foreign_key_value = $_SESSION['user_id'];; 
+                        
+                            // Prepare the SQL statement
+                            $stmt = $conn->prepare("INSERT INTO assessments (course_id, assessment_name, instructions, release_datetime, user_id, questions) VALUES (:value0, :value1, :value2, :value3, :foreign_key, :value4)");
+                        
+                            // Bind parameters
+                            //Assign data retreived from form to the following variables below respectively to will input statement into SQL to make add in a new assessment into the assessment database
+                            $name = $_POST['name'];
+                            $instructions = $_POST['instruction'];
+                            $time = $_POST['time'];
+                            $course = $_POST['idCourse'];
+                            $userID = $_SESSION['user_id'];
+                            $questions = $_POST['inputQuestion'];
+                            $question_JSON = json_encode($questions);
+                            $stmt->bindParam(':value0', $course);
+                            $stmt->bindParam(':value1', $name);
+                            $stmt->bindParam(':value2', $instructions);
+                            $stmt->bindParam(':value3', $time);
+                            $stmt->bindParam(':value4', $question_JSON);
+                            $stmt->bindParam(':foreign_key', $foreign_key_value);
+                        
+                            // Execute the query
+                            $stmt->execute();
+                        
+                            echo "Assessment inserted successfully!";
+                        } catch (PDOException $e) {
+                            echo "Error: " . $e->getMessage();
+                        }
+                    } else {
+                        echo "Assessment course id is missing";
+                    }
+                }else{
+                    echo "Assessment question is missing";
+                }
+            }else{
+                echo "Assessment time is missing";
+            }
+        } else {
+            echo "Assessment instructions is missing";
+        }  
+    } else {
+        echo "Assessment name is missing";
     }
     // Closes the Database conection 
     mysqli_close($link);

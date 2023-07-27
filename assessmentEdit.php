@@ -7,7 +7,6 @@ include("checkSession.php");
 include "navbar.php";
 
 $assessmentID = $_GET['assessment_id'];
-//echo $itemID;
 
 // create query to retrieve a single record based on the value of $compID 
 $queryItem = "SELECT * FROM assessments
