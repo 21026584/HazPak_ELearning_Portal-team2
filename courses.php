@@ -123,13 +123,9 @@ body{
         <input type="submit" value="Add" />
     </form>
 
-
-
   </div>
 
 </div>
-
-        
             <!-- Datatable -->
             <main class="tableMain">
                 <table id='exerciseTable' class="display table-striped data-table">
@@ -185,7 +181,7 @@ body{
                         title: 'Edit',
                         data: null,
                         render: function(data, type, row) {
-                            return '<a href="AddTrainee.php?user_id=' + row.user_id + '">Edit</a>';
+                            return '<a href="EditTrainee.php?user_id=' + row.user_id + '">Edit</a>';
                         }
                     },
                     {
