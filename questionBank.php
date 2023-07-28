@@ -42,16 +42,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $question_image = null;
     }
+
     // Retrieve form data
     $question_type_id = $_POST['questionType'];
     $question_text = $_POST['questionText'];
-    $question_answer = $_POST['selectedField'];
+    $question_answers = $_POST['answerField'];
     $answer_options = $_POST['inputField'];
 
-    // Convert the answer_options array to a JSON string
-    $answer_options_JSON = json_encode($answer_options);
 
-    $questionQuery = "INSERT INTO question_bank (question_type_id, question_text, question_answer, answer_options, question_image) VALUES ('$question_type_id', '$question_text', '$question_answer', '$answer_options_JSON', '$question_image')";
+    if (isset($_POST['inputField']) && !empty($_POST['inputField'])) {
+        $answer_options_JSON = json_encode($answer_options);
+    } else {
+        $answer_options_JSON = json_encode(null);
+    }
+
+    // Convert the answer_options array to a JSON string
+    $question_answers_JSON = json_encode($question_answers);
+
+    $questionQuery = "INSERT INTO question_bank (question_type_id, question_text, question_answer, answer_options, question_image) VALUES ('$question_type_id', '$question_text', '$question_answers_JSON', '$answer_options_JSON', '$question_image')";
     $questionResult = mysqli_query($link, $questionQuery) or die(mysqli_error($link));
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
@@ -107,18 +115,18 @@ mysqli_close($link);
                         <br>
                         <textarea class="inputText" name="questionText" required></textarea>
                         <br>
-                        <button type="button" onclick="addInputField()">Add Field</button>
-                        <br>
                         <div id="inputFieldsContainer">
                             <!-- The dynamically created input fields will be appended here -->
+                            <button type="button" onclick="addInputField()">Add Field</button>
+                            <br>
                             <input type="file" name="image" accept="image/*">
                             <div id="fieldContainer0" class="field-container">
                                 <input type="text" name="inputField[]" placeholder="Enter option" required>
-                                <input type="radio" name="selectedField" value="0" required>
+                                <input type="radio" name="answerField" value="0" required>
                             </div>
                             <div id="fieldContainer1" class="field-container">
                                 <input type="text" name="inputField[]" placeholder="Enter option" required>
-                                <input type="radio" name="selectedField" value="1" required>
+                                <input type="radio" name="answerField" value="1" required>
                             </div>
                         </div>
                         <button type="submit" name="submit">Submit</button>
@@ -225,7 +233,9 @@ mysqli_close($link);
             }
         }
 
-        let currentQuestionType = '<?php echo $questionArr[0]['type_id'] ?>'; // Default question type
+        let currentQuestionType = '<?php echo $questionArr[0]['type_id'] ?>'; // Default question type 
+        // Counter for answer index
+        fieldCounter = 2;
 
         function changeQuestionType() {
             const inputFieldsContainer = document.getElementById("inputFieldsContainer");
@@ -238,49 +248,36 @@ mysqli_close($link);
             const selectedQuestionType = questionTypeSelect.value;
 
             if (selectedQuestionType == '<?php echo $questionArr[0]['type_id'] ?>') { // Multiple Choice
+                inputFieldsContainer.innerHTML += '<button type="button" onclick="addInputField()">Add Field</button><br>'; // Add input fields
                 inputFieldsContainer.innerHTML += '<input type="file" name="image" accept="image/*">'; // Image upload
 
                 inputFieldsContainer.innerHTML += '<div id="fieldContainer0" class="field-container">'; // Input field container
                 inputFieldsContainer.innerHTML += '<input type="text" name="inputField[]" placeholder="Enter option" required>'; // Input field
-                inputFieldsContainer.innerHTML += '<input type="radio" name="selectedField" value="0" required>'; // Radio button
+                inputFieldsContainer.innerHTML += '<input type="radio" name="answerField[]" value="0" required>'; // Radio button
                 inputFieldsContainer.innerHTML += '</div>';
 
                 inputFieldsContainer.innerHTML += '<div id="fieldContainer1" class="field-container">'; // Input field container
                 inputFieldsContainer.innerHTML += '<input type="text" name="inputField[]" placeholder="Enter option" required>'; // Input field
-                inputFieldsContainer.innerHTML += '<input type="radio" name="selectedField" value="1" required>'; // Radio button
+                inputFieldsContainer.innerHTML += '<input type="radio" name="answerField[]" value="1" required>'; // Radio button
                 inputFieldsContainer.innerHTML += '</div>';
+
+                fieldCounter = 2; // Set fieldCounter
             } else if (selectedQuestionType === '<?php echo $questionArr[1]['type_id'] ?>') { // Fill in the blank
+                inputFieldsContainer.innerHTML += '<button type="button" onclick="addAnswerField()">Add Answer</button><br>'; // Add input fields
                 inputFieldsContainer.innerHTML += '<input type="file" name="image" accept="image/*">'; // Image upload
 
                 inputFieldsContainer.innerHTML += '<div id="fieldContainer0" class="field-container">'; // Input field container
-                inputFieldsContainer.innerHTML += '<input type="text" name="inputField[]" placeholder="Enter option" required>'; // Input field
-                inputFieldsContainer.innerHTML += '<input type="radio" name="selectedField" value="0" required>'; // Radio button
+                inputFieldsContainer.innerHTML += '<input type="text" name="answerField[]" placeholder="Enter answer" required>'; // Answer field
                 inputFieldsContainer.innerHTML += '</div>';
 
-                inputFieldsContainer.innerHTML += '<div id="fieldContainer1" class="field-container">'; // Input field container
-                inputFieldsContainer.innerHTML += '<input type="text" name="inputField[]" placeholder="Enter option" required>'; // Input field
-                inputFieldsContainer.innerHTML += '<input type="radio" name="selectedField" value="1" required>'; // Radio button
-                inputFieldsContainer.innerHTML += '</div>';
-            } else if (selectedQuestionType === '<?php echo $questionArr[2]['type_id'] ?>') {
-                inputFieldsContainer.innerHTML += '<input type="file" name="image" accept="image/*">'; // Image upload
-
-                inputFieldsContainer.innerHTML += '<div id="fieldContainer0" class="field-container">'; // Input field container
-                inputFieldsContainer.innerHTML += '<input type="text" name="inputField[]" placeholder="Enter option" required>'; // Input field
-                inputFieldsContainer.innerHTML += '<input type="radio" name="selectedField" value="0" required>'; // Radio button
-                inputFieldsContainer.innerHTML += '</div>';
-
-                inputFieldsContainer.innerHTML += '<div id="fieldContainer1" class="field-container">'; // Input field container
-                inputFieldsContainer.innerHTML += '<input type="text" name="inputField[]" placeholder="Enter option" required>'; // Input field
-                inputFieldsContainer.innerHTML += '<input type="radio" name="selectedField" value="1" required>'; // Radio button
-                inputFieldsContainer.innerHTML += '</div>';
+                fieldCounter = 1; // Set fieldCounter
             }
 
             // Update the current question type
             currentQuestionType = selectedQuestionType;
         }
-        // Counter for answer index
-        fieldCounter = 2;
 
+        // Add answer for Multiple Choice question
         function addInputField() {
             const inputFieldsContainer = document.getElementById("inputFieldsContainer");
 
@@ -299,7 +296,7 @@ mysqli_close($link);
             // Create the radio button
             const radioButton = document.createElement("input");
             radioButton.type = "radio";
-            radioButton.name = "selectedField";
+            radioButton.name = "answerField[]";
             radioButton.value = fieldCounter;
             radioButton.required = true;
 
@@ -325,6 +322,46 @@ mysqli_close($link);
         function removeInputField(fieldContainerId) {
             const fieldContainer = document.getElementById(fieldContainerId);
             fieldContainer.remove();
+            fieldCounter--;
+        }
+
+        // Add answer for Fill in the Blanks question
+        function addAnswerField() {
+            const answerFieldsContainer = document.getElementById("inputFieldsContainer");
+
+            // Create a new answer field container
+            const fieldContainer = document.createElement("div");
+            fieldContainer.id = "fieldContainer" + fieldCounter;
+            fieldContainer.classList.add("field-container");
+
+            // Create the answer field
+            const answerField = document.createElement("input");
+            answerField.type = "text";
+            answerField.name = "answerField[]";
+            answerField.placeholder = "Enter answer";
+            answerField.required = true;
+
+            // Create the remove button
+            const removeButton = document.createElement("button");
+            removeButton.type = "button";
+            removeButton.textContent = "Remove";
+            removeButton.onclick = function() {
+                removeAnswerField(fieldContainer.id);
+            };
+
+            // Append the answer field and remove button to the answer container
+            fieldContainer.appendChild(answerField);
+            fieldContainer.appendChild(removeButton);
+
+            // Append the field container to the answer fields container
+            answerFieldsContainer.appendChild(fieldContainer);
+
+            fieldCounter++;
+        }
+
+        function removeAnswerField(answerFieldContainerId) {
+            const answerFieldContainer = document.getElementById(answerFieldContainerId);
+            answerFieldContainer.remove();
             fieldCounter--;
         }
     </script>
