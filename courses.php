@@ -45,6 +45,44 @@ $jsonData = json_encode($data);
 body{
     position: fixed;
 }
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
 </style>
 <body>
     <?php
@@ -54,38 +92,51 @@ body{
     // Show the Question Bank Page 
     if (($userRoleID == 0) || ($userRoleID == 1)) {
     ?>
-        <div class="tableRoot">
+         <div class="tableRoot">
             <header class='tableHeader'>
                 <h1>Courses</h1>
             </header>
-<!--             <div class="assessmentButtonContainer">
-                <button id="Add_Button">Add student button</button>
-            </div> -->
+      
 
-            <div class="w3-container">
-  <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black">Add Student</button>
+            <button id="myBtn">Add Trainee</button>
 
-  <div id="id01" class="w3-modal">
-    <div class="w3-modal-content">
-      <div class="w3-container">
-        <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-        <p>Some text. Some text. Some text.</p>
-      </div>
-    </div>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+
+    <form id="AddTraineeForm" method="post" action="doAddTrainee.php">
+        <label for="idUsername">Username:</label>
+        <input type="text" id="idUsername" name="username" required />
+        <br>
+        <label for="traineeID">Trainee ID:</label>
+        <input type="text" id="traineeID" name="traineeID" required />
+        <br>
+        <label for="traineePassword">Password:</label>
+        <input type="text" id="traineePassword" name="traineePassword" required />
+        <br>
+        <p><label for="intake">Intake:</label></p>
+        <input type="text" id="intake" name="intake" required />
+        <br>
+        <input type="submit" value="Add" />
+    </form>
+
   </div>
+
 </div>
-        
             <!-- Datatable -->
             <main class="tableMain">
-                <table id='exerciseTable' class="display table-striped">
+                <table id='exerciseTable' class="display table-striped data-table">
                     <thead class="table-header">
                         <tr>
                             <!-- Headers -->
                             <td>Student ID</td>
                             <td>Student Name</td>
                             <td>Intake</td>
-                            <td>Add</td>
                             <td>Edit</td>
+                            <td>Delete</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -127,17 +178,17 @@ body{
                         data: 'intake'
                     },
                     {
-                        title: 'Add',
-                        data: null,
-                        render: function(data, type, row) {
-                            return '<a href="AddTrainee.php?user_id=' + row.user_id + '">Add</a>';
-                        }
-                    },
-                    {
                         title: 'Edit',
                         data: null,
                         render: function(data, type, row) {
                             return '<a href="EditTrainee.php?user_id=' + row.user_id + '">Edit</a>';
+                        }
+                    },
+                    {
+                        title: 'Delete',
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<a href="deleteTrainee.php?user_id=' + row.user_id + '">Delete</a>';
                         }
                     }
 
@@ -145,39 +196,59 @@ body{
             });
         });
 
+        // Event listener for the "Delete" links
+        $(document).on('click', 'a[data-action="delete"]', function(event) {
+            event.preventDefault();
+            var url = $(this).attr('href');
+
+            // Send AJAX request to deleteTrainee.php
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        // Refresh the DataTable after successful deletion
+                        $('#exerciseTable').DataTable().ajax.reload();
+                    } else {
+                        // Handle deletion error, show an alert or message if needed
+                        alert('Failed to delete trainee. Please try again.');
+                    }
+                },
+                error: function() {
+                    // Handle AJAX error, show an alert or message if needed
+                    alert('An error occurred while processing your request. Please try again.');
+                }
+            });
+        });
 
 
+// Get the modal
+var modal = document.getElementById("myModal");
 
-        function redirectToPage(url) {
-            window.location.href = url;
-        }
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
 
-                // Get the modal
-        var modal = document.getElementById("id01");
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
 
-        // Get the button that opens the modal
-        var btn = document.getElementById("id01");
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
 
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
 
-        // When the user clicks the button, open the modal 
-        btn.onclick = function() {
-        modal.style.display = "block";
-        
-        }
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
 
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-        modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-        }
 
 
 

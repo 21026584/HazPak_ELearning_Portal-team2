@@ -441,6 +441,7 @@ body {
     position: relative;
     left: 2%
   } 
+  
 
 
 /*  Css for grades page */
@@ -490,11 +491,8 @@ body {
     margin-left:100px;
   }
 
-  .myChart{
-    width:20%
-  }
 
-  .question-table{
+  .data-table{
     width: 75vw !important;
     margin-left: 0 !important;
   }
@@ -502,4 +500,62 @@ body {
   .tableMain{
     width: 75vw;
     overflow: hidden;
+  }
+
+  .questionForm{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  background-color: #f2f2f2;
+  padding: 20px;
+  }
+
+  .questionFormButton{
+    background-color: #ffff00;
+    border: none;
+    color: rgb(0, 0, 0);
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+
+
+  input[type=text], select {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  input[type=file], select {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  .AddTraineeForm{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  background-color: #f2f2f2;
+  padding: 20px;
   }
