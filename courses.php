@@ -117,7 +117,7 @@ body{
         <label for="traineePassword">Password:</label>
         <input type="text" id="traineePassword" name="traineePassword" required />
         <br>
-        <p><label for="intake">Intake:</label></p>
+        <label for="intake">Intake:</label>
         <input type="text" id="intake" name="intake" required />
         <br>
         <input type="submit" value="Add" />
