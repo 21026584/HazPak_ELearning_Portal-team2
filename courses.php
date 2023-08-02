@@ -109,7 +109,7 @@ body{
 
     <form id="AddTraineeForm" method="post" action="doAddTrainee.php">
         <label for="idUsername">Username:</label>
-        <input type="text" id="idUsername" name="username" required />
+        <input type="text" id="idUsername" name="idUsername" required />
         <br>
         <label for="traineeID">Trainee ID:</label>
         <input type="text" id="traineeID" name="traineeID" required />

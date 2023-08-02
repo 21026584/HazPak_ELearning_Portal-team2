@@ -1,13 +1,25 @@
 <?php
+include("checkSession.php");
 include ("dbFunctions.php");
-$updatedID = $_POST['traineeID'];
-$updateUsername = $_POST['idUsername'];
-$updatePassword = $_POST['traineePassword'];
+
+
+
+$queryItem = "SELECT * FROM users";
+
+$resultItem = mysqli_query($link, $queryItem) or 
+die(mysqli_error($link)); 
+
+
+$updatedID = $_POST['UpdatedTraineeID'];
+$updateUsername = $_POST['UpdatedUsername'];
+$updatePassword = $_POST['UpdatedTraineePassword'];
+
+
+
 
 $queryUpdate = "UPDATE users
-                SET user_id='$updatedID'
-                WHERE id = $theID";
-
+                SET user_id='$updatedID'";
+        
 $resultUpdate = mysqli_query($link, $queryUpdate)
         or die(mysqli_error($link));
 

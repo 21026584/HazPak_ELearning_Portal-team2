@@ -7,9 +7,9 @@
     // php file that contains the common database connection code
     include "dbFunctions.php";
 
-    if (!empty($_POST['username']) && !empty($_POST['traineeID']) && !empty($_POST['intake'])) {
+    if (!empty($_POST['idUsername']) && !empty($_POST['traineeID']) && !empty($_POST['intake'])) {
         //Assign data retreived from form to the following variables below respectively to will input statement into SQL to make add in a new assessment into the assessment database
-       $username = $_POST['username'];
+       $username = $_POST['idUsername'];
         $id = $_POST['traineeID'];
         $intake = $_POST['intake'];
         $password = $_POST['traineePassword'];

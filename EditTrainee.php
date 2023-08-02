@@ -42,14 +42,14 @@ mysqli_close($link);
     <h3>Edit Trainee</h3>
 
     <form id="EditTraineeForm" method="post" action="doTraineeEdit.php">
-        <label for="idUsername">Username:</label>
-        <input type="text" id="idUsername" name="username" value="<?php echo $rowItem['username']?>" required  />
+        <label for="UpdatedUsername">Username:</label>
+        <input type="text" id="UpdatedUsername" name="UpdatedUsername" value="<?php echo $rowItem['username']?>" required  />
         <br>
-        <label for="traineeID">Trainee ID:</label>
-        <input type="text" id="traineeID" name="traineeID" value="<?php echo $rowItem['user_id']?>" required />
+        <label for="UpdatedTraineeID">Trainee ID:</label>
+        <input type="text" id="UpdatedTraineeID" name="UpdatedTraineeID" value="<?php echo $rowItem['user_id']?>" required />
         <br>
-        <label for="traineePassword">Password:</label>
-        <input type="text" id="traineePassword" name="traineePassword" value="<?php echo $rowItem['password']?>" required />
+        <label for="UpdatedTraineePassword">Password:</label>
+        <input type="text" id="UpdatedTraineePassword" name="UpdatedTraineePassword" value="<?php echo $rowItem['password']?>" required />
       <br>
         <label for="intake">Intake:</label>
         <input type="text" id="intake" name="intake" value="<?php echo $rowItem['intake']?>"required />
