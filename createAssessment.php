@@ -5,6 +5,7 @@ include "dbFunctions.php";
 include("checkSession.php");
 // Navbar
 include "navbar.php";
+// FIX THE MODAL datatable, it is very funky
 
 //getting the course id
 $query = "SELECT * FROM courses";
@@ -81,25 +82,25 @@ mysqli_close($link);
         <br>
         <div id="Create_Modal" class="modal">
             <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <main class="tableMain">
-                <table id='exerciseTable' class="display table-striped question-table">
-                    <thead class="table-header">
-                        <tr>
-                            <!-- Headers -->
-                            <td>Question ID</td>
-                            <td>Question Text</td>
-                            <td>Question Type</td>
-                            <td>Select</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </main>
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <main class="tableMain">
+                    <table id='exerciseTable' class="display table-striped question-table">
+                        <thead class="table-header">
+                            <tr>
+                                <!-- Headers -->
+                                <td>Question ID</td>
+                                <td>Question Text</td>
+                                <td>Question Type</td>
+                                <td>Select</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </main>
+            </div>
         </div>
-    </div>
         <input type="submit" value="Create" />
     </form>
 

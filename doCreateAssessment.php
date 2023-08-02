@@ -80,7 +80,7 @@
 
     <body>
         <p> Create more <a href="createAssessment.php" class="custom-nav-link">Assessments</a>?</p>
-        <p> Return to <a href="assessment.php" class="custom-nav-link">Assessments</a> page?</p>
+        <p> Return to <a href="assessments.php" class="custom-nav-link">Assessments</a> page?</p>
     </body>
 
 </html>
