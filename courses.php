@@ -2,9 +2,13 @@
 include("checkSession.php");
 include("dbFunctions.php");
 
-$query = "SELECT U.user_id, U.username, U.intake, U.role_id
+$query = "SELECT U.user_id, U.username, U.intake, U.role_id, G.course_id, A.assessment_name
     FROM users AS U
-    WHERE role_id = 2";
+    INNER JOIN grades AS G 
+    ON U.user_id = G.user_id
+    INNER JOIN assessments AS A
+    ON G.course_id = A.course_id
+    WHERE U.role_id = 2";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
 // Initialise values
@@ -60,8 +64,30 @@ body{
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
+.modal2 {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
 /* Modal Content */
 .modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.modal-content2 {
   background-color: #fefefe;
   margin: auto;
   padding: 20px;
@@ -106,7 +132,7 @@ body{
   <!-- Modal content -->
   <div class="modal-content">
     <span class="close">&times;</span>
-
+ 
     <form id="AddTraineeForm" method="post" action="doAddTrainee.php">
         <label for="idUsername">Username:</label>
         <input type="text" id="idUsername" name="idUsername" required />
@@ -121,8 +147,7 @@ body{
         <input type="text" id="intake" name="intake" required />
         <br>
         <input type="submit" value="Add" />
-    </form>
-
+    </form> 
   </div>
 
 </div>
@@ -132,10 +157,10 @@ body{
 <button id="myBtn2">Add Course</button>
 
 <!-- The Modal -->
-<div id="myModal2" class="modal">
+<div id="myModal2" class="modal2">
 
   <!-- Modal content -->
-  <div class="modal-content">
+  <div class="modal-content2">
     <span class="close">&times;</span>
 
     <form id="AddCourseForm" method="post" action="doAddCourse.php">
@@ -153,13 +178,14 @@ body{
 </div>
 
 
-
             <!-- Datatable -->
             <main class="tableMain">
                 <table id='exerciseTable' class="display table-striped data-table">
                     <thead class="table-header">
                         <tr>
                             <!-- Headers -->
+                            <td>Course ID</td>
+                            <td>Assessment</td>
                             <td>Student ID</td>
                             <td>Student Name</td>
                             <td>Intake</td>
@@ -172,6 +198,9 @@ body{
                 </table>
             </main>
         </div>
+
+
+
     <?php
         // If not admin/head admin role, 
     } else {
@@ -194,6 +223,14 @@ body{
             $('#exerciseTable').DataTable({
                 data: jsonData,
                 columns: [{
+                        title: 'Course ID',
+                        data: 'course_id'
+                    },
+                    {
+                        title: 'Assessment',
+                        data: 'assessment_name'
+                    },
+                    {
                         title: 'Student ID',
                         data: 'user_id'
                     },
@@ -223,6 +260,7 @@ body{
                 ]
             });
         });
+
 
         // Event listener for the "Delete" links
         $(document).on('click', 'a[data-action="delete"]', function(event) {

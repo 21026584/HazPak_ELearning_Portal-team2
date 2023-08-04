@@ -25,7 +25,6 @@ $rowItem = mysqli_fetch_array($resultItem);
 
 
 
-
 mysqli_close($link);
 ?>
 <!DOCTYPE html>
@@ -45,7 +44,10 @@ mysqli_close($link);
         <label for="UpdatedUsername">Username:</label>
         <input type="text" id="UpdatedUsername" name="UpdatedUsername" value="<?php echo $rowItem['username']?>" required  />
         <br>
-        <label for="UpdatedTraineeID">Trainee ID:</label>
+        <label for="traineeID">Original Trainee ID:</label>
+        <input type="text" id="traineeID" name="traineeID" value="<?php echo $rowItem['user_id']?>" />
+        <br>
+        <label for="UpdatedTraineeID">New Trainee ID:</label>
         <input type="text" id="UpdatedTraineeID" name="UpdatedTraineeID" value="<?php echo $rowItem['user_id']?>" required />
         <br>
         <label for="UpdatedTraineePassword">Password:</label>
