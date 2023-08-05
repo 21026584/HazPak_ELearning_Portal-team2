@@ -89,46 +89,79 @@ if ($row = mysqli_fetch_assoc($result)) {
     <?php
     include "navbar.php";
     ?>
+    <form id="assessmentForm" method="post" action="submit_assessment.php">
+        <?php if (in_array('A', $sections)) : ?>
+            <button type="button" class="collapsible">Section A</button>
+            <div class="collapsible-content question-column">
+                <?php foreach ($sectionQuestions['A'] as $questionRow) : ?>
+                    <div class="question-content">
+                        <?php if (!empty($questionRow['question_image'])) : ?>
+                            <img src="data:image/jpeg;base64,<?php echo base64_encode($questionRow['question_image']); ?>" alt="Question Image">
+                        <?php endif; ?>
+                        <p>Question: <?php echo $questionRow['question_text']; ?></p>
+                        <?php
+                        // Add your logic to display the answer choices for MCQ questions
 
-    <?php if (in_array('A', $sections)) : ?>
-        <button type="button" class="collapsible">Section A</button>
-        <div class="collapsible-content">
-            <?php foreach ($sectionQuestions['A'] as $questionRow) : ?>
-                <p>Question: <?php echo $questionRow['question_text']; ?></p>
-                <?php
-                // Add your logic to display the answer choices for MCQ questions
-                // You can access the answer options from the $answerOptions array for each question
-                // Example: $answerOptions = $answerOptions[$questionRow['question_id']];
-                ?>
-            <?php endforeach; ?>
-        </div>
-    <?php endif; ?>
+                        // Decode the answer_options JSON string into an array
+                        $answerOptions = json_decode($questionRow['answer_options'], true);
 
-    <?php if (in_array('B', $sections)) : ?>
-        <button type="button" class="collapsible">Section B</button>
-        <div class="collapsible-content">
-            <?php foreach ($sectionQuestions['B'] as $questionRow) : ?>
-                <p>Question: <?php echo $questionRow['question_text']; ?></p>
-                <?php
-                // Add your logic to display the input field for FIB questions
-                ?>
-            <?php endforeach; ?>
-        </div>
-    <?php endif; ?>
+                        if (!empty($answerOptions)) {
+                            foreach ($answerOptions as $index => $option) {
+                                // Generate unique IDs for the radio buttons
+                                $radioId = "radio_" . $questionRow['question_id'] . "_" . $index;
+                                ?>
+                                <label for="<?php echo $radioId; ?>">
+                                <input type="radio" id="<?php echo $radioId; ?>" name="question_<?php echo $questionRow['question_id']; ?>" value="<?php echo $index; ?>">
+                                    <?php echo $option; ?>
+                                </label>
+                                <?php
+                            }
+                        }
+                        //Example: $answerOptions = $answerOptions[$questionRow['question_id']];
+                        ?>
+                    
 
-    <?php if (in_array('C', $sections)) : ?>
-        <button type="button" class="collapsible">Section C</button>
-        <div class="collapsible-content">
-            <?php foreach ($sectionQuestions['C'] as $questionRow) : ?>
-                <p>Question: <?php echo $questionRow['question_text']; ?></p>
-                <?php
-                // Add your logic to display questions of the specified type in Section C
-                ?>
-            <?php endforeach; ?>
-        </div>
-    <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
 
-    <button type="button" class="submit-assessment-button">Submit</button>
+        <?php if (in_array('B', $sections)) : ?>
+            <button type="button" class="collapsible">Section B</button>
+            <div class="collapsible-content question-column">
+                <?php foreach ($sectionQuestions['B'] as $questionRow) : ?>
+                    <div class="question-content">
+                        <?php if (!empty($questionRow['question_image'])) : ?>
+                            <img src="data:image/jpeg;base64,<?php echo base64_encode($questionRow['question_image']); ?>" alt="Question Image">
+                        <?php endif; ?>
+                        <p>Question: <?php echo $questionRow['question_text']; ?></p>
+                        <?php
+                    // Add your logic to display the input field for FIB questions
+                    ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if (in_array('C', $sections)) : ?>
+            <button type="button" class="collapsible">Section C</button>
+            <div class="collapsible-content question-column">
+                <?php foreach ($sectionQuestions['C'] as $questionRow) : ?>
+                    <div class="question-content">
+                        <?php if (!empty($questionRow['question_image'])) : ?>
+                            <img src="data:image/jpeg;base64,<?php echo base64_encode($questionRow['question_image']); ?>" alt="Question Image">
+                        <?php endif; ?>
+                        <p>Question: <?php echo $questionRow['question_text']; ?></p>
+                        <?php
+                    // Add your logic to display questions of the specified type in Section C
+                    ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+
+        <button type="submit" class="submit-assessment-button">Submit</button>
+    </form>
 
     <script src="script.js"></script>
 </body>
