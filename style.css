@@ -559,3 +559,13 @@ body {
   background-color: #f2f2f2;
   padding: 20px;
   }
+
+  .question-content{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .question-column{
+    display: flex;
+    flex-direction: column;
+  }

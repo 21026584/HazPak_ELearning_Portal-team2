@@ -92,38 +92,53 @@ if ($row = mysqli_fetch_assoc($result)) {
 
     <?php if (in_array('A', $sections)) : ?>
         <button type="button" class="collapsible">Section A</button>
-        <div class="collapsible-content">
+        <div class="collapsible-content question-column">
             <?php foreach ($sectionQuestions['A'] as $questionRow) : ?>
-                <p>Question: <?php echo $questionRow['question_text']; ?></p>
-                <?php
-                // Add your logic to display the answer choices for MCQ questions
-                // You can access the answer options from the $answerOptions array for each question
-                // Example: $answerOptions = $answerOptions[$questionRow['question_id']];
+                <div class="question-content">
+                    <?php if (!empty($questionRow['question_image'])) : ?>
+                        <img src="data:image/jpeg;base64,<?php echo base64_encode($questionRow['question_image']); ?>" alt="Question Image">
+                     <?php endif; ?>
+                    <p>Question: <?php echo $questionRow['question_text']; ?></p>
+                    <?php
+                    // Add your logic to display the answer choices for MCQ questions
+                    // You can access the answer options from the $answerOptions array for each question
+                    // Example: $answerOptions = $answerOptions[$questionRow['question_id']];
                 ?>
+                </div>
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
 
     <?php if (in_array('B', $sections)) : ?>
         <button type="button" class="collapsible">Section B</button>
-        <div class="collapsible-content">
+        <div class="collapsible-content question-column">
             <?php foreach ($sectionQuestions['B'] as $questionRow) : ?>
-                <p>Question: <?php echo $questionRow['question_text']; ?></p>
-                <?php
+                <div class="question-content">
+                    <?php if (!empty($questionRow['question_image'])) : ?>
+                        <img src="data:image/jpeg;base64,<?php echo base64_encode($questionRow['question_image']); ?>" alt="Question Image">
+                     <?php endif; ?>
+                    <p>Question: <?php echo $questionRow['question_text']; ?></p>
+                    <?php
                 // Add your logic to display the input field for FIB questions
                 ?>
+                </div>
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
 
     <?php if (in_array('C', $sections)) : ?>
         <button type="button" class="collapsible">Section C</button>
-        <div class="collapsible-content">
+        <div class="collapsible-content question-column">
             <?php foreach ($sectionQuestions['C'] as $questionRow) : ?>
-                <p>Question: <?php echo $questionRow['question_text']; ?></p>
-                <?php
+                <div class="question-content">
+                    <?php if (!empty($questionRow['question_image'])) : ?>
+                        <img src="data:image/jpeg;base64,<?php echo base64_encode($questionRow['question_image']); ?>" alt="Question Image">
+                     <?php endif; ?>
+                    <p>Question: <?php echo $questionRow['question_text']; ?></p>
+                    <?php
                 // Add your logic to display questions of the specified type in Section C
                 ?>
+                </div>
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
