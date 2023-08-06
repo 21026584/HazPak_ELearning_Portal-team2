@@ -145,7 +145,7 @@ $userRoleID = $_SESSION['role_id'];
   ?>
 </div>
 
-<div style='margin-left: 280px; width:100%'>
+<div style='margin-left: 280px;'>
 
 <html>
 

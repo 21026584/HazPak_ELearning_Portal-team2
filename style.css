@@ -273,10 +273,10 @@ body {
 .submit-assessment-button{
     background-color: #F3DB2E;
     border: 0;
-    /* padding: 10px 20px; */
+    padding: 10px 20px;
     position: fixed;
-    left: 70%;
-    
+    left: 87%;
+    top: 90%;
 }
 
 .acc_container {
@@ -437,7 +437,7 @@ body {
     overflow: hidden; 
     transition: max-height 0.2s ease-out;
     margin-bottom: 5vh;
-    width: 60vw;
+    width: 61vw;
     position: relative;
     left: 2%
   } 
@@ -563,9 +563,46 @@ body {
   .question-content{
     display: flex;
     flex-direction: column;
+    margin-bottom: 2vh;
+    border-top: #E23805 dashed;
+
   }
 
   .question-column{
     display: flex;
     flex-direction: column;
+  }
+
+  .question_image{
+    width: 80%;
+    margin: auto;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+  }
+
+  .question_text{
+    margin: 0;
+    margin-top: 1rem;
+  }
+
+  #countdown-timer {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.left_panel{
+    float: left;
+    width: 75%;
+    overflow: hidden;
+  }
+  
+  .right_panel{
+    float: right;
+    width: 25%;
+    overflow: hidden;
   }
