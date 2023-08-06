@@ -12,3 +12,4 @@ $database = "u439252487_hazpak2"; */
 
 // Connect to the database
 $link = mysqli_connect($host, $username, $password, $database) or die(mysqli_connect_error());
+?>

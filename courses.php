@@ -2,12 +2,10 @@
 include("checkSession.php");
 include("dbFunctions.php");
 
-$query = "SELECT U.user_id, U.username, U.intake, U.role_id, G.course_id, A.assessment_name
+$query = "SELECT U.user_id, U.username, U.intake, U.role_id, G.course_id
     FROM users AS U
     INNER JOIN grades AS G 
     ON U.user_id = G.user_id
-    INNER JOIN assessments AS A
-    ON G.course_id = A.course_id
     WHERE U.role_id = 2";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
@@ -109,6 +107,30 @@ body{
   text-decoration: none;
   cursor: pointer;
 }
+
+
+
+
+/* The Close Button */
+.close2 {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close2:hover,
+.close2:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+
+
+
 </style>
 <body>
     <?php
@@ -122,7 +144,6 @@ body{
             <header class='tableHeader'>
                 <h1>Courses</h1>
             </header>
-      
 
             <button id="myBtn">Add Trainee</button>
 
@@ -161,7 +182,7 @@ body{
 
   <!-- Modal content -->
   <div class="modal-content2">
-    <span class="close">&times;</span>
+    <span class="close2">&times;</span>
 
     <form id="AddCourseForm" method="post" action="doAddCourse.php">
         <label for="courseId">Course Id:</label>
@@ -170,6 +191,23 @@ body{
         <label for="description">Description:</label>
         <input type="text" id="description" name="description" required />
     <br>
+
+
+                <main class="tableMain">
+                    <table id='TraineeTable2' class="display table-striped question-table">
+                        <thead class="table-header">
+                            <tr>
+                            <td>Student ID</td>
+                            <td>Student Name</td>
+                            <td>Intake</td>
+                            <td>Select</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </main>
+
         <input type="submit" value="Add" />
     </form>
 
@@ -180,12 +218,11 @@ body{
 
             <!-- Datatable -->
             <main class="tableMain">
-                <table id='exerciseTable' class="display table-striped data-table">
+                <table id='TraineeTable' class="display table-striped data-table">
                     <thead class="table-header">
                         <tr>
                             <!-- Headers -->
                             <td>Course ID</td>
-                            <td>Assessment</td>
                             <td>Student ID</td>
                             <td>Student Name</td>
                             <td>Intake</td>
@@ -220,15 +257,11 @@ body{
         $(document).ready(function() {
             // Compile database rows into json
             var jsonData = <?php echo $jsonData; ?>;
-            $('#exerciseTable').DataTable({
+            $('#TraineeTable').DataTable({
                 data: jsonData,
                 columns: [{
                         title: 'Course ID',
                         data: 'course_id'
-                    },
-                    {
-                        title: 'Assessment',
-                        data: 'assessment_name'
                     },
                     {
                         title: 'Student ID',
@@ -275,7 +308,7 @@ body{
                 success: function(response) {
                     if (response.status === 'success') {
                         // Refresh the DataTable after successful deletion
-                        $('#exerciseTable').DataTable().ajax.reload();
+                        $('#TraineeTable').DataTable().ajax.reload();
                     } else {
                         // Handle deletion error, show an alert or message if needed
                         alert('Failed to delete trainee. Please try again.');
@@ -289,31 +322,70 @@ body{
         });
 
 
-// Get the modal
-var modal = document.getElementById("myModal2");
 
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn2");
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
 
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-  modal.style.display = "block";
-}
+        $(document).ready(function() {
+            // Compile database rows into json
+            var jsonData = <?php echo $jsonData; ?>;
+            $('#TraineeTable2').DataTable({
+                data: jsonData,
+                columns: [
+                    {
+                        title: 'Student ID',
+                        data: 'user_id'
+                    },
+                    {
+                        title: 'Student Name',
+                        data: 'username'
+                    },
+                    {
+                        title: 'Intake',
+                        data: 'intake'
+                    },
+                    {
+                        title: 'Select',
+                        data: 'traineeId',
+                        render: function(data, type, row) {
+                            return '<input id="traineeID" name="traineeID[]" value="'+ row.user_id +'" type="checkbox"/>';
+                        }
+                    }
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
+                ]
+            });
+        });
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
+
+        // Event listener for the "Delete" links
+        $(document).on('click', 'a[data-action="delete"]', function(event) {
+            event.preventDefault();
+            var url = $(this).attr('href');
+
+            // Send AJAX request to deleteTrainee.php
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        // Refresh the DataTable after successful deletion
+                        $('#TraineeTable2').DataTable().ajax.reload();
+                    } else {
+                        // Handle deletion error, show an alert or message if needed
+                        alert('Failed to delete trainee. Please try again.');
+                    }
+                },
+                error: function() {
+                    // Handle AJAX error, show an alert or message if needed
+                    alert('An error occurred while processing your request. Please try again.');
+                }
+            });
+        });
+
+
+
+
+
 
 
 // Get the modal
@@ -341,6 +413,36 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+
+
+
+// Get the modal
+var modal2 = document.getElementById("myModal2");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn2");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close2")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal2.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal2.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal2) {
+    modal2.style.display = "none";
+  }
+}
+
+
 
 
        
