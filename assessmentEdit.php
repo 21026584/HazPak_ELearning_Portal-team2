@@ -94,6 +94,10 @@ mysqli_close($link);
         <br>
         <input type="datetime-local" id="idTime" name="time" value="<?php echo $rowItem['release_datetime']?>" required />
         <br><br>
+        <label for="endTime">Select a end time:</label>
+        <br>
+        <input type="time" id="endTime" name="endTime" value="<?php echo $rowItem['end_time']?>"required>
+        <br><br>
         <p><label for="inputQuestion">Questions:</label></p>
         <!-- <div class="form-group" id="inputQuestion">
             <input id='displayQuestion' type="text" class="questionID" name="inputQuestion[]" placeholder="Enter Question ID" required/>
