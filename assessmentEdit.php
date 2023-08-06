@@ -126,13 +126,14 @@ mysqli_close($link);
                         </tbody>
                     </table>
                 </main>
-                <p>Should be displaying checkbox with matching question ID<?php
-                    for ($i = 0; $i < count($questionArr); $i++) {
-                        $selectCourse = $questionArr[$i];
-                        print_r($selectCourse);
-                        print(", ");
-                    }
-                ?>
+                <p>Should be displaying checkbox with matching question ID 
+                    <?php
+                        for ($i = 0; $i < count($questionArr); $i++) {
+                            $selectCourse = $questionArr[$i];
+                            print_r($selectCourse);
+                            print(", ");
+                        }
+                    ?>
                 </p>
             </div>
         </div>
@@ -142,6 +143,7 @@ mysqli_close($link);
  
     <!-- To display the database -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -150,7 +152,6 @@ mysqli_close($link);
             // Compile database rows into json
             var jsonData = <?php echo $jsonData; ?>;
             $('#exerciseTable').DataTable({
-                responsive: true,
                 data: jsonData,
                 columns: [{
                         title: 'Question ID',
@@ -169,36 +170,41 @@ mysqli_close($link);
                         title: 'Select',
                         data: 'question_id',
                         render: function(data, type, row) {
-                            // quite hard to set a checkbox to be checked
-                            var isTrue = false;
                             <?php
                                 for ($i = 0; $i < count($questionArr); $i++) {
-                                    $selectquestion = $questionArr[$i];
-                                ?>   
-                                var phpQuestion = parseInt(<?php echo intval($selectquestion); ?>)
+                            ?>
+                                
+                            var idQuestion = <?php echo $questionArr[$i]; ?>;
 
-                                if (row.question_id === phpQuestion) {
-                                    isTrue = true;
-                                    break;
-                                } else {
-                                    isTrue = false;
-                                }
+                            if (row.question_id === idQuestion) {
+                                return '<input id="checkQu" name="inputQuestion[]" value="'+ row.question_id +'" type="checkbox" checked/>';
+                                <?php print("Success");?>
+                            } else {
+                                return '<input id="checkQu" name="inputQuestion[]" value="'+ row.question_id +'" type="checkbox"/>';
+                                <?php print("None");?>
+                            }
+                            
                             <?php
                                 }
                             ?>
-                            if (isTrue) {
-                                return '<input class="chkbox"id="checkQu" name="inputQuestion[]" value="'+ row.question_id +'" type="checkbox" checked/>';
-                                <?php echo "Edit is successful";?>
-                            } else {
-                                return '<input class="chkbox"id="checkQu" name="inputQuestion[]" value="'+ row.question_id +'" type="checkbox"/>';
-
-                                <?php echo "Edit is no good";?>
-                            }
-                            // return '<input class="chkbox"id="checkQu" name="inputQuestion[]" value="'+ row.question_id +'" type="checkbox"/>';
-                    }
-                }];
+                        }
+                    },
+                ]
             });
         });
+
+    // Add new input question field
+        // $("#addField").click(function() {
+        //     var questionType = $("#questionType").val();
+        //     var inputFieldHtml = '<div><input id="displayQuestion" type="text" name="inputQuestion[]" placeholder="Enter Question ID" required><button type="button" class="removeField">Remove</button></div>';
+        //     $("#inputQuestion").append(inputFieldHtml);
+        // });
+
+        // // Remove the selected input field
+        // $(document).on("click", ".removeField", function() {
+        //     $(this).parent('div').remove();
+        // });
+
         // Get the modal
         var modal = document.getElementById("Create_Modal");
 
