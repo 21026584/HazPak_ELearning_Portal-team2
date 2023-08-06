@@ -219,7 +219,8 @@ $result->data_seek(0);
         });
 
         function confirmDel() {
-            confirm("Are you sure you want to delete this Assessment?")
+            //Couldn't get the assessment name due to the modal structure
+            confirm("Are you sure you want to delete this Assessment?");
         }
     </script>
 </body>

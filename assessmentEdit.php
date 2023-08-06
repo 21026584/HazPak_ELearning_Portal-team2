@@ -146,6 +146,7 @@ mysqli_close($link);
             // Compile database rows into json
             var jsonData = <?php echo $jsonData; ?>;
             $('#exerciseTable').DataTable({
+                responsive: true,
                 data: jsonData,
                 columns: [{
                         title: 'Question ID',
@@ -165,67 +166,35 @@ mysqli_close($link);
                         data: 'question_id',
                         render: function(data, type, row) {
                             // quite hard to set a checkbox to be checked
-                            // var isTrue = false;
-                            // 
-                            //     for ($i = 0; $i < count($questionArr); $i++) {
-                            //         $selectquestion = $questionArr[$i];
-                            //         
-                            //     var phpQuestion = parseInt(<php echo intval($selectquestion); ?>)
-                            //     if (row.question_id === phpQuestion) {
-                            //         isTrue = true;
-                            //         break;
-                            //     } else {
-                            //         isTrue = false;
-                            //     }
-                            // <php
-                            //     }
-                            // ?>
-                            // if (isTrue) {
-                            //     return '<input class="chkbox"id="checkQu" name="inputQuestion[]" value="'+ row.question_id +'" type="checkbox" checked/>';
-                            // } else {
-                            //     return '<input class="chkbox"id="checkQu" name="inputQuestion[]" value="'+ row.question_id +'" type="checkbox"/>';
-                            // }
-                            return '<input class="chkbox"id="checkQu" name="inputQuestion[]" value="'+ row.question_id +'" type="checkbox"/>';
-                            
-                        }
-                    },
-                ]
+                            var isTrue = false;
+                            <?php
+                                for ($i = 0; $i < count($questionArr); $i++) {
+                                    $selectquestion = $questionArr[$i];
+                                ?>   
+                                var phpQuestion = parseInt(<?php echo intval($selectquestion); ?>)
+
+                                if (row.question_id === phpQuestion) {
+                                    isTrue = true;
+                                    break;
+                                } else {
+                                    isTrue = false;
+                                }
+                            <?php
+                                }
+                            ?>
+                            if (isTrue) {
+                                return '<input class="chkbox"id="checkQu" name="inputQuestion[]" value="'+ row.question_id +'" type="checkbox" checked/>';
+                                <?php echo "Edit is successful";?>
+                            } else {
+                                return '<input class="chkbox"id="checkQu" name="inputQuestion[]" value="'+ row.question_id +'" type="checkbox"/>';
+
+                                <?php echo "Edit is no good";?>
+                            }
+                            // return '<input class="chkbox"id="checkQu" name="inputQuestion[]" value="'+ row.question_id +'" type="checkbox"/>';
+                    }
+                }];
             });
-// I going to try this code out, was provided by ChatGPT
-            // Initialize the DataTable inside the modal
-            // var dataTable = $('#dataTable').DataTable({
-            //     columns: [
-            //         { data: 'column1' },
-            //         { data: 'column2' },
-            //         { data: 'checkboxData', render: function (data, type, row) {
-            //             return '<input type="checkbox" ' + (row.column1 === data ? 'checked' : '') + '>';
-            //         }}
-            //     ]
-            // });
-
-            // // Populate the DataTable with data from PHP
-            // var dataFromPHP = [
-            //     { column1: 'Data 1', column2: 'Data 2', checkboxData: 'Data 1' },
-            //     { column1: 'Data 3', column2: 'Data 4', checkboxData: 'Data 4' },
-            //     // Add more data objects as needed
-            // ];
-
-            // dataTable.rows.add(dataFromPHP).draw();
-        // });
         });
-
-    // Add new input question field
-        // $("#addField").click(function() {
-        //     var questionType = $("#questionType").val();
-        //     var inputFieldHtml = '<div><input id="displayQuestion" type="text" name="inputQuestion[]" placeholder="Enter Question ID" required><button type="button" class="removeField">Remove</button></div>';
-        //     $("#inputQuestion").append(inputFieldHtml);
-        // });
-
-        // // Remove the selected input field
-        // $(document).on("click", ".removeField", function() {
-        //     $(this).parent('div').remove();
-        // });
-
         // Get the modal
         var modal = document.getElementById("Create_Modal");
 
