@@ -72,6 +72,10 @@ mysqli_close($link);
         <br>
         <input type="datetime-local" id="idTime" name="time" required />
         <br><br>
+        <label for="endTime">Select a end time:</label>
+        <br>
+        <input type="time" id="endTime" name="endTime" required>
+        <br><br>
         <p><label for="inputQuestion">Questions:</label></p>
         <!-- <div class="form-group" id="inputQuestion">
             <input id='displayQuestion' type="text" class="questionID" name="inputQuestion[]" placeholder="Enter Question ID" required/>
@@ -85,7 +89,7 @@ mysqli_close($link);
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <main class="tableMain">
-                    <table id='exerciseTable' class="display table-striped question-table">
+                    <table id='questionTable' class="display table-striped question-table table-condensed">
                         <thead class="table-header">
                             <tr>
                                 <!-- Headers -->
@@ -106,6 +110,7 @@ mysqli_close($link);
 
     <!-- To display the database -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -113,7 +118,7 @@ mysqli_close($link);
         $(document).ready(function() {
             // Compile database rows into json
             var jsonData = <?php echo $jsonData; ?>;
-            $('#exerciseTable').DataTable({
+            $('#questionTable').DataTable({
                 data: jsonData,
                 columns: [{
                         title: 'Question ID',
