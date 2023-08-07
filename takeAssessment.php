@@ -7,8 +7,9 @@ include("dbFunctions.php");
 // Retrieve the selected assessment ID from the URL
 $assessmentId = $_GET['assessment_id'];
 
+
 // Query to fetch assessment details based on the ID
-$query = "SELECT A.assessment_name, A.release_datetime, A.questions, A.end_time
+$query = "SELECT A.assessment_name, A.course_id , A.release_datetime, A.questions, A.end_time
           FROM assessments AS A
           WHERE assessment_id = '$assessmentId'";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
@@ -20,6 +21,7 @@ $data = array();
 if ($row = mysqli_fetch_assoc($result)) {
     // Retrieve information from the selected assessment role
     $assessmentName = $row['assessment_name'];
+    $courseId = $row['course_id'];
     $releaseTime = $row['release_datetime'];
     $duration = $row['end_time'];
 
@@ -89,6 +91,7 @@ if ($row = mysqli_fetch_assoc($result)) {
     ?>
     <form id="assessmentForm" method="post" action="submit_assessment.php">
         <input type="hidden" name="assessment_id" value="<?php echo $assessmentId; ?>">
+        <input type="hidden" name="courseId" value="<?php echo $courseId; ?>">
         <div class="left_panel">
             <?php
                     $questionCounter = 1; // Initialize the question counter
