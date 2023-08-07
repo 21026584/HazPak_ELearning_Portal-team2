@@ -62,8 +62,8 @@
     </head>
 
     <body>
-        <p> Create more <a href="createExercise.php" class="custom-nav-link">Exercises</a>?</p>
-        <p> Return to <a href="exercises.php" class="custom-nav-link">Exercise</a> page?</p>
+        <p><a href="createExercise.php" class="custom-nav-link">Create</a> more exercise?</p>
+        <p><a href="exercises.php" class="custom-nav-link">Return</a> to exercise datatable?</p>
     </body>
 
 </html>

@@ -169,7 +169,7 @@ $result->data_seek(0);
                         title: 'Delete',
                         data: null,
                         render: function(data, type, row) {
-                            return '<a href="exerciseDelete.php?exercise_id=' + row.exercise_id + '">Delete</a>';
+                            return '<a href="exerciseDelete.php?exercise_id=' + row.exercise_id + '"  onclick="confirmDel()">Delete</a>';
                         }
                     }
                 ]
@@ -202,6 +202,11 @@ $result->data_seek(0);
                 });
             });
         });
+
+        function confirmDel() {
+            //Couldn't get the exercise name due to the modal structure
+            confirm("Are you sure you want to delete this Exerccise?");
+        }
     </script>
 </body>
 

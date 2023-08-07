@@ -1,16 +1,16 @@
 <?php
 // php file that contains the common database connection code
-include "dbFunctions.php";
+include ("dbFunctions.php");
 // Check user session
 include("checkSession.php");
 // Navbar
 include "navbar.php";
 
-$assessmentID = $_GET['assessment_id'];
+$exerciseID = $_GET['exercise_id'];
 
 // create query to retrieve a single record based on the value of $compID 
-$queryItem = "SELECT * FROM assessments
-          WHERE assessment_id=$assessmentID";
+$queryItem = "SELECT * FROM exercises
+          WHERE exercise_id=$exerciseID";
 
 // execute the query
 $resultItem = mysqli_query($link, $queryItem) or 
@@ -64,11 +64,11 @@ mysqli_close($link);
     <body>
     <h3>Edit Assessment</h3>
 
-    <form id="postForm" method="post" action="doAssessmentEdit.php">
+    <form id="postForm" method="post" action="doExerciseEdit.php">
         <!-- Ensure that assessment ID is carried over -->
-        <input type="hidden" name="idAssessment" value="<?php echo $rowItem['assessment_id'] ?>"/>
-        <label for="idName">Assessment Name:</label>
-        <input type="text" id="idName" name="name" value="<?php echo $rowItem['assessment_name']?>" required />
+        <input type="hidden" name="idExercise" value="<?php echo $rowItem['exercise_id'] ?>"/>
+        <label for="idName">Exercise Name:</label>
+        <input type="text" id="idName" name="name" value="<?php echo $rowItem['exercise_name']?>" required />
         <br><br>
         <label for="idCourse">Course:</label>
         <select id="idCourse" name="idCourse" required>
@@ -93,10 +93,6 @@ mysqli_close($link);
         <label for="idTime">Enter in release Time:</label>
         <br>
         <input type="datetime-local" id="idTime" name="time" value="<?php echo $rowItem['release_datetime']?>" required />
-        <br><br>
-        <label for="endTime">Select a end time:</label>
-        <br>
-        <input type="time" id="endTime" name="endTime" value="<?php echo $rowItem['end_time']?>"required>
         <br><br>
         <p><label for="inputQuestion">Questions:</label></p>
         <!-- <div class="form-group" id="inputQuestion">
@@ -126,15 +122,15 @@ mysqli_close($link);
                         </tbody>
                     </table>
                 </main>
-                <p>Should be displaying checkbox with matching question ID 
-                    <?php
+                <!-- <p>Should be displaying checkbox with matching question ID 
+                    <php
                         for ($i = 0; $i < count($questionArr); $i++) {
                             $selectCourse = $questionArr[$i];
                             print_r($selectCourse);
                             print(", ");
                         }
                     ?>
-                </p>
+                </p> -->
             </div>
         </div>
         <input type="submit" value="Finish Edit" />
@@ -170,17 +166,20 @@ mysqli_close($link);
                         title: 'Select',
                         data: 'question_id',
                         render: function(data, type, row) {
-                            var idQuestion = 0;
                             <?php
                                 for ($i = 0; $i < count($questionArr); $i++) {
                             ?>
-                                    idQuestion = <?php echo $questionArr[$i]?>;
+                                
+                            var idQuestion = <?php echo $questionArr[$i]; ?>;
 
-                                    if (row.question_id == idQuestion) {
-                                        return '<input id="checkQu" name="inputQuestion[]" value="'+ row.question_id +'" type="checkbox" checked/>';
-                                    } else {
-                                        return '<input id="checkQu" name="inputQuestion[]" value="'+ row.question_id +'" type="checkbox"/>';
-                                    }
+                            if (row.question_id === idQuestion) {
+                                return '<input id="checkQu" name="inputQuestion[]" value="'+ row.question_id +'" type="checkbox" checked/>';
+                                <?php print("Success");?>
+                            } else {
+                                return '<input id="checkQu" name="inputQuestion[]" value="'+ row.question_id +'" type="checkbox"/>';
+                                <?php print("None");?>
+                            }
+                            
                             <?php
                                 }
                             ?>
@@ -189,6 +188,18 @@ mysqli_close($link);
                 ]
             });
         });
+
+    // Add new input question field
+        // $("#addField").click(function() {
+        //     var questionType = $("#questionType").val();
+        //     var inputFieldHtml = '<div><input id="displayQuestion" type="text" name="inputQuestion[]" placeholder="Enter Question ID" required><button type="button" class="removeField">Remove</button></div>';
+        //     $("#inputQuestion").append(inputFieldHtml);
+        // });
+
+        // // Remove the selected input field
+        // $(document).on("click", ".removeField", function() {
+        //     $(this).parent('div').remove();
+        // });
 
         // Get the modal
         var modal = document.getElementById("Create_Modal");

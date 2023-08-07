@@ -25,6 +25,7 @@ if (mysqli_num_rows($result) > 0) {
 // Convert the data to JSON format
 $jsonData = json_encode($data);
 
+// Fetching question_type info from database
 $query = "SELECT * FROM question_type";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 while ($row = mysqli_fetch_assoc($result)) {
@@ -33,37 +34,85 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_FILES["image"]) && !empty($_FILES["image"]["tmp_name"])) {
-        // Retrieve the image file data
-        $image = $_FILES["image"]["tmp_name"];
+    if (isset($_POST["createForm"])) { // Create Question Handler
+        if (isset($_FILES["image"]) && !empty($_FILES["image"]["tmp_name"])) {
+            // Retrieve the image file data
+            $image = $_FILES["image"]["tmp_name"];
 
-        // Read the image file content
-        $question_image = addslashes(file_get_contents($image));
-    } else {
-        $question_image = null;
+            // Read the image file content
+            $question_image = addslashes(file_get_contents($image));
+        } else {
+            $question_image = null;
+        }
+
+        // Retrieve form data
+        $question_type_id = $_POST['questionType'];
+        $question_text = $_POST['questionText'];
+        $question_answers = $_POST['answerField'];
+        $answer_options = $_POST['inputField'];
+
+
+        if (isset($_POST['inputField']) && !empty($_POST['inputField'])) {
+            $answer_options_JSON = json_encode($answer_options);
+        } else {
+            $answer_options_JSON = json_encode(null);
+        }
+
+        // Convert the answer_options array to a JSON string
+        $question_answers_JSON = json_encode($question_answers);
+
+        $questionQuery = "INSERT INTO question_bank (question_type_id, question_text, question_answer, answer_options, question_image) VALUES ('$question_type_id', '$question_text', '$question_answers_JSON', '$answer_options_JSON', '$question_image')";
+        $questionResult = mysqli_query($link, $questionQuery) or die(mysqli_error($link));
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
+    } else if (isset($_POST["editForm"])) { // Edit Question Handler
+        if (isset($_FILES["image"]) && !empty($_FILES["image"]["tmp_name"])) {
+            // Retrieve the image file data
+            $image = $_FILES["image"]["tmp_name"];
+
+            // Read the image file content
+            $question_image = addslashes(file_get_contents($image));
+        } else {
+            $question_image = null;
+        }
+
+        // Retrieve form data
+        $question_id = $_POST['questionId'];
+        $question_type_id = $_POST['questionType'];
+        $question_text = $_POST['questionText'];
+        $question_answers = $_POST['answerField'];
+        $answer_options = $_POST['inputField'];
+
+
+        if (isset($_POST['inputField']) && !empty($_POST['inputField'])) {
+            $answer_options_JSON = json_encode($answer_options);
+        } else {
+            $answer_options_JSON = json_encode(null);
+        }
+
+        // Convert the answer_options array to a JSON string
+        $question_answers_JSON = json_encode($question_answers);
+
+        $questionQuery = "UPDATE question_bank
+                          SET question_type_id = '$question_type_id',
+                              question_text = '$question_text',
+                              question_answer = '$question_answers_JSON',
+                              answer_options = '$answer_options_JSON',
+                              question_image = '$question_image'
+                          WHERE question_id = '$question_id'";
+        $questionResult = mysqli_query($link, $questionQuery) or die(mysqli_error($link));
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
+    } else if (isset($_POST["deleteForm"])) { // Delete Question Handler
+        $question_id = $_POST['questionId'];
+        $questionQuery = "DELETE FROM question_bank
+                          WHERE question_id = '$question_id'";
+        $questionResult = mysqli_query($link, $questionQuery) or die(mysqli_error($link));
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
     }
-
-    // Retrieve form data
-    $question_type_id = $_POST['questionType'];
-    $question_text = $_POST['questionText'];
-    $question_answers = $_POST['answerField'];
-    $answer_options = $_POST['inputField'];
-
-
-    if (isset($_POST['inputField']) && !empty($_POST['inputField'])) {
-        $answer_options_JSON = json_encode($answer_options);
-    } else {
-        $answer_options_JSON = json_encode(null);
-    }
-
-    // Convert the answer_options array to a JSON string
-    $question_answers_JSON = json_encode($question_answers);
-
-    $questionQuery = "INSERT INTO question_bank (question_type_id, question_text, question_answer, answer_options, question_image) VALUES ('$question_type_id', '$question_text', '$question_answers_JSON', '$answer_options_JSON', '$question_image')";
-    $questionResult = mysqli_query($link, $questionQuery) or die(mysqli_error($link));
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit();
 }
+
 
 // Close the database connection
 mysqli_close($link);
@@ -96,45 +145,11 @@ mysqli_close($link);
                 <h1>Question Bank</h1>
             </header>
             <div class="assessmentButtonContainer">
-                <button id="Create_Button">Create Questions</button>
+                <button id="Create_Button" onclick="openModal(-1,0)">Create Questions</button>
             </div>
-            <div id="Create_Modal" class="modal">
+            <div id="modal" class="modal">
                 <!-- Modal content -->
                 <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <form id="questionForm" enctype="multipart/form-data" class="questionForm" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                        <label for="questionType">Question Type:</label>
-                        <select id="questionType" name="questionType" onchange="changeQuestionType()">
-                            <?php
-                            for ($i = 0; $i < count($questionArr); $i++) {
-                                $name = $questionArr[$i]['type_name'];
-                                $idType = $questionArr[$i]['type_id'];
-                                echo "<option value=$idType>$name</option>";
-                            }
-                            ?>
-                        </select>
-                        <br>
-                        <br>
-                        <textarea class="inputText" name="questionText" required></textarea>
-                        <br>
-                        <div id="inputFieldsContainer">
-                            <!-- The dynamically created input fields will be appended here -->
-                            <button type="button" onclick="addInputField()">Add Field</button>
-                            <br>
-                            <input type="file" name="image" accept="image/*">
-                            <br>
-                            <div id="fieldContainer0" class="field-container">
-                                <input type="text" name="inputField[]" placeholder="Enter option" required>
-                                <input type="radio" name="answerField" value="0" required>
-                            </div>
-                            <div id="fieldContainer1" class="field-container">
-                                <input type="text" name="inputField[]" placeholder="Enter option" required>
-                                <input type="radio" name="answerField" value="1" required>
-                            </div>
-                        </div>
-                        <br>
-                        <button type="submit" class="questionFormButton" name="submit">Submit</button>
-                    </form>
                 </div>
             </div>
             <!-- Datatable -->
@@ -192,7 +207,7 @@ mysqli_close($link);
                         title: 'Edit',
                         data: null,
                         render: function(data, type, row) {
-                            return '<a href="questionEdit.php?question_id=' + row.question_id + '">Edit</a>';
+                            return '<a href="#" onclick="openModal(' + row.question_id + ',1' + ')">Edit</a>';
                         }
                     },
                     // Use exercise_id to indicated exercise to delete
@@ -200,7 +215,7 @@ mysqli_close($link);
                         title: 'Delete',
                         data: null,
                         render: function(data, type, row) {
-                            return '<a href="questionDelete.php?question_id=' + row.question_id + '">Delete</a>';
+                            return '<a href="#" onclick="openModal(' + row.question_id + ',2' + ')">Delete</a>';
                         }
                     }
                 ]
@@ -211,31 +226,34 @@ mysqli_close($link);
             window.location.href = url;
         }
 
-        // Get the modal
-        var modal = document.getElementById("Create_Modal");
+        var modal = $("#modal");
 
-        // Get the button that opens the modal
-        var btn = document.getElementById("Create_Button");
+        // When the "Edit" link is clicked, open the modal
+        function openModal(question_id, modal_type) {
+            // Send an AJAX request to a PHP script that retrieves modal details
+            $.ajax({
+                url: 'questionModal.php',
+                type: 'POST',
+                data: {
+                    modal_type: modal_type,
+                    question_id: question_id,
+                },
+                success: function(response) {
+                    // Update the content of the modalContent with the response
+                    $('.modal-content').html(response);
+                    modal.show(); // Show the modal
+                },
 
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks the button, open the modal 
-        btn.onclick = function() {
-            modal.style.display = "block";
+                error: function(xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
         }
 
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
+        // Close the modal when the user clicks on <span> (x)
+        $(document).on("click", ".close", function() {
+            modal.hide();
+        });
 
         let currentQuestionType = '<?php echo $questionArr[0]['type_id'] ?>'; // Default question type 
         // Counter for answer index
