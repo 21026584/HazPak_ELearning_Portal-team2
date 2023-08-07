@@ -44,17 +44,15 @@ mysqli_close($link);
         <label for="UpdatedUsername">Username:</label>
         <input type="text" id="UpdatedUsername" name="UpdatedUsername" value="<?php echo $rowItem['username']?>" required  />
         <br>
-        <label for="traineeID">Original Trainee ID:</label>
+        <label for="traineeID">Trainee ID:</label>
         <input type="text" id="traineeID" name="traineeID" value="<?php echo $rowItem['user_id']?>" />
         <br>
-        <label for="UpdatedTraineeID">New Trainee ID:</label>
-        <input type="text" id="UpdatedTraineeID" name="UpdatedTraineeID" value="<?php echo $rowItem['user_id']?>" required />
         <br>
         <label for="UpdatedTraineePassword">Password:</label>
         <input type="text" id="UpdatedTraineePassword" name="UpdatedTraineePassword" value="<?php echo $rowItem['password']?>" required />
       <br>
-        <label for="intake">Intake:</label>
-        <input type="text" id="intake" name="intake" value="<?php echo $rowItem['intake']?>"required />
+        <label for="UpdatedIntake">Intake:</label>
+        <input type="text" id="UpdatedIntake" name="UpdatedIntake" value="<?php echo $rowItem['intake']?>"required />
         <br>
         <input type="submit" value="Edit" />
     </form>

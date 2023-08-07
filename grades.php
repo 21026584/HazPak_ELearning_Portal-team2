@@ -12,14 +12,14 @@ $link = mysqli_connect($db_host,$db_username,$db_password,$db_name) or
         die(mysqli_connect_error());
 
 
- $query = "SELECT * FROM grades "
+ $query = "SELECT * FROM assessment_grade "
     ;
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
 while ($row = mysqli_fetch_assoc($result)) {
   $arrItems[] = $row;
-  $grade = $row['grade'];
-   $course = $row['course_id'];
+  $grade = $row['score'];
+   $assessment = $row['assessment_id'];
    $user = $row['user_id'];
 }
 
@@ -50,7 +50,7 @@ mysqli_close($link);
     <div class="content">
 
       <?php
-      if($course = "C01" || $user = "T01"){
+      if($assessment == 1 || $user = "T01"){
         echo $grade;
       }
       else{
@@ -69,7 +69,7 @@ mysqli_close($link);
     <button type="button" class="collapsible">Assessment 2</button>
     <div class="content">
       <?php  
-      if($course = "C02"){
+      if($assessment == 2 And $user = "T01"){
         echo $grade;
       }
       else{
@@ -84,15 +84,19 @@ echo"";
   <div class="Assessment3">
     <button type="button" class="collapsible">Assessment 3</button>
     <div class="content">
-      <a class="assessment-anchor" href="">
-      <?php  ?>
-      </a>
-      <a class="assessment-anchor" href="">
-
-      </a>
+      <?php  
+      if($assessment == 3 And $user = "T01"){
+        echo $grade;
+      }
+      else{
+echo"";
+      }
+      ?>
+      
     </div>
   </div>
 
+  
 
 </div>
 

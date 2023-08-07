@@ -62,8 +62,6 @@ $userRoleID = $_SESSION['role_id'];
         <a href="questionBank.php" class="custom-nav-link">Question Bank</a>
       </li>
 
-      <!-- Check if current page matches navigation item then sets class to active -->
-
 
 <?php } ?>
 

@@ -2,11 +2,9 @@
 include("checkSession.php");
 include("dbFunctions.php");
 
-$query = "SELECT U.user_id, U.username, U.intake, U.role_id, G.course_id
-    FROM users AS U
-    INNER JOIN grades AS G 
-    ON U.user_id = G.user_id
-    WHERE U.role_id = 2";
+$query = "SELECT U.user_id, U.username, U.intake, U.role_id
+FROM users AS U
+WHERE U.role_id = 2";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
 // Initialise values
@@ -222,7 +220,6 @@ body{
                     <thead class="table-header">
                         <tr>
                             <!-- Headers -->
-                            <td>Course ID</td>
                             <td>Student ID</td>
                             <td>Student Name</td>
                             <td>Intake</td>
@@ -259,10 +256,10 @@ body{
             var jsonData = <?php echo $jsonData; ?>;
             $('#TraineeTable').DataTable({
                 data: jsonData,
-                columns: [{
+                columns: [/* {
                         title: 'Course ID',
                         data: 'course_id'
-                    },
+                    }, */
                     {
                         title: 'Student ID',
                         data: 'user_id'
