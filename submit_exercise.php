@@ -15,12 +15,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Include necessary files and database connection
     include("dbFunctions.php");
 
-    // Retrieve the assessment ID from the form
-    $assessmentId = $_POST['assessment_id'];
+    // Retrieve the exercise ID from the form
+    $exerciseId = $_POST['exercise_id'];
 
-    // Get the included question IDs for the assessment
+    // Get the included question IDs for the exercise
     $includedQuestionIds = array();
-    $query = "SELECT questions FROM assessments WHERE assessment_id = '$assessmentId'";
+    $query = "SELECT questions FROM exercises WHERE exercise_id = '$exerciseId'";
     $result = mysqli_query($link, $query);
 
     if ($row = mysqli_fetch_assoc($result)) {
@@ -72,19 +72,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Calculate the user's score
     $userScore = count($correctAnswers);
 
-    // Retrieve user and assessment details
+    // Retrieve user and exercise details
     $userId = $_SESSION['user_id']; // Change to actual session variable
     $courseId = $_POST['courseId'];
 
-    $timeTaken = $_POST['time_taken']; // Get the time_taken from the form
-
-    $adjustedDurationInSeconds = max($timeTaken, 0);
-    // Convert the adjusted duration back to time format
-    $adjustedDurationTime = gmdate("H:i:s", $adjustedDurationInSeconds);
-    
-    // Insert user's grade and adjusted duration into assessment_grade table
-    $insertQuery = "INSERT INTO assessment_grade (assessment_id, course_id, user_id, score, time_taken) 
-                    VALUES ('$assessmentId', '$courseId', '$userId', '$userScore', '$adjustedDurationTime')";
+    // Insert user's grade and adjusted duration into exercise_grade table
+    $insertQuery = "INSERT INTO exercise_grade (exercise_id, course_id, user_id, score) 
+                    VALUES ('$exerciseId', '$courseId', '$userId', '$userScore')";
     mysqli_query($link, $insertQuery);
 
     // Display the user's score

@@ -126,6 +126,24 @@ $userRoleID = $_SESSION['role_id'];
 
 <?php } ?>
 
+<?php
+    if ($userRoleID == 0) {
+    ?>
+      <!-- Check if current page matches navigation item then sets class to active -->
+
+
+      <li <?php if ($currentPage == 'admin.php') {
+            echo 'class="custom-nav-item-active"';
+          } else {
+            echo 'class="custom-nav-item"';
+          } ?>>
+        <a href="admin.php" class="custom-nav-link">Admins</a>
+      </li>
+      <!-- Check if current page matches navigation item then sets class to active -->
+
+
+<?php } ?>
+
 
     <!-- TEMPORARY LOG OUT -->
     <li class="custom-nav-item">
@@ -135,12 +153,6 @@ $userRoleID = $_SESSION['role_id'];
       </form> 
     </li>
   </ul>
-  <?php
-  echo 'user_id: ' . $_SESSION['user_id'] . '<br>';
-  echo 'firstLogin: ' . $_SESSION['firstLogin'] . '<br>';
-  echo 'role_id: ' . $userRoleID . '<br>';
-  echo 'username: ' . $_SESSION['username'];
-  ?>
 </div>
 
 <div style='margin-left: 280px;'>

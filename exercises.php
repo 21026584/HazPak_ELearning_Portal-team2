@@ -78,14 +78,6 @@ $result->data_seek(0);
     <?php
         // Show the trainee Exercise Page 
     } else if ($userRoleID == 2) { ?>
-        <div class="acc_container">
-            <div class="account">
-                <h4>Account</h4>
-                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUXbmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA%3D">
-                    <img id="circle" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
-                </a>
-            </div>
-        </div>
         <div class="assessment-details-dropdown-container">
             <select class="assessment-details-dropdown" name="pets" id="pet-select">
                 <?php
@@ -127,7 +119,7 @@ $result->data_seek(0);
                     Created by: <?php echo $createdBy; ?>
                 </div>
                 <div class="assessment-details-button-container">
-                    <button class="start-assessment-button">Start</button>
+                    <a href="takeExercise.php?exercise_id=<?php echo $exerciseId; ?>" class="start-assessment-button">Start</a>
                 </div>
             </div>
         </div>

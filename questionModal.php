@@ -32,7 +32,6 @@ if ($row = mysqli_fetch_assoc($questionResult)) {
 
 if ($modal_type == 0) { // Create Question
     echo '
-    CREATE QUESTION
         <span class="close">&times;</span>
         <form id="questionForm" enctype="multipart/form-data" class="questionForm" method="POST" action="/HazPak_ELearning_Portal-team2/questionBank.php">
         <label for="questionType">Question Type:</label>
@@ -70,7 +69,6 @@ if ($modal_type == 0) { // Create Question
     ';
 } else if ($modal_type == 1) { // Edit Question
     echo '
-        EDIT QUESTION
         <span class="close">&times;</span>
         <form id="editForm" enctype="multipart/form-data" class="questionForm" method="POST" action="/HazPak_ELearning_Portal-team2/questionBank.php">
             <label for="questionType">Question Type:</label>
@@ -94,7 +92,6 @@ if ($modal_type == 0) { // Create Question
         ';
     if ($type_id == 0) { // If edit MCQ
         echo '
-        MCQ
                 <div id="inputFieldsContainer">
                     <!-- The dynamically created input fields will be appended here -->
                     <button type="button" onclick="addInputField()">Add Field</button>
@@ -138,7 +135,6 @@ if ($modal_type == 0) { // Create Question
         ';
     } else if ($type_id == 1) { // If edit FIB
         echo '
-    FIB
     <div id="inputFieldsContainer">
         <!-- The dynamically created input fields will be appended here -->
         <button type="button" onclick="addAnswerField()">Add Answer</button><br>

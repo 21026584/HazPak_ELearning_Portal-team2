@@ -18,10 +18,7 @@ if (mysqli_num_rows($result) > 0) {
     while ($row = $result->fetch_assoc()) {
         // Add each row to the data array
         $data[] = $row;
-        $assessmentName = $row["assessment_name"];
-        $assessmentRelease = $row["release_datetime"];
-        $exerciseName = $row["exercise_name"];
-        $exerciseRelease = $row["release_datetime"];
+  
     }
 }
 
@@ -63,28 +60,53 @@ $jsonData = json_encode($data);
     <div class="row-container">
       <button type="button" class="collapsible">Available Assessments</button>
       <div class="collapsible-content">
-        <a class="assessment-anchor" href="">
-          <img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
-          <p>Assessment 1</p>
-        </a>
-        <a class="assessment-anchor" href="">
-          <img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
-          <p>Assessment 2</p>
-        </a>
+      <?php
+      // Include necessary files and database connection
+      include("dbFunctions.php");
+
+      // Get the current date and time
+      date_default_timezone_set('Asia/Singapore');
+      $currentDateTime = date("Y-m-d H:i:s");
+      
+      // Query to retrieve assessments with release_datetime in the past
+      $query = "SELECT * FROM assessments WHERE release_datetime <= '$currentDateTime'";
+      $result = mysqli_query($link, $query);
+
+      while ($row = mysqli_fetch_assoc($result)) {
+        $assessmentId = $row['assessment_id'];
+        $assessmentName = $row['assessment_name'];
+
+        // Display the assessment information
+        echo '<a class="assessment-anchor" href="assessments.php">' . 
+             '<img id="assessment-img" src="Images/HazPakLogo.png" placeholder="HazPak">' .
+             '<p>' . $assessmentName . '</p>' .
+             '</a>';
+      }
+
+      
+    ?>
       </div>
     </div>
 
     <div class="row-container">
       <button type="button" class="collapsible">Available Exercises</button>
       <div class="collapsible-content ">
-        <a class="assessment-anchor" href="">
-          <img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
-          <p>Exercise 1</p>
-        </a>
-        <a class="assessment-anchor" href="">
-          <img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">
-          <p>Exercise 2</p>
-        </a>
+        <?php
+          // Query to retrieve exercises with release_datetime in the past
+          $query = "SELECT * FROM exercises WHERE release_datetime <= '$currentDateTime'";
+          $result = mysqli_query($link, $query);
+
+          while ($row = mysqli_fetch_assoc($result)) {
+            $exerciseId = $row['exercise_id'];
+            $exerciseName = $row['exercise_name'];
+
+            // Display the assessment information
+            echo '<a class="assessment-anchor" href="assessments.php">' . 
+                '<img id="assessment-img" src="Images/HazPakLogo.png" placeholder="HazPak">' .
+                '<p>' . $exerciseName . '</p>' .
+                '</a>';
+          }
+        ?>
       </div>
     </div>
   </div>
@@ -110,7 +132,46 @@ $jsonData = json_encode($data);
         <ul class="days"></ul>
       </div>
       <div class="assignments">
+        <?php
+          $currentDate = date('Y-m-d'); // Current date in 'Y-m-d' format
+          $releasedExercises = array(); // To store released exercises
+          $releasedAssessments = array(); // To store released assessments
 
+          foreach ($data as $row) {
+              if ($row['release_datetime'] === $currentDate) {
+                  if (!empty($row['exercise_name'])) {
+                      $releasedExercises[] = $row['exercise_name'];
+                  }
+                  if (!empty($row['assessment_name'])) {
+                      $releasedAssessments[] = $row['assessment_name'];
+                  }
+              }
+          }
+
+          if (!empty($releasedExercises)) {
+              echo '<h3>Released Exercises:</h3>';
+              foreach ($releasedExercises as $exercise) {
+                  echo '<div class="assignment">';
+                  echo '<h4>' . $exercise . '</h4>';
+                  // Add more exercise details as needed
+                  echo '</div>';
+              }
+          }
+
+          if (!empty($releasedAssessments)) {
+              echo '<h3>Released Assessments:</h3>';
+              foreach ($releasedAssessments as $assessment) {
+                  echo '<div class="assignment">';
+                  echo '<h4>' . $assessment . '</h4>';
+                  // Add more assessment details as needed
+                  echo '</div>';
+              }
+          }
+
+          if (empty($releasedExercises) && empty($releasedAssessments)) {
+              echo 'No exercises or assessments released today.';
+          }
+        ?>
       </div>
     </div>
   </div>
