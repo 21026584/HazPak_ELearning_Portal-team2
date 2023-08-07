@@ -184,7 +184,7 @@ $result->data_seek(0);
                         title: 'Delete',
                         data: null,
                         render: function(data, type, row) {
-                            return '<a href="assessmentDelete.php?assessment_id=' + row.assessment_id + '">Delete</a>';
+                            return '<a href="assessmentDelete.php?assessment_id=' + row.assessment_id + '" onclick="confirmDel()">Delete</a>';
                         }
                     }
                 ]
@@ -217,6 +217,11 @@ $result->data_seek(0);
                 });
             });
         });
+
+        function confirmDel() {
+            //Couldn't get the assessment name due to the modal structure
+            confirm("Are you sure you want to delete this Assessment?");
+        }
     </script>
 </body>
 

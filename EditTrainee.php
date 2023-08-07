@@ -7,28 +7,23 @@ include("checkSession.php");
 include "navbar.php";
 
 $user_id = $_GET['user_id'];
+// $traineeID = $_POST['user_id'];
+
 //echo $itemID;
 
 // create query to retrieve a single record based on the value of $compID 
 $queryItem = "SELECT * FROM users
-          WHERE user_id=$user_id";
+WHERE user_id='$user_id'";
 
 // execute the query
-$resultItem = mysqli_query($link, $queryItem) or 
-                die(mysqli_error($link));
+ $resultItem = mysqli_query($link, $queryItem) or 
+                die(mysqli_error($link)); 
 
 // fetch the execution result to an array
 $rowItem = mysqli_fetch_array($resultItem);
 
-//Getting the questions from json file
-$questionArr =  json_decode($rowItem['questions'], true);
 
-//getting the course id
-$query = "SELECT * FROM courses";
-$result = mysqli_query($link, $query) or die(mysqli_error($link));
-while ($row = mysqli_fetch_assoc($result)) {
-    $course[] = $row;
-}
+
 
 mysqli_close($link);
 ?>
@@ -42,54 +37,30 @@ mysqli_close($link);
         <title>Edit Assessment</title>
     </head>
     <body>
-    <h3>Edit Assessment</h3>
 
-    <form id="postForm" method="post" action="doTraineeEdit.php">
-        <!-- Ensure that assessment ID is carried over -->
-        <input type="hidden" name="idAssessment" value="<?php echo $rowItem['user_id'] ?>"/>
-        <label for="idName">Assessment Name:</label>
-        <input type="text" id="idName" name="name" value="<?php echo $rowItem['assessment_name']?>" required />
-        <br><br>
-        <label for="idCourse">Course:</label>
-        <select id="idCourse" name="idCourse" required>
-            <?php
-            // list the course from database and shows current assessment course
-            for ($i = 0; $i < count($course); $i++) {
-                $selectCourse = $course[$i]['course_id'];
-                if ($selectCourse == $rowItem['instructions']){
-                    echo "<option selected>$selectCourse</option>";
-                } else {
-                    echo "<option>$selectCourse</option>";
-                }
-                
-            }
-            ?>
-        </select>
-        <br><br>
-        <label for="idInstuc">Instructions:</label>
+    <h3>Edit Trainee</h3>
+
+    <form id="EditTraineeForm" method="post" action="doTraineeEdit.php">
+        <label for="UpdatedUsername">Username:</label>
+        <input type="text" id="UpdatedUsername" name="UpdatedUsername" value="<?php echo $rowItem['username']?>" required  />
         <br>
-        <textarea id="idInstuc" name="instruction" rows="5" cols="30" required><?php echo $rowItem['instructions']?></textarea>
-        <br><br>
-        <label for="idTime">Enter in release Time:</label>
+        <label for="traineeID">Original Trainee ID:</label>
+        <input type="text" id="traineeID" name="traineeID" value="<?php echo $rowItem['user_id']?>" />
         <br>
-        <input type="datetime-local" id="idTime" name="time" value="<?php echo $rowItem['release_datetime']?>" required />
-        <p><label for="inputQuestion">Questions:</label></p>
-        <div class="form-group" id="inputQuestion">
-            <input id='questionID' type="text" class="questionID" name="inputQuestion[]" placeholder="Enter Question ID" value="<?php echo $questionArr[0]?>" required/>
-            <?php
-                for ($i = 1; $i < count($questionArr); $i++) {
-                    ?>
-                    <div><input type="text" name="inputQuestion[]" placeholder="Enter Question ID" value="<?php echo $questionArr[$i]; ?>" required><button type="button" class="removeField">Remove</button></div>
-                    <?php
-                }
-            ?>
-        </div>
-            <button type="button" id="addField">Add new questions</button>
-            <br>
-        <br><br>
-        <input type="submit" value="Finish Edit" />
+        <label for="UpdatedTraineeID">New Trainee ID:</label>
+        <input type="text" id="UpdatedTraineeID" name="UpdatedTraineeID" value="<?php echo $rowItem['user_id']?>" required />
+        <br>
+        <label for="UpdatedTraineePassword">Password:</label>
+        <input type="text" id="UpdatedTraineePassword" name="UpdatedTraineePassword" value="<?php echo $rowItem['password']?>" required />
+      <br>
+        <label for="intake">Intake:</label>
+        <input type="text" id="intake" name="intake" value="<?php echo $rowItem['intake']?>"required />
+        <br>
+        <input type="submit" value="Edit" />
     </form>
-    
+
+
+
     <script>
     // Add new input question field
         $("#addField").click(function() {

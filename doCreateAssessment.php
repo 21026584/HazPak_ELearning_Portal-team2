@@ -9,7 +9,7 @@
     // && !empty($_POST['instruction']) && !empty($_POST['time']) && isset($_POST['inputQuestion'])&& !empty($_POST['idCourse'])
     if (!empty($_POST['name']) ) {
         if (!empty($_POST['instruction'])){
-            if (!empty($_POST['time'])){
+            if (!empty($_POST['time']) && !empty($_POST['endTime'])){
                 if (!empty($_POST['inputQuestion'])){
                     if (!empty($_POST['idCourse'])){
                         try {
@@ -24,13 +24,14 @@
                             $foreign_key_value = $_SESSION['user_id'];; 
                         
                             // Prepare the SQL statement
-                            $stmt = $conn->prepare("INSERT INTO assessments (course_id, assessment_name, instructions, release_datetime, user_id, questions) VALUES (:value0, :value1, :value2, :value3, :foreign_key, :value4)");
+                            $stmt = $conn->prepare("INSERT INTO assessments (course_id, assessment_name, instructions, release_datetime, end_time, user_id, questions) VALUES (:value0, :value1, :value2, :value3, :value4, :foreign_key, :value5)");
                         
                             // Bind parameters
                             //Assign data retreived from form to the following variables below respectively to will input statement into SQL to make add in a new assessment into the assessment database
                             $name = $_POST['name'];
                             $instructions = $_POST['instruction'];
                             $time = $_POST['time'];
+                            $end = $_POST['endTime'];
                             $course = $_POST['idCourse'];
                             $userID = $_SESSION['user_id'];
                             $questions = $_POST['inputQuestion'];
@@ -39,7 +40,8 @@
                             $stmt->bindParam(':value1', $name);
                             $stmt->bindParam(':value2', $instructions);
                             $stmt->bindParam(':value3', $time);
-                            $stmt->bindParam(':value4', $question_JSON);
+                            $stmt->bindParam(':value4', $end);
+                            $stmt->bindParam(':value5', $question_JSON);
                             $stmt->bindParam(':foreign_key', $foreign_key_value);
                         
                             // Execute the query
@@ -79,8 +81,8 @@
     </head>
 
     <body>
-        <p> Create more <a href="createAssessment.php" class="custom-nav-link">Assessments</a>?</p>
-        <p> Return to <a href="assessment.php" class="custom-nav-link">Assessments</a> page?</p>
+        <p><a href="createAssessment.php" class="custom-nav-link">Create</a> more assessments?</p>
+        <p><a href="assessments.php" class="custom-nav-link">Return</a> to Assessments table?</p>
     </body>
 
 </html>

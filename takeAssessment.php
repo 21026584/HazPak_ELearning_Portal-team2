@@ -8,7 +8,7 @@ include("dbFunctions.php");
 $assessmentId = $_GET['assessment_id'];
 
 // Query to fetch assessment details based on the ID
-$query = "SELECT A.assessment_name, A.release_datetime, A.questions
+$query = "SELECT A.assessment_name, A.release_datetime, A.questions, A.end_time
           FROM assessments AS A
           WHERE assessment_id = '$assessmentId'";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
@@ -21,6 +21,7 @@ if ($row = mysqli_fetch_assoc($result)) {
     // Retrieve information from the selected assessment role
     $assessmentName = $row['assessment_name'];
     $releaseTime = $row['release_datetime'];
+    $duration = $row['end_time'];
 
     // Get the questions column value (JSON string)
     $questionsJSON = $row['questions'];
@@ -89,47 +90,132 @@ if ($row = mysqli_fetch_assoc($result)) {
     <?php
     include "navbar.php";
     ?>
+    <form id="assessmentForm" method="post" action="submit_assessment.php">
+        <div class="left_panel">
+            <?php
+                    $questionCounter = 1; // Initialize the question counter
 
-    <?php if (in_array('A', $sections)) : ?>
-        <button type="button" class="collapsible">Section A</button>
-        <div class="collapsible-content">
-            <?php foreach ($sectionQuestions['A'] as $questionRow) : ?>
-                <p>Question: <?php echo $questionRow['question_text']; ?></p>
-                <?php
-                // Add your logic to display the answer choices for MCQ questions
-                // You can access the answer options from the $answerOptions array for each question
-                // Example: $answerOptions = $answerOptions[$questionRow['question_id']];
-                ?>
-            <?php endforeach; ?>
+                    if (in_array('A', $sections)) : ?>
+                        <button type="button" class="collapsible">Section A</button>
+                        <div class="collapsible-content question-column">
+                            <?php foreach ($sectionQuestions['A'] as $questionRow) : ?>
+                                <div class="question-content">
+                                    <?php if (!empty($questionRow['question_image'])) : ?>
+                                        <img src="data:image/jpeg;base64,<?php echo base64_encode($questionRow['question_image']); ?>" alt="Question Image" class="question_image">
+                                    <?php endif; ?>
+                                    <p class="question_text"><?php echo $questionCounter . ". " . $questionRow['question_text']; ?></p>
+                                    <?php
+                                    // Add your logic to display the answer choices for MCQ questions
+
+                                    // Decode the answer_options JSON string into an array
+                                    $answerOptions = json_decode($questionRow['answer_options'], true);
+
+                                    if (!empty($answerOptions)) {
+                                        foreach ($answerOptions as $index => $option) {
+                                            // Generate unique IDs for the radio buttons
+                                            $radioId = "radio_" . $questionRow['question_id'] . "_" . $index;
+                                            ?>
+                                            <label for="<?php echo $radioId; ?>">
+                                            <input type="radio" id="<?php echo $radioId; ?>" name="question_<?php echo $questionRow['question_id']; ?>" value="<?php echo $index; ?>">
+                                                <?php echo $option; ?>
+                                            </label>
+                                            <?php
+                                        }
+                                    }
+                                    //Example: $answerOptions = $answerOptions[$questionRow['question_id']];
+                                    ?>
+                                
+
+                                </div>
+                            <?php 
+                            $questionCounter++; // Increment the question counter
+                            endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (in_array('B', $sections)) : ?>
+                        <button type="button" class="collapsible">Section B</button>
+                        <div class="collapsible-content question-column">
+                            <?php foreach ($sectionQuestions['B'] as $questionRow) : ?>
+                                <div class="question-content">
+                                    <?php if (!empty($questionRow['question_image'])) : ?>
+                                        <img src="data:image/jpeg;base64,<?php echo base64_encode($questionRow['question_image']); ?>" alt="Question Image" class="question_image">
+                                    <?php endif; ?>
+                                    <p class="question_text"><?php echo $questionCounter . ". " . $questionRow['question_text']; ?></p>
+                                    <?php
+                                // Add your logic to display the input field for FIB questions
+                                ?>
+                                </div>
+                                <?php 
+                            $questionCounter++; // Increment the question counter
+                            endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (in_array('C', $sections)) : ?>
+                        <button type="button" class="collapsible">Section C</button>
+                        <div class="collapsible-content question-column">
+                            <?php foreach ($sectionQuestions['C'] as $questionRow) : ?>
+                                <div class="question-content">
+                                    <?php if (!empty($questionRow['question_image'])) : ?>
+                                        <img src="data:image/jpeg;base64,<?php echo base64_encode($questionRow['question_image']); ?>" alt="Question Image" class="question_image">
+                                    <?php endif; ?>
+                                    <p class="question_text"><?php echo $questionCounter . ". " . $questionRow['question_text']; ?></p>
+                                    <?php
+                                // Add your logic to display questions of the specified type in Section C
+                                ?>
+                                </div>
+                                <?php 
+                            $questionCounter++; // Increment the question counter
+                            endforeach; ?>
+                        </div>
+                    <?php endif; ?>
         </div>
-    <?php endif; ?>
-
-    <?php if (in_array('B', $sections)) : ?>
-        <button type="button" class="collapsible">Section B</button>
-        <div class="collapsible-content">
-            <?php foreach ($sectionQuestions['B'] as $questionRow) : ?>
-                <p>Question: <?php echo $questionRow['question_text']; ?></p>
-                <?php
-                // Add your logic to display the input field for FIB questions
-                ?>
-            <?php endforeach; ?>
+        <div class="right_panel">
+            <div id="countdown-timer"></div>
+        <button type="submit" class="submit-assessment-button">Submit</button>
         </div>
-    <?php endif; ?>
 
-    <?php if (in_array('C', $sections)) : ?>
-        <button type="button" class="collapsible">Section C</button>
-        <div class="collapsible-content">
-            <?php foreach ($sectionQuestions['C'] as $questionRow) : ?>
-                <p>Question: <?php echo $questionRow['question_text']; ?></p>
-                <?php
-                // Add your logic to display questions of the specified type in Section C
-                ?>
-            <?php endforeach; ?>
-        </div>
-    <?php endif; ?>
+        
+    </form>
 
-    <button type="button" class="submit-assessment-button">Submit</button>
+    <script>
+        // Get the duration string from the PHP variable
+        var durationString = "<?php echo $duration; ?>";
 
+        // Parse hours, minutes, and seconds from the duration string
+        var durationParts = durationString.split(":");
+        var hours = parseInt(durationParts[0]);
+        var minutes = parseInt(durationParts[1]);
+        var seconds = parseInt(durationParts[2]);
+
+        // Convert hours, minutes, and seconds to seconds
+        var durationInSeconds = hours * 3600 + minutes * 60 + seconds;
+
+        // Calculate the end time by adding the duration to the current time
+        var now = new Date();
+        var endTime = new Date(now.getTime() + durationInSeconds * 1000); // Convert duration to milliseconds
+
+        // Update the countdown every second
+        var countdownInterval = setInterval(function() {
+            var now = new Date().getTime();
+            var timeRemaining = endTime - now;
+
+            if (timeRemaining <= 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("countdown-timer").innerHTML = "Time's up!";
+            } else {
+                var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+                document.getElementById("countdown-timer").innerHTML =hours + "h " + minutes + "m " + seconds + "s ";
+            }
+        }, 1000);
+    </script>
+
+    
     <script src="script.js"></script>
 </body>
 

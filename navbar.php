@@ -38,48 +38,7 @@ $userRoleID = $_SESSION['role_id'];
     <!-- Check if current page matches navigation item then sets class to active -->
 
     <!-- Check if user is Head Admin/Admin, before assigning specific nav items -->
-    <?php
-    if ($userRoleID == 0 || $userRoleID == 1) {
-    ?>
-      <!-- Check if current page matches navigation item then sets class to active -->
 
-      <li <?php if ($currentPage == 'courses.php') {
-            echo 'class="custom-nav-item-active"';
-          } else {
-            echo 'class="custom-nav-item"';
-          } ?>>
-        <a href="courses.php" class="custom-nav-link">Courses</a>
-      </li>
-
-      <li <?php if ($currentPage == 'questionBank.php') {
-            echo 'class="custom-nav-item-active"';
-          } else {
-            echo 'class="custom-nav-item"';
-          } ?>>
-        <a href="questionBank.php" class="custom-nav-link">Question Bank</a>
-      </li>
-
-
-
-    <?php } else { ?>
-      <!-- Check if current page matches navigation item then sets class to active -->
-
-      
-
-
-    <li <?php if ($currentPage == 'grades.php') {
-            echo 'class="custom-nav-item-active"';
-          } else {
-            echo 'class="custom-nav-item"';
-          } ?>>
-        <a href="grades.php" class="custom-nav-link">Grades</a>
-      </li>
-
-    <?php }
-    ?>
-    <!-- Check if current page matches navigation item then sets class to active -->
-
-    <!-- Check if current page matches navigation item then sets class to active -->
 
     <li <?php if ($currentPage == 'index.php') {
           echo 'class="custom-nav-item-active"';
@@ -89,6 +48,26 @@ $userRoleID = $_SESSION['role_id'];
       <a href="index.php" class="custom-nav-link">Dashboard</a>
     </li>
     
+
+    <?php
+    if ($userRoleID == 0 || $userRoleID == 1) {
+    ?>
+      <!-- Check if current page matches navigation item then sets class to active -->
+
+      <li <?php if ($currentPage == 'questionBank.php') {
+            echo 'class="custom-nav-item-active"';
+          } else {
+            echo 'class="custom-nav-item"';
+          } ?>>
+        <a href="questionBank.php" class="custom-nav-link">Question Bank</a>
+      </li>
+
+      <!-- Check if current page matches navigation item then sets class to active -->
+
+
+<?php } ?>
+
+
     <li <?php if ($currentPage == 'exercises.php') {
           echo 'class="custom-nav-item-active"';
         } else {
@@ -105,7 +84,49 @@ $userRoleID = $_SESSION['role_id'];
         } ?>>
       <a href="assessments.php" class="custom-nav-link">Assessments</a>
     </li>
+    
 
+    <?php
+    if ($userRoleID == 0 || $userRoleID == 1) {
+    ?>
+      <!-- Check if current page matches navigation item then sets class to active -->
+
+      
+
+    <li <?php if ($currentPage == 'courses.php') {
+            echo 'class="custom-nav-item-active"';
+          } else {
+            echo 'class="custom-nav-item"';
+          } ?>>
+        <a href="courses.php" class="custom-nav-link">Courses</a>
+      </li>
+
+
+      <!-- Check if current page matches navigation item then sets class to active -->
+
+
+<?php } ?>
+
+
+
+
+<?php
+    if ($userRoleID == 2) {
+    ?>
+      <!-- Check if current page matches navigation item then sets class to active -->
+
+
+      <li <?php if ($currentPage == 'grades.php') {
+            echo 'class="custom-nav-item-active"';
+          } else {
+            echo 'class="custom-nav-item"';
+          } ?>>
+        <a href="grades.php" class="custom-nav-link">Grades</a>
+      </li>
+      <!-- Check if current page matches navigation item then sets class to active -->
+
+
+<?php } ?>
 
 
     <!-- TEMPORARY LOG OUT -->
@@ -124,7 +145,7 @@ $userRoleID = $_SESSION['role_id'];
   ?>
 </div>
 
-<div style='margin-left: 280px; width:100%'>
+<div style='margin-left: 280px;'>
 
 <html>
 

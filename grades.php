@@ -96,9 +96,9 @@ echo"";
 
 </div>
 
-<div>
+<!-- <div>
 <canvas id="myChart"></canvas> 
-</div>
+</div> -->
 
 </body>
 
@@ -107,36 +107,6 @@ echo"";
 <script src="script.js"></script>
 <script>
   
-
-
-const labels = [
-     'Pass',
-     'Fail',
-    ];
-
-
-   const data = {
-     labels: labels,
-     datasets: [{
-       label: 'Dataset',
-       backgroundColor: [ 
-       'rgb(255, 99, 132)', 
-       'rgb(54, 162, 235)',
-
-     ],
-       data: [2,1],
-    }]
-   };
-
-    const config = {
-    type: 'bar',
-   data: data
-      };
-
-        const myChart = new Chart(
-      document.getElementById('myChart'),
-        config
-     );
 
 
 
