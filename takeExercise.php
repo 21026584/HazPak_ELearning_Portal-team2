@@ -8,7 +8,7 @@ include("dbFunctions.php");
 $exercise_id = $_GET['exercise_id'];
 
 // Query to fetch exercise details based on the ID
-$query = "SELECT E.exercise_name, E.release_datetime, E.questions
+$query = "SELECT E.exercise_name, E.release_datetime, E.questions, E.course_id
           FROM exercises AS E
           WHERE exercise_id = '$exercise_id'";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
@@ -20,6 +20,7 @@ $data = array();
 if ($row = mysqli_fetch_assoc($result)) {
     // Retrieve information from the selected exercise role
     $exercisename = $row['exercise_name'];
+    $courseId = $row['course_id'];
     $releaseTime = $row['release_datetime'];
 
     // Get the questions column value (JSON string)
@@ -87,6 +88,7 @@ if ($row = mysqli_fetch_assoc($result)) {
     ?>
     <form id="exerciseForm" method="post" action="submit_exercise.php">
         <input type="hidden" name="exercise_id" value="<?php echo $exercise_id; ?>">
+        <input type="hidden" name="courseId" value="<?php echo $courseId; ?>">
         <div class="left_panel">
             <?php
                     $questionCounter = 1; // Initialize the question counter

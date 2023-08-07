@@ -11,7 +11,6 @@ if (isset($_SESSION['user_id'])) {
     exit; // Stop further processing if the user is not logged in
 }
 
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Include necessary files and database connection
     include("dbFunctions.php");
@@ -39,31 +38,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Loop through included question IDs and compare with user answers
     foreach ($includedQuestionIds as $questionId) {
         $userAnswerKey = "question_" . $questionId;
-
+    
         if (isset($userAnswers[$userAnswerKey])) {
             $userAnswer = $userAnswers[$userAnswerKey];
-
-            // Retrieve the correct answer from the question_bank table
-            $query = "SELECT question_answer FROM question_bank WHERE question_id = '$questionId'";
+    
+            // Retrieve the correct answer and question text from the question_bank table
+            $query = "SELECT question_answer, question_text FROM question_bank WHERE question_id = '$questionId'";
             $result = mysqli_query($link, $query);
-
+    
             if ($row = mysqli_fetch_assoc($result)) {
-                $correctAnswer = $row['question_answer'];
-
+                $correctAnswerJson = $row['question_answer'];
+                $questionText = $row['question_text'];
+    
+                // Decode the correct answer from JSON format
+                $correctAnswerArray = json_decode($correctAnswerJson, true);
+                $correctAnswer = implode(", ", $correctAnswerArray);
+    
                 // Compare user's answer to the correct answer
                 if ($userAnswer === $correctAnswer) {
                     $correctAnswers[] = $questionId; // Store correct question IDs
                 }
+    
+                // Echo question text, correct answer, and user's answer
+                echo "Question: " . $questionText . "<br>";
+                echo "Correct Answer: " . $correctAnswer . "<br>";
+                echo "Your Answer: " . $userAnswer . "<br><br>";
             }
         }
     }
+    
+    
 
     // Calculate the user's score
     $userScore = count($correctAnswers);
 
     // Retrieve user and exercise details
     $userId = $_SESSION['user_id']; // Change to actual session variable
-    $courseId = "C01"; // Change to the appropriate course ID
+    $courseId = $_POST['courseId'];
 
     // Insert user's grade and adjusted duration into exercise_grade table
     $insertQuery = "INSERT INTO exercise_grade (exercise_id, course_id, user_id, score) 
