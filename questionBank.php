@@ -35,6 +35,27 @@ while ($row = mysqli_fetch_assoc($result)) {
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST["createForm"])) { // Create Question Handler
+
+        // Retrieve form data
+        $question_type_id = $_POST['questionType'];
+        $question_text = $_POST['questionText'];
+        $question_answers = $_POST['answerField'];
+        $answer_options = $_POST['inputField'];
+
+
+        // Convert the answer_options array to a JSON string
+        if (isset($_POST['inputField']) && !empty($_POST['inputField'])) {
+            $answer_options_JSON = json_encode($answer_options);
+        } else {
+            $answer_options_JSON = json_encode(null);
+        }
+
+        // Convert the answer_options array to a JSON string
+        $question_answers_JSON = json_encode($question_answers);
+
+        // Initialize variables for image handling
+        $question_image = null;
+
         if (isset($_FILES["image"]) && !empty($_FILES["image"]["tmp_name"])) {
             // Retrieve the image file data
             $image = $_FILES["image"]["tmp_name"];
@@ -45,26 +66,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $question_image = null;
         }
 
-        // Retrieve form data
-        $question_type_id = $_POST['questionType'];
-        $question_text = $_POST['questionText'];
-        $question_answers = $_POST['answerField'];
-        $answer_options = $_POST['inputField'];
+        // Create a prepared statement for the INSERT query
+        $questionQuery = "INSERT INTO question_bank (question_type_id, question_text, question_answer, answer_options, question_image) VALUES (?, ?, ?, ?, ?)";
+        $stmt = mysqli_prepare($link, $questionQuery);
 
+        // Bind parameters
+        mysqli_stmt_bind_param($stmt, "issss", $question_type_id, $question_text, $question_answers_JSON, $answer_options_JSON, $question_image);
 
-        if (isset($_POST['inputField']) && !empty($_POST['inputField'])) {
-            $answer_options_JSON = json_encode($answer_options);
+        // Execute the prepared statement
+        mysqli_stmt_execute($stmt);
+
+        // Check if the insertion was successful
+        if (mysqli_stmt_affected_rows($stmt) > 0) {
+            // Successfully inserted
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
         } else {
-            $answer_options_JSON = json_encode(null);
+            // Insertion failed
+            echo "Insertion operation failed.";
         }
 
-        // Convert the answer_options array to a JSON string
-        $question_answers_JSON = json_encode($question_answers);
-
-        $questionQuery = "INSERT INTO question_bank (question_type_id, question_text, question_answer, answer_options, question_image) VALUES ('$question_type_id', '$question_text', '$question_answers_JSON', '$answer_options_JSON', '$question_image')";
-        $questionResult = mysqli_query($link, $questionQuery) or die(mysqli_error($link));
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
+        // Close the prepared statement
+        mysqli_stmt_close($stmt);
     } else if (isset($_POST["editForm"])) { // Edit Question Handler
         if (isset($_FILES["image"]) && !empty($_FILES["image"]["tmp_name"])) {
             // Retrieve the image file data
@@ -92,17 +115,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Convert the answer_options array to a JSON string
         $question_answers_JSON = json_encode($question_answers);
-
+        
+        // Create a prepared statement for the UPDATE query
         $questionQuery = "UPDATE question_bank
-                          SET question_type_id = '$question_type_id',
-                              question_text = '$question_text',
-                              question_answer = '$question_answers_JSON',
-                              answer_options = '$answer_options_JSON',
-                              question_image = '$question_image'
-                          WHERE question_id = '$question_id'";
-        $questionResult = mysqli_query($link, $questionQuery) or die(mysqli_error($link));
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
+                          SET question_type_id = ?,
+                            question_text = ?,
+                            question_answer = ?,
+                            answer_options = ?,
+                            question_image = ?
+                          WHERE question_id = ?";
+        $stmt = mysqli_prepare($link, $questionQuery);
+
+        // Bind parameters
+        mysqli_stmt_bind_param($stmt, "issssi", $question_type_id, $question_text, $question_answers_JSON, $answer_options_JSON, $question_image, $question_id);
+
+        // Execute the prepared statement
+        mysqli_stmt_execute($stmt);
+
+        // Check if the update was successful
+        if (mysqli_stmt_affected_rows($stmt) > 0) {
+            // Successfully updated
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
+        } else {
+            // Update failed
+            echo "Update operation failed.";
+        }
+
+        // Close the prepared statement
+        mysqli_stmt_close($stmt);
     } else if (isset($_POST["deleteForm"])) { // Delete Question Handler
         $question_id = $_POST['questionId'];
         $questionQuery = "DELETE FROM question_bank
