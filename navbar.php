@@ -155,12 +155,6 @@ $userRoleID = $_SESSION['role_id'];
       </form> 
     </li>
   </ul>
-  <?php
-  echo 'user_id: ' . $_SESSION['user_id'] . '<br>';
-  echo 'firstLogin: ' . $_SESSION['firstLogin'] . '<br>';
-  echo 'role_id: ' . $userRoleID . '<br>';
-  echo 'username: ' . $_SESSION['username'];
-  ?>
 </div>
 
 <div style='margin-left: 280px;'>
