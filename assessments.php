@@ -213,6 +213,10 @@ $result->data_seek(0);
         function confirmDel() {
             //Couldn't get the assessment name due to the modal structure
             confirm("Are you sure you want to delete this Assessment?");
+            // var result = window.confirm("Are you sure you want to delete this Assessment?");
+            // if (result) {
+            //     window.location.href = "new_page.html"; // Change the URL to your desired page
+            // }
         }
     </script>
 </body>

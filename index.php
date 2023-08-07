@@ -78,7 +78,7 @@ $jsonData = json_encode($data);
 
         // Display the assessment information
         echo '<a class="assessment-anchor" href="assessments.php">' . 
-             '<img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">' .
+             '<img id="assessment-img" src="Images/HazPakLogo.png" placeholder="HazPak">' .
              '<p>' . $assessmentName . '</p>' .
              '</a>';
       }
@@ -102,7 +102,7 @@ $jsonData = json_encode($data);
 
             // Display the assessment information
             echo '<a class="assessment-anchor" href="assessments.php">' . 
-                '<img id="assessment-img" src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=70">' .
+                '<img id="assessment-img" src="Images/HazPakLogo.png" placeholder="HazPak">' .
                 '<p>' . $exerciseName . '</p>' .
                 '</a>';
           }
