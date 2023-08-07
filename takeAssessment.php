@@ -48,7 +48,6 @@ if ($row = mysqli_fetch_assoc($result)) {
     $sectionQuestions = array(
         'A' => array(), // For MCQ questions
         'B' => array(), // For FIB questions
-        'C' => array()  // For other questions
     );
 
     // Loop through questions and categorize them into sections
@@ -66,8 +65,6 @@ if ($row = mysqli_fetch_assoc($result)) {
             $sectionQuestions['A'][] = $questionRow; // Add to Section A
         } elseif ($questionType == 1) { // Assuming question_type_id for FIB is 1
             $sectionQuestions['B'][] = $questionRow; // Add to Section B
-        } else {
-            $sectionQuestions['C'][] = $questionRow; // Add to Section C
         }
     }
 
@@ -91,6 +88,7 @@ if ($row = mysqli_fetch_assoc($result)) {
     include "navbar.php";
     ?>
     <form id="assessmentForm" method="post" action="submit_assessment.php">
+        <input type="hidden" name="assessment_id" value="<?php echo $assessmentId; ?>">
         <div class="left_panel">
             <?php
                     $questionCounter = 1; // Initialize the question counter
@@ -116,6 +114,7 @@ if ($row = mysqli_fetch_assoc($result)) {
                                             $radioId = "radio_" . $questionRow['question_id'] . "_" . $index;
                                             ?>
                                             <label for="<?php echo $radioId; ?>">
+                                            <input type="hidden" name="question_ids[]" value="<?php echo $questionRow['question_id']; ?>">
                                             <input type="radio" id="<?php echo $radioId; ?>" name="question_<?php echo $questionRow['question_id']; ?>" value="<?php echo $index; ?>">
                                                 <?php echo $option; ?>
                                             </label>
@@ -142,9 +141,8 @@ if ($row = mysqli_fetch_assoc($result)) {
                                         <img src="data:image/jpeg;base64,<?php echo base64_encode($questionRow['question_image']); ?>" alt="Question Image" class="question_image">
                                     <?php endif; ?>
                                     <p class="question_text"><?php echo $questionCounter . ". " . $questionRow['question_text']; ?></p>
-                                    <?php
-                                // Add your logic to display the input field for FIB questions
-                                ?>
+                                    <input type="hidden" name="question_ids[]" value="<?php echo $questionRow['question_id']; ?>">
+                                    <input type="text" name="question_<?php echo $questionRow['question_id']; ?>" class="fib-input" placeholder="Your answer here">
                                 </div>
                                 <?php 
                             $questionCounter++; // Increment the question counter
@@ -152,28 +150,11 @@ if ($row = mysqli_fetch_assoc($result)) {
                         </div>
                     <?php endif; ?>
 
-                    <?php if (in_array('C', $sections)) : ?>
-                        <button type="button" class="collapsible">Section C</button>
-                        <div class="collapsible-content question-column">
-                            <?php foreach ($sectionQuestions['C'] as $questionRow) : ?>
-                                <div class="question-content">
-                                    <?php if (!empty($questionRow['question_image'])) : ?>
-                                        <img src="data:image/jpeg;base64,<?php echo base64_encode($questionRow['question_image']); ?>" alt="Question Image" class="question_image">
-                                    <?php endif; ?>
-                                    <p class="question_text"><?php echo $questionCounter . ". " . $questionRow['question_text']; ?></p>
-                                    <?php
-                                // Add your logic to display questions of the specified type in Section C
-                                ?>
-                                </div>
-                                <?php 
-                            $questionCounter++; // Increment the question counter
-                            endforeach; ?>
-                        </div>
-                    <?php endif; ?>
         </div>
         <div class="right_panel">
             <div id="countdown-timer"></div>
-        <button type="submit" class="submit-assessment-button">Submit</button>
+            <input type="hidden" name="time_taken" value="">
+            <button type="submit" class="submit-assessment-button">Submit</button>
         </div>
 
         
@@ -181,6 +162,7 @@ if ($row = mysqli_fetch_assoc($result)) {
 
     <script>
         // Get the duration string from the PHP variable
+        var starttime = "<?php echo $releaseTime; ?>";
         var durationString = "<?php echo $duration; ?>";
 
         // Parse hours, minutes, and seconds from the duration string
@@ -193,10 +175,10 @@ if ($row = mysqli_fetch_assoc($result)) {
         var durationInSeconds = hours * 3600 + minutes * 60 + seconds;
 
         // Calculate the end time by adding the duration to the current time
-        var now = new Date();
+        var now = new Date(starttime);
         var endTime = new Date(now.getTime() + durationInSeconds * 1000); // Convert duration to milliseconds
 
-        // Update the countdown every second
+        // Update the countdown and hidden input value every second
         var countdownInterval = setInterval(function() {
             var now = new Date().getTime();
             var timeRemaining = endTime - now;
@@ -204,16 +186,30 @@ if ($row = mysqli_fetch_assoc($result)) {
             if (timeRemaining <= 0) {
                 clearInterval(countdownInterval);
                 document.getElementById("countdown-timer").innerHTML = "Time's up!";
+                document.querySelector("input[name='time_taken']").value = durationInSeconds;
             } else {
                 var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
                 var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
                 var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-                document.getElementById("countdown-timer").innerHTML =hours + "h " + minutes + "m " + seconds + "s ";
+                document.getElementById("countdown-timer").innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
+                document.querySelector("input[name='time_taken']").value = durationInSeconds - Math.floor(timeRemaining / 1000);
             }
         }, 1000);
+
+        // Function to submit the form when time is up
+        function submitFormWhenTimeIsUp() {
+            clearInterval(countdownInterval);
+            document.getElementById("countdown-timer").innerHTML = "Time's up!";
+            document.querySelector("input[name='time_taken']").value = durationInSeconds;
+            document.getElementById("assessmentForm").submit();
+        }
+
+        // Set a timeout to call the function when time is up
+        setTimeout(submitFormWhenTimeIsUp, durationInSeconds * 1000); // Convert duration to milliseconds
     </script>
+
 
     
     <script src="script.js"></script>
