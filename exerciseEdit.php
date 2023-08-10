@@ -122,15 +122,15 @@ mysqli_close($link);
                         </tbody>
                     </table>
                 </main>
-                <!-- <p>Should be displaying checkbox with matching question ID 
-                    <php
+                <p>Should be displaying checkbox with matching question ID 
+                    <?php
                         for ($i = 0; $i < count($questionArr); $i++) {
                             $selectCourse = $questionArr[$i];
                             print_r($selectCourse);
                             print(", ");
                         }
                     ?>
-                </p> -->
+                </p>
             </div>
         </div>
         <input type="submit" value="Finish Edit" />

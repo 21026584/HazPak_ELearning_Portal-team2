@@ -169,7 +169,7 @@ $result->data_seek(0);
                         title: 'Delete',
                         data: null,
                         render: function(data, type, row) {
-                            return '<a href="exerciseDelete.php?exercise_id=' + row.exercise_id + '"  onclick="confirmDel()">Delete</a>';
+                            return '<button onclick="confirmDel('+ row.exercise_id +')">Delete</button>';
                         }
                     }
                 ]
@@ -203,9 +203,17 @@ $result->data_seek(0);
             });
         });
 
-        function confirmDel() {
-            //Couldn't get the exercise name due to the modal structure
-            confirm("Are you sure you want to delete this Exerccise?");
+        // will confirm whether admins want to delete that assessment
+        function confirmDel(url) {
+            var confirmation = window.confirm("Are you sure you want to delete this Exercise?");
+  
+            if (confirmation) {
+                // If user clicked "OK", redirect to assessmentDelete.php
+                window.location.href = "exerciseDelete.php?exercise_id="+url;
+            } else {
+                // If user clicked "Cancel", alert message appear and nothing else happen
+                alert(url+" was not deleted");
+            }
         }
     </script>
 </body>
