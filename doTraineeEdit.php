@@ -4,13 +4,12 @@ include ("dbFunctions.php");
 
 
 $traineeID = $_POST['traineeID'];
-$updatedID = $_POST['UpdatedTraineeID'];
-$updateUsername = $_POST['UpdatedUsername'];
-$updatePassword = $_POST['UpdatedTraineePassword'];
-
+$updatedUsername = $_POST['UpdatedUsername'];
+$updatedPassword = $_POST['UpdatedTraineePassword'];
+$UpdatedIntake = $_POST['UpdatedIntake'];
 
 $queryUpdate = "UPDATE users
-                SET user_id='$updatedID'
+                SET username='$updatedUsername', password=SHA1('$updatedPassword'), intake='$UpdatedIntake'
                 WHERE user_id='$traineeID'";
         
 $resultUpdate = mysqli_query($link, $queryUpdate)

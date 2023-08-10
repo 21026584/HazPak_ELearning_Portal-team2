@@ -59,7 +59,7 @@ $jsonData = json_encode($data);
     </h1>
     <div class="row-container">
       <button type="button" class="collapsible">Available Assessments</button>
-      <div class="collapsible-content">
+      <div class="collapsible-content scrollable-content">
       <?php
       // Include necessary files and database connection
       include("dbFunctions.php");
@@ -90,7 +90,7 @@ $jsonData = json_encode($data);
 
     <div class="row-container">
       <button type="button" class="collapsible">Available Exercises</button>
-      <div class="collapsible-content ">
+      <div class="collapsible-content scrollable-content">
         <?php
           // Query to retrieve exercises with release_datetime in the past
           $query = "SELECT * FROM exercises WHERE release_datetime <= '$currentDateTime'";

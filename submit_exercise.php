@@ -81,18 +81,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     VALUES ('$exerciseId', '$courseId', '$userId', '$userScore')";
     mysqli_query($link, $insertQuery);
 
-    // Display the user's score
-    echo "Your score: " . $userScore . " out of " . $totalQuestions . "<br>";
-
-    // Display the questions that were answered correctly
-    echo "Questions you got correct:<br>";
-    foreach ($correctAnswers as $questionId) {
-        $query = "SELECT question_text FROM question_bank WHERE question_id = '$questionId'";
-        $result = mysqli_query($link, $query);
-        if ($row = mysqli_fetch_assoc($result)) {
-            echo "- " . $row['question_text'] . "<br>";
-        }
+    // Display the submission status
+    echo "<div style='text-align: center; margin-top: 45vh;'>";
+    if (mysqli_affected_rows($link) > 0) {
+        echo "Exercise successfully submitted.<br>";
+        echo "<a href='index.php'>Return to Dashboard</a>";
+    } else {
+        echo "Failed to submit exercise.<br>";
+        echo "<a href='index.php'>Return to Dashboard</a>";
     }
+    echo "</div>";
 
     // Close the database connection
     mysqli_close($link);

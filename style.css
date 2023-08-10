@@ -606,3 +606,7 @@ body {
     width: 25%;
     overflow: hidden;
   }
+
+  .scrollable-content {
+    overflow-x: auto;
+}
