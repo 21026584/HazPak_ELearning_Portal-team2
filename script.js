@@ -5,7 +5,7 @@ function expandAllCollapsibles() {
   for (var i = 0; i < coll.length; i++) {
     coll[i].classList.add("collapsible_active");
     var content = coll[i].nextElementSibling;
-    content.style.maxHeight = content.scrollHeight + "px";
+    content.style.maxHeight = content.scrollHeight + 15 + "px";
   }
 }
 
@@ -24,7 +24,7 @@ window.onload = function() {
         if (content.style.maxHeight) {
           content.style.maxHeight = null;
         } else {
-          content.style.maxHeight = content.scrollHeight + "px";
+          content.style.maxHeight = content.scrollHeight + 15 + "px";
         }
       });
     }  
