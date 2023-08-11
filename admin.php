@@ -112,46 +112,19 @@ $result->data_seek(0);
                     ]
                 });
             });
-            // Redirects the user to the specified URL
-            function redirectToPage(url) {
-                window.location.href = url;
+
+            // will confirm whether admins want to delete that assessment
+            function confirmDel(url) {
+                var confirmation = window.confirm("Are you sure you want to delete this Admin?");
+                alert("Delete button clicked for user ID: " + url);
+                if (confirmation) {
+                    // If user clicked "OK", redirect to assessmentDelete.php
+                    window.location.href = "adminDelete.php?user_id="+url;
+                } else {
+                    // If user clicked "Cancel", alert message appear and nothing else happen
+                    alert(url+" was not deleted");
+                }
             }
-
-            $(document).ready(function() {
-                $('#pet-select').change(function() {
-                    var assessmentId = $(this).val();
-
-                    // Send an AJAX request to a PHP script that retrieves assessment details
-                    $.ajax({
-                        url: 'getAssessmentDetails.php',
-                        type: 'POST',
-                        data: {
-                            assessmentId: assessmentId
-                        },
-                        success: function(response) {
-                            // Update the content of the assessmentDetailsContainer with the response
-                            $('#assessmentDetails').html(response);
-                        },
-
-                        error: function(xhr, status, error) {
-                            console.log(xhr.responseText);
-                        }
-                    });
-                });
-            });
-
-        // will confirm whether admins want to delete that assessment
-        function confirmDel(url) {
-            var confirmation = window.confirm("Are you sure you want to delete this Admin?");
-  
-            if (confirmation) {
-                // If user clicked "OK", redirect to assessmentDelete.php
-                window.location.href = "adminDelete.php?user_id="+url;
-            } else {
-                // If user clicked "Cancel", alert message appear and nothing else happen
-                alert(url+" was not deleted");
-            }
-        }
         </script>
     </body>
 
