@@ -135,51 +135,54 @@ $jsonData = json_encode($data);
       </div>
       <div class="assignments">
           <?php
-        $currentDate = date('Y-m-d'); // Current date in 'Y-m-d' format
-        $releasedExercises = array(); // To store released exercises
-        $releasedAssessments = array(); // To store released assessments
+          // Include necessary files and database connection
+          include("dbFunctions.php");
+
+          // Get the current date in 'Y-m-d' format
+          $currentDate = date('Y-m-d');
 
           // Query to retrieve exercises released today
           $query = "SELECT * FROM exercises WHERE DATE(release_datetime) = '$currentDate'";
           $result = mysqli_query($link, $query);
 
-          while ($row = mysqli_fetch_assoc($result)) {
-              $releasedExercises[] = $row['exercise_name'];
+          // Display released exercises
+          if (mysqli_num_rows($result) > 0) {
+              echo '<h5>Released Exercises:</h5>';
+              while ($row = mysqli_fetch_assoc($result)) {
+                  echo '<div class="assignment">';
+                  echo '<a href="exercises.php?exercise_id=' . $row['exercise_id'] . '">' .
+                      '<p>' . $row['exercise_name'] . '</p>' .
+                      '</a>';
+                  echo '</div>';
+              }
           }
 
           // Query to retrieve assessments released today
           $query = "SELECT * FROM assessments WHERE DATE(release_datetime) = '$currentDate'";
           $result = mysqli_query($link, $query);
 
-          while ($row = mysqli_fetch_assoc($result)) {
-              $releasedAssessments[] = $row['assessment_name'];
-          }
-
-          if (!empty($releasedExercises)) {
-              echo '<h3>Released Exercises:</h3>';
-              foreach ($releasedExercises as $exercise) {
+          // Display released assessments
+          if (mysqli_num_rows($result) > 0) {
+              echo '<h5>Released Assessments:</h5>';
+              while ($row = mysqli_fetch_assoc($result)) {
                   echo '<div class="assignment">';
-                  echo '<p>' . $exercise . '</p>';
-                  // Add more exercise details as needed
+                  echo '<a href="assessments.php?assessment_id=' . $row['assessment_id'] . '">' .
+                      '<p>' . $row['assessment_name'] . '</p>' .
+                      '</a>';
                   echo '</div>';
               }
           }
 
-          if (!empty($releasedAssessments)) {
-              echo '<h3>Released Assessments:</h3>';
-              foreach ($releasedAssessments as $assessment) {
-                  echo '<div class="assignment">';
-                  echo '<p>' . $assessment . '</p>';
-                  // Add more assessment details as needed
-                  echo '</div>';
-              }
-          }
-
-          if (empty($releasedExercises) && empty($releasedAssessments)) {
+          // If no exercises or assessments released today
+          if (mysqli_num_rows($result) === 0) {
               echo '<p>No exercises or assessments released today.</p>';
           }
+
+          // Close the database connection
+          mysqli_close($link);
           ?>
       </div>
+
 
 
 
