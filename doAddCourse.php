@@ -21,7 +21,7 @@
             //  $foreign_key_value = $_POST['traineeID']; 
         
             // Prepare the SQL statement
-            $stmt = $conn->prepare("INSERT INTO courses(user_id, course_id) VALUES (:value0, :value1);");
+            $stmt = $conn->prepare("INSERT INTO courses(user_id, course_id, description) VALUES (:value0, :value1, :value2);");
         
             // Bind parameters
             //Assign data retreived from form to the following variables below respectively to will input statement into SQL to make add in a new assessment into the assessment database
@@ -31,7 +31,7 @@
             $trainee_JSON = json_encode($traineeID);
             $stmt->bindParam(':value0', $trainee_JSON);
             $stmt->bindParam(':value1', $course_id);
-            // $stmt->bindParam(':value2', $description);
+            $stmt->bindParam(':value2', $description);
         
             // Execute the query
             $stmt->execute();
