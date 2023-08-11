@@ -72,7 +72,7 @@ mysqli_close($link);
         <br>
         <input type="datetime-local" id="idTime" name="time" required />
         <br><br>
-        <label for="endTime">Select a end time:</label>
+        <label for="endTime">Select duration:</label>
         <br>
         <input type="time" id="endTime" name="endTime" required>
         <br><br>

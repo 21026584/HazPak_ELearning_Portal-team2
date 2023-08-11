@@ -10,7 +10,7 @@ $assessmentID = $_GET['assessment_id'];
 
 // create query to retrieve a single record based on the value of $compID 
 $queryItem = "SELECT * FROM assessments
-          WHERE assessment_id=$assessmentID";
+          WHERE assessment_id='$assessmentID'";
 
 // execute the query
 $resultItem = mysqli_query($link, $queryItem) or 
@@ -94,7 +94,7 @@ mysqli_close($link);
         <br>
         <input type="datetime-local" id="idTime" name="time" value="<?php echo $rowItem['release_datetime']?>" required />
         <br><br>
-        <label for="endTime">Select a end time:</label>
+        <label for="endTime">Select a duration:</label>
         <br>
         <input type="time" id="endTime" name="endTime" value="<?php echo $rowItem['end_time']?>"required>
         <br><br>

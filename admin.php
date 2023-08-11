@@ -7,7 +7,7 @@ include("checkSession.php");
 include "navbar.php";
 $roleID = $_SESSION['role_id'];
 
-// Query 
+// Query to display only head admins or admins
 $query = "SELECT user_id, username
     FROM users 
     WHERE role_id = 1 OR role_id = 0";
@@ -51,28 +51,7 @@ $result->data_seek(0);
                 <header class='tableHeader'>
                     <h1>Admin</h1>
                 </header>
-                <div class="adminButtonContainer">
-                <button id="Create_Button">Create Admins</button>
-                </div>
-                <div id="Create_Modal" class="modal">
-                    <!-- Modal content -->
-                    <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <h1>Create Admin</h1>
-                    <form  id="postForm" method="post" action="doAssessmentEdit.php">
-                        <input type="hidden" name="roleID" value="1"/>
-                        <input type="hidden" name="login" value="1"/>
-                        <label for="userID">User ID:</label>
-                        <input type="text" id="userID" name="userID" required />
-                        <br><br>
-                        <label for="userName">Username:</label>
-                        <input type="text" id="" name="" required />
-                        <br><br>
-                        <label for="password">Password:</label>
-                        <input type="text" id="password" name="password" value="Password" placeholder="'Password' is default" required />
-                    </form>
-                    </div>
-                </div>
+                <button onclick="redirectToPage('createAdmin.php')">Create Admins</button>
                 <!-- Datatable -->
                 <main class="tableMain">
                     <table id='assessmentTable' class="">
@@ -119,7 +98,7 @@ $result->data_seek(0);
                             title: 'Edit',
                             data: null,
                             render: function(data, type, row) {
-                                return '<a href="adminEdit.php?user_id=' + row.user_id + '" class="">Edit</a>';
+                                return '<a href="adminEdit.php?username=' + row.username + '" class="">Edit</a>';
                             }
                         },
                         // Use assessment_id for indicated assessment to delete
@@ -127,7 +106,7 @@ $result->data_seek(0);
                             title: 'Delete',
                             data: null,
                             render: function(data, type, row) {
-                                return '<a href="adminDelete.php?user_id=' + row.user_id + '" onclick="confirmDel()">Delete</a>';
+                                return '<button onclick="confirmDel('+ row.user_id +')">Delete</button>';
                             }
                         }
                     ]
@@ -161,35 +140,17 @@ $result->data_seek(0);
                 });
             });
 
-        // Get the modal
-        var modal = document.getElementById("Create_Modal");
-
-        // Get the input that opens the modal
-        var btn = document.getElementById("Create_Button");
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks the question input, open the modal 
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+        // will confirm whether admins want to delete that assessment
+        function confirmDel(url) {
+            var confirmation = window.confirm("Are you sure you want to delete this Admin?");
+  
+            if (confirmation) {
+                // If user clicked "OK", redirect to assessmentDelete.php
+                window.location.href = "adminDelete.php?user_id="+url;
+            } else {
+                // If user clicked "Cancel", alert message appear and nothing else happen
+                alert(url+" was not deleted");
             }
-        }
-
-        function confirmDel() {
-            //Couldn't get the assessment name due to the modal structure
-            confirm("Are you sure you want to delete this Admin?");
         }
         </script>
     </body>
