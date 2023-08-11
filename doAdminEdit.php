@@ -8,7 +8,7 @@
 
     // && !empty($_POST['instruction']) && !empty($_POST['time']) && isset($_POST['inputQuestion'])&& !empty($_POST['idCourse'])
     if (!empty($_POST['userID'])){
-        if(!empty($_POST['roleID'])){
+        if(!empty($_POST['roleID']) || $_POST['roleID'] == 0){
             if(!empty($_POST['userName'])){
                 if(!empty($_POST['password'])){
                     try {
