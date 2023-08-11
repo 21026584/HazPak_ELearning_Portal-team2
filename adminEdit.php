@@ -35,6 +35,7 @@ mysqli_close($link);
     <h3>Edit Admin</h3>
     <form id="postForm" method="post" action="doAdminEdit.php">
     <input type="hidden" name="loginfirst" value="1">
+    <input type="hidden" name="previousID" value="<?php echo $rowItem['user_id']?>">
     <label for="userID">User ID:</label>
     <input type="text" id="userID" name="userID" value="<?php echo $rowItem['user_id']?>" required />
     <br><br>
