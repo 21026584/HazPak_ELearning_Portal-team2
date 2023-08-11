@@ -59,7 +59,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $correctAnswers[] = $questionId; // Store correct question IDs
                 }
     
-            
+                // Echo question text, correct answer, and user's answer (for testing)
+                //echo "Question: " . $questionText . "<br>";
+                //echo "Correct Answer: " . $correctAnswer . "<br>";
+                //echo "Your Answer: " . $userAnswer . "<br><br>";
             }
         }
     }
