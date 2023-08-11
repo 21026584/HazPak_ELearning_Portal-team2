@@ -15,11 +15,10 @@ $data = array();
 
 // Fetching user info from database
 if (mysqli_num_rows($result) > 0) {
-    while ($row = $result->fetch_assoc()) {
-        // Add each row to the data array
-        $data[] = $row;
-  
-    }
+  while ($row = $result->fetch_assoc()) {
+    // Add each row to the data array
+    $data[] = $row;
+  }
 }
 
 // Close the database connection
@@ -50,9 +49,9 @@ $jsonData = json_encode($data);
   // Navbar
   include "navbar.php";
   ?>
-    
-  
-  
+
+
+
   <div class="left_panel">
     <h1 class="header">
       Dashboard
@@ -60,52 +59,55 @@ $jsonData = json_encode($data);
     <div class="row-container">
       <button type="button" class="collapsible">Available Assessments</button>
       <div class="collapsible-content scrollable-content">
-      <?php
-      // Include necessary files and database connection
-      include("dbFunctions.php");
+        <?php
+        // Include necessary files and database connection
+        include("dbFunctions.php");
 
-      // Get the current date and time
-      date_default_timezone_set('Asia/Singapore');
-      $currentDateTime = date("Y-m-d H:i:s");
-      
-      // Query to retrieve assessments with release_datetime in the past
-      $query = "SELECT * FROM assessments WHERE release_datetime <= '$currentDateTime'";
-      $result = mysqli_query($link, $query);
+        // Get the current date and time
+        date_default_timezone_set('Asia/Singapore');
+        $currentDateTime = date("Y-m-d H:i:s");
 
-      while ($row = mysqli_fetch_assoc($result)) {
-        $assessmentId = $row['assessment_id'];
-        $assessmentName = $row['assessment_name'];
+        // Calculate the start and end dates of the current week
+        $startOfWeek = date("Y-m-d 00:00:00", strtotime('this week'));
+        $endOfWeek = date("Y-m-d 23:59:59", strtotime('this week +6 days'));
 
-        // Display the assessment information
-        echo '<a class="assessment-anchor" href="assessments.php">' . 
-             '<img id="assessment-img" src="Images/HazPakLogo.png" placeholder="HazPak">' .
-             '<p>' . $assessmentName . '</p>' .
-             '</a>';
-      }
+        // Query to retrieve assessments with release_datetime within the current week
+        $query = "SELECT * FROM assessments WHERE release_datetime BETWEEN '$startOfWeek' AND '$endOfWeek'";
+        $result = mysqli_query($link, $query);
 
-      
-    ?>
+        while ($row = mysqli_fetch_assoc($result)) {
+          $assessmentId = $row['assessment_id'];
+          $assessmentName = $row['assessment_name'];
+
+          // Construct the link to the specific assessment page using assessment ID
+          echo '<a class="assessment-anchor" href="assessments.php?assessment_id=' . $assessmentId . '">' .
+            '<img id="assessment-img" src="Images/HazPakLogo.png" placeholder="HazPak">' .
+            '<p>' . $assessmentName . '</p>' .
+            '</a>';
+        }
+        ?>
       </div>
     </div>
+
 
     <div class="row-container">
       <button type="button" class="collapsible">Available Exercises</button>
       <div class="collapsible-content scrollable-content">
         <?php
-          // Query to retrieve exercises with release_datetime in the past
-          $query = "SELECT * FROM exercises WHERE release_datetime <= '$currentDateTime'";
-          $result = mysqli_query($link, $query);
+        // Query to retrieve exercises with release_datetime in the past
+        $query = "SELECT * FROM exercises WHERE release_datetime BETWEEN '$startOfWeek' AND '$endOfWeek'";
+        $result = mysqli_query($link, $query);
 
-          while ($row = mysqli_fetch_assoc($result)) {
-            $exerciseId = $row['exercise_id'];
-            $exerciseName = $row['exercise_name'];
+        while ($row = mysqli_fetch_assoc($result)) {
+          $exerciseId = $row['exercise_id'];
+          $exerciseName = $row['exercise_name'];
 
-            // Display the assessment information
-            echo '<a class="assessment-anchor" href="assessments.php">' . 
-                '<img id="assessment-img" src="Images/HazPakLogo.png" placeholder="HazPak">' .
-                '<p>' . $exerciseName . '</p>' .
-                '</a>';
-          }
+          // Display the assessment information
+          echo '<a class="assessment-anchor" href="exercises.php?exercise_id=' . $exerciseId . '">' .
+            '<img id="assessment-img" src="Images/HazPakLogo.png" placeholder="HazPak">' .
+            '<p>' . $exerciseName  . '</p>' .
+            '</a>';
+        }
         ?>
       </div>
     </div>
@@ -132,84 +134,91 @@ $jsonData = json_encode($data);
         <ul class="days"></ul>
       </div>
       <div class="assignments">
-        <?php
-          $currentDate = date('Y-m-d'); // Current date in 'Y-m-d' format
-          $releasedExercises = array(); // To store released exercises
-          $releasedAssessments = array(); // To store released assessments
+          <?php
+          // Include necessary files and database connection
+          include("dbFunctions.php");
 
-          foreach ($data as $row) {
-              if ($row['release_datetime'] === $currentDate) {
-                  if (!empty($row['exercise_name'])) {
-                      $releasedExercises[] = $row['exercise_name'];
-                  }
-                  if (!empty($row['assessment_name'])) {
-                      $releasedAssessments[] = $row['assessment_name'];
-                  }
-              }
-          }
+          // Get the current date in 'Y-m-d' format
+          $currentDate = date('Y-m-d');
 
-          if (!empty($releasedExercises)) {
-              echo '<h3>Released Exercises:</h3>';
-              foreach ($releasedExercises as $exercise) {
+          // Query to retrieve exercises released today
+          $query = "SELECT * FROM exercises WHERE DATE(release_datetime) = '$currentDate'";
+          $result = mysqli_query($link, $query);
+
+          // Display released exercises
+          if (mysqli_num_rows($result) > 0) {
+              echo '<h5>Released Exercises:</h5>';
+              while ($row = mysqli_fetch_assoc($result)) {
                   echo '<div class="assignment">';
-                  echo '<h4>' . $exercise . '</h4>';
-                  // Add more exercise details as needed
+                  echo '<a href="exercises.php?exercise_id=' . $row['exercise_id'] . '">' .
+                      '<p>' . $row['exercise_name'] . '</p>' .
+                      '</a>';
                   echo '</div>';
               }
           }
 
-          if (!empty($releasedAssessments)) {
-              echo '<h3>Released Assessments:</h3>';
-              foreach ($releasedAssessments as $assessment) {
+          // Query to retrieve assessments released today
+          $query = "SELECT * FROM assessments WHERE DATE(release_datetime) = '$currentDate'";
+          $result = mysqli_query($link, $query);
+
+          // Display released assessments
+          if (mysqli_num_rows($result) > 0) {
+              echo '<h5>Released Assessments:</h5>';
+              while ($row = mysqli_fetch_assoc($result)) {
                   echo '<div class="assignment">';
-                  echo '<h4>' . $assessment . '</h4>';
-                  // Add more assessment details as needed
+                  echo '<a href="assessments.php?assessment_id=' . $row['assessment_id'] . '">' .
+                      '<p>' . $row['assessment_name'] . '</p>' .
+                      '</a>';
                   echo '</div>';
               }
           }
 
-          if (empty($releasedExercises) && empty($releasedAssessments)) {
-              echo 'No exercises or assessments released today.';
+          // If no exercises or assessments released today
+          if (mysqli_num_rows($result) === 0) {
+              echo '<p>No exercises or assessments released today.</p>';
           }
-        ?>
+
+          // Close the database connection
+          mysqli_close($link);
+          ?>
       </div>
+
+
+
+
+
     </div>
   </div>
-</div> 
+  </div>
 
-<script src="script.js"></script>
-<!-- Add the link for Tippy.js here -->
-<script src="https://unpkg.com/@popperjs/core@2"></script>
-<script src="https://unpkg.com/tippy.js@6"></script>
-<script>
-  const lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(); // getting last date of month
-  let current_day = new Date();
-  let assessmentN = " ";
+  <script src="script.js"></script>
+  <!-- Add the link for Tippy.js here -->
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
+  <script>
+    const lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(); // getting last date of month
+    let current_day = new Date();
+    let assessmentN = " ";
 
     for (let i = 1; i <= lastDateofMonth; i++) { // creating li of all days of current month
-      current_day = new Date(currYear, currMonth,i);
-      if(current_day == `<?php $assessmentRelease ?>${[i]}`){
+      current_day = new Date(currYear, currMonth, i);
+      if (current_day == `<?php $assessmentRelease ?>${[i]}`) {
         assessmentN = "<?php $assessmentName ?>";
       }
-        
-      
+
+
       tippy(`#my_day${i}`, {
-          placement: 'right', //place tippy to the right
-          interactive: true, //allow interaction in tippy (e.g. click and select text)
-          content: `${current_day}`,
-          allowHTML: true, //allow HTML in tippy content
-          delay: 200, //delay tippy showing and hiding (in milliseconds)
-          followCursor: true //get tippy to follow mouse cursor
+        placement: 'right', //place tippy to the right
+        interactive: true, //allow interaction in tippy (e.g. click and select text)
+        content: `${current_day}`,
+        allowHTML: true, //allow HTML in tippy content
+        delay: 200, //delay tippy showing and hiding (in milliseconds)
+        followCursor: true //get tippy to follow mouse cursor
       });
       console.log(current_day);
-      
 
-  }
 
-  
-  
-
-      
+    }
   </script>
 </body>
 
