@@ -135,27 +135,32 @@ $jsonData = json_encode($data);
         <ul class="days"></ul>
       </div>
       <div class="assignments">
-        <?php
+          <?php
           $currentDate = date('Y-m-d'); // Current date in 'Y-m-d' format
           $releasedExercises = array(); // To store released exercises
           $releasedAssessments = array(); // To store released assessments
 
-          foreach ($data as $row) {
-              if ($row['release_datetime'] === $currentDate) {
-                  if (!empty($row['exercise_name'])) {
-                      $releasedExercises[] = $row['exercise_name'];
-                  }
-                  if (!empty($row['assessment_name'])) {
-                      $releasedAssessments[] = $row['assessment_name'];
-                  }
-              }
+          // Query to retrieve exercises released today
+          $query = "SELECT * FROM exercises WHERE DATE(release_datetime) = '$currentDate'";
+          $result = mysqli_query($link, $query);
+
+          while ($row = mysqli_fetch_assoc($result)) {
+              $releasedExercises[] = $row['exercise_name'];
+          }
+
+          // Query to retrieve assessments released today
+          $query = "SELECT * FROM assessments WHERE DATE(release_datetime) = '$currentDate'";
+          $result = mysqli_query($link, $query);
+
+          while ($row = mysqli_fetch_assoc($result)) {
+              $releasedAssessments[] = $row['assessment_name'];
           }
 
           if (!empty($releasedExercises)) {
               echo '<h3>Released Exercises:</h3>';
               foreach ($releasedExercises as $exercise) {
                   echo '<div class="assignment">';
-                  echo '<h4>' . $exercise . '</h4>';
+                  echo '<p>' . $exercise . '</p>';
                   // Add more exercise details as needed
                   echo '</div>';
               }
@@ -165,17 +170,21 @@ $jsonData = json_encode($data);
               echo '<h3>Released Assessments:</h3>';
               foreach ($releasedAssessments as $assessment) {
                   echo '<div class="assignment">';
-                  echo '<h4>' . $assessment . '</h4>';
+                  echo '<p>' . $assessment . '</p>';
                   // Add more assessment details as needed
                   echo '</div>';
               }
           }
 
           if (empty($releasedExercises) && empty($releasedAssessments)) {
-              echo 'No exercises or assessments released today.';
+              echo '<p>No exercises or assessments released today.</p>';
           }
-        ?>
+          ?>
       </div>
+
+
+
+
     </div>
   </div>
 </div> 
