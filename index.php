@@ -54,57 +54,60 @@ $jsonData = json_encode($data);
   
   
   <div class="left_panel">
-    <h1 class="header">
-      Dashboard
-    </h1>
-    <div class="row-container">
-      <button type="button" class="collapsible">Available Assessments</button>
-      <div class="collapsible-content scrollable-content">
-      <?php
-      // Include necessary files and database connection
-      include("dbFunctions.php");
+      <h1 class="header">
+        Dashboard
+      </h1>
+      <div class="row-container">
+        <button type="button" class="collapsible">Available Assessments</button>
+        <div class="collapsible-content scrollable-content">
+        <?php
+        // Include necessary files and database connection
+        include("dbFunctions.php");
 
-      // Get the current date and time
-      date_default_timezone_set('Asia/Singapore');
-      $currentDateTime = date("Y-m-d H:i:s");
+        // Get the current date and time
+        date_default_timezone_set('Asia/Singapore');
+        $currentDateTime = date("Y-m-d H:i:s");
+
+        // Calculate the start and end dates of the current week
+        $startOfWeek = date("Y-m-d 00:00:00", strtotime('this week'));
+        $endOfWeek = date("Y-m-d 23:59:59", strtotime('this week +6 days'));
+
+        // Query to retrieve assessments with release_datetime within the current week
+        $query = "SELECT * FROM assessments WHERE release_datetime BETWEEN '$startOfWeek' AND '$endOfWeek'";
+        $result = mysqli_query($link, $query);
+
+        while ($row = mysqli_fetch_assoc($result)) {
+          $assessmentId = $row['assessment_id'];
+          $assessmentName = $row['assessment_name'];
       
-      // Query to retrieve assessments with release_datetime in the past
-      $query = "SELECT * FROM assessments WHERE release_datetime <= '$currentDateTime'";
-      $result = mysqli_query($link, $query);
-
-      while ($row = mysqli_fetch_assoc($result)) {
-        $assessmentId = $row['assessment_id'];
-        $assessmentName = $row['assessment_name'];
-
-        // Display the assessment information
-        echo '<a class="assessment-anchor" href="assessments.php">' . 
-             '<img id="assessment-img" src="Images/HazPakLogo.png" placeholder="HazPak">' .
-             '<p>' . $assessmentName . '</p>' .
-             '</a>';
-      }
-
-      
-    ?>
-      </div>
+          // Construct the link to the specific assessment page using assessment ID
+          echo '<a class="assessment-anchor" href="assessments.php?assessment_id=' . $assessmentId . '">' . 
+               '<img id="assessment-img" src="Images/HazPakLogo.png" placeholder="HazPak">' .
+               '<p>' . $assessmentName . '</p>' .
+               '</a>';
+        }      
+        ?>
     </div>
+  </div>
+
 
     <div class="row-container">
       <button type="button" class="collapsible">Available Exercises</button>
       <div class="collapsible-content scrollable-content">
         <?php
           // Query to retrieve exercises with release_datetime in the past
-          $query = "SELECT * FROM exercises WHERE release_datetime <= '$currentDateTime'";
-          $result = mysqli_query($link, $query);
+          $query = "SELECT * FROM exercises WHERE release_datetime BETWEEN '$startOfWeek' AND '$endOfWeek'";
+        $result = mysqli_query($link, $query);
 
           while ($row = mysqli_fetch_assoc($result)) {
             $exerciseId = $row['exercise_id'];
             $exerciseName = $row['exercise_name'];
 
             // Display the assessment information
-            echo '<a class="assessment-anchor" href="assessments.php">' . 
-                '<img id="assessment-img" src="Images/HazPakLogo.png" placeholder="HazPak">' .
-                '<p>' . $exerciseName . '</p>' .
-                '</a>';
+            echo '<a class="assessment-anchor" href="exercises.php">' . 
+               '<img id="assessment-img" src="Images/HazPakLogo.png" placeholder="HazPak">' .
+               '<p>' . $exerciseName  . '</p>' .
+               '</a>';
           }
         ?>
       </div>
