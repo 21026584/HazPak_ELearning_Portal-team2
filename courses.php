@@ -18,11 +18,32 @@ if (mysqli_num_rows($result) > 0) {
     }
 }
 
+$query2 = "SELECT *
+FROM courses";
+$result2 = mysqli_query($link, $query2) or die(mysqli_error($link));
+
+// Initialise values
+$data2 = array();
+
+// Fetching user info from database
+if (mysqli_num_rows($result2) > 0) {
+    while ($row = $result2->fetch_assoc()) {
+        // Add each row to the data array
+        $data2[] = $row;
+    }
+}
+
+
+
 // Close the database connection
 mysqli_close($link);
 
 // Convert the data to JSON format
 $jsonData = json_encode($data);
+$jsonData2 = json_encode($data2);
+;
+
+
 ?>
 
 <!DOCTYPE html>
@@ -39,11 +60,11 @@ $jsonData = json_encode($data);
 </head>
 <style>
 .tableMain{
-    width: 110%;
+    width: 100%;
 }
 
 body{
-    position: fixed;
+    position: relative;
 }
 
 .modal {
@@ -123,10 +144,6 @@ body{
   text-decoration: none;
   cursor: pointer;
 }
-
-
-
-
 
 
 </style>
@@ -213,8 +230,7 @@ body{
 
 </div>
 
-
-            <!-- Datatable -->
+           <!-- Datatable -->
             <main class="tableMain">
                 <table id='TraineeTable' class="display table-striped data-table">
                     <thead class="table-header">
@@ -234,6 +250,22 @@ body{
         </div>
 
 
+        <div class="tableRoot">
+            <main class="tableMain">
+                <table id='CoursesTable' class="display table-striped data-table">
+                    <thead class="table-header">
+                        <tr>
+                            <!-- Headers -->
+                            <td>Course ID</td>
+                            <td>Description</td>
+                            <td>Student ID</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </main>
+    </div>
 
     <?php
         // If not admin/head admin role, 
@@ -256,10 +288,7 @@ body{
             var jsonData = <?php echo $jsonData; ?>;
             $('#TraineeTable').DataTable({
                 data: jsonData,
-                columns: [/* {
-                        title: 'Course ID',
-                        data: 'course_id'
-                    }, */
+                columns: [
                     {
                         title: 'Student ID',
                         data: 'user_id'
@@ -290,6 +319,47 @@ body{
                 ]
             });
         });
+
+
+
+        $(document).ready(function() {
+            // Compile database rows into json
+            var jsonData2 = <?php echo $jsonData2; ?>;
+            $('#CoursesTable').DataTable({
+                data: jsonData2,
+                columns: [
+                    {
+                        title: 'Course ID',
+                        data: 'course_id'
+                    },
+                    {
+                        title: 'Student ID',
+                        data: 'user_id'
+                    },
+                    {
+                        title: 'Description',
+                        data: 'description'
+                    }/* ,
+                    {
+                        title: 'Edit',
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<a href="EditTrainee.php?user_id=' + row.user_id + '">Edit</a>';
+                        }
+                    },
+                    {
+                        title: 'Delete',
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<a href="deleteTrainee.php?user_id=' + row.user_id + '">Delete</a>';
+                        }
+                    } */
+
+                ]
+            });
+        });
+
+
 
 
         // Event listener for the "Delete" links
