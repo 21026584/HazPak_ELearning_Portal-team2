@@ -15,11 +15,10 @@ $data = array();
 
 // Fetching user info from database
 if (mysqli_num_rows($result) > 0) {
-    while ($row = $result->fetch_assoc()) {
-        // Add each row to the data array
-        $data[] = $row;
-  
-    }
+  while ($row = $result->fetch_assoc()) {
+    // Add each row to the data array
+    $data[] = $row;
+  }
 }
 
 // Close the database connection
@@ -50,16 +49,16 @@ $jsonData = json_encode($data);
   // Navbar
   include "navbar.php";
   ?>
-    
-  
-  
+
+
+
   <div class="left_panel">
-      <h1 class="header">
-        Dashboard
-      </h1>
-      <div class="row-container">
-        <button type="button" class="collapsible">Available Assessments</button>
-        <div class="collapsible-content scrollable-content">
+    <h1 class="header">
+      Dashboard
+    </h1>
+    <div class="row-container">
+      <button type="button" class="collapsible">Available Assessments</button>
+      <div class="collapsible-content scrollable-content">
         <?php
         // Include necessary files and database connection
         include("dbFunctions.php");
@@ -79,36 +78,36 @@ $jsonData = json_encode($data);
         while ($row = mysqli_fetch_assoc($result)) {
           $assessmentId = $row['assessment_id'];
           $assessmentName = $row['assessment_name'];
-      
+
           // Construct the link to the specific assessment page using assessment ID
-          echo '<a class="assessment-anchor" href="assessments.php?assessment_id=' . $assessmentId . '">' . 
-               '<img id="assessment-img" src="Images/HazPakLogo.png" placeholder="HazPak">' .
-               '<p>' . $assessmentName . '</p>' .
-               '</a>';
-        }      
+          echo '<a class="assessment-anchor" href="assessments.php?assessment_id=' . $assessmentId . '">' .
+            '<img id="assessment-img" src="Images/HazPakLogo.png" placeholder="HazPak">' .
+            '<p>' . $assessmentName . '</p>' .
+            '</a>';
+        }
         ?>
+      </div>
     </div>
-  </div>
 
 
     <div class="row-container">
       <button type="button" class="collapsible">Available Exercises</button>
       <div class="collapsible-content scrollable-content">
         <?php
-          // Query to retrieve exercises with release_datetime in the past
-          $query = "SELECT * FROM exercises WHERE release_datetime BETWEEN '$startOfWeek' AND '$endOfWeek'";
+        // Query to retrieve exercises with release_datetime in the past
+        $query = "SELECT * FROM exercises WHERE release_datetime BETWEEN '$startOfWeek' AND '$endOfWeek'";
         $result = mysqli_query($link, $query);
 
-          while ($row = mysqli_fetch_assoc($result)) {
-            $exerciseId = $row['exercise_id'];
-            $exerciseName = $row['exercise_name'];
+        while ($row = mysqli_fetch_assoc($result)) {
+          $exerciseId = $row['exercise_id'];
+          $exerciseName = $row['exercise_name'];
 
-            // Display the assessment information
-            echo '<a class="assessment-anchor" href="exercises.php">' . 
-               '<img id="assessment-img" src="Images/HazPakLogo.png" placeholder="HazPak">' .
-               '<p>' . $exerciseName  . '</p>' .
-               '</a>';
-          }
+          // Display the assessment information
+          echo '<a class="assessment-anchor" href="exercises.php?exercise_id=' . $exerciseId . '">' .
+            '<img id="assessment-img" src="Images/HazPakLogo.png" placeholder="HazPak">' .
+            '<p>' . $exerciseName  . '</p>' .
+            '</a>';
+        }
         ?>
       </div>
     </div>
@@ -136,83 +135,78 @@ $jsonData = json_encode($data);
       </div>
       <div class="assignments">
         <?php
-          $currentDate = date('Y-m-d'); // Current date in 'Y-m-d' format
-          $releasedExercises = array(); // To store released exercises
-          $releasedAssessments = array(); // To store released assessments
+        $currentDate = date('Y-m-d'); // Current date in 'Y-m-d' format
+        $releasedExercises = array(); // To store released exercises
+        $releasedAssessments = array(); // To store released assessments
 
-          foreach ($data as $row) {
-              if ($row['release_datetime'] === $currentDate) {
-                  if (!empty($row['exercise_name'])) {
-                      $releasedExercises[] = $row['exercise_name'];
-                  }
-                  if (!empty($row['assessment_name'])) {
-                      $releasedAssessments[] = $row['assessment_name'];
-                  }
-              }
+        foreach ($data as $row) {
+          if ($row['release_datetime'] === $currentDate) {
+            if (!empty($row['exercise_name'])) {
+              $releasedExercises[] = $row['exercise_name'];
+            }
+            if (!empty($row['assessment_name'])) {
+              $releasedAssessments[] = $row['assessment_name'];
+            }
           }
+        }
 
-          if (!empty($releasedExercises)) {
-              echo '<h3>Released Exercises:</h3>';
-              foreach ($releasedExercises as $exercise) {
-                  echo '<div class="assignment">';
-                  echo '<h4>' . $exercise . '</h4>';
-                  // Add more exercise details as needed
-                  echo '</div>';
-              }
+        if (!empty($releasedExercises)) {
+          echo '<h3>Released Exercises:</h3>';
+          foreach ($releasedExercises as $exercise) {
+            echo '<div class="assignment">';
+            echo '<h4>' . $exercise . '</h4>';
+            // Add more exercise details as needed
+            echo '</div>';
           }
+        }
 
-          if (!empty($releasedAssessments)) {
-              echo '<h3>Released Assessments:</h3>';
-              foreach ($releasedAssessments as $assessment) {
-                  echo '<div class="assignment">';
-                  echo '<h4>' . $assessment . '</h4>';
-                  // Add more assessment details as needed
-                  echo '</div>';
-              }
+        if (!empty($releasedAssessments)) {
+          echo '<h3>Released Assessments:</h3>';
+          foreach ($releasedAssessments as $assessment) {
+            echo '<div class="assignment">';
+            echo '<h4>' . $assessment . '</h4>';
+            // Add more assessment details as needed
+            echo '</div>';
           }
+        }
 
-          if (empty($releasedExercises) && empty($releasedAssessments)) {
-              echo 'No exercises or assessments released today.';
-          }
+        if (empty($releasedExercises) && empty($releasedAssessments)) {
+          echo 'No exercises or assessments released today.';
+        }
         ?>
       </div>
     </div>
   </div>
-</div> 
+  </div>
 
-<script src="script.js"></script>
-<!-- Add the link for Tippy.js here -->
-<script src="https://unpkg.com/@popperjs/core@2"></script>
-<script src="https://unpkg.com/tippy.js@6"></script>
-<script>
-  const lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(); // getting last date of month
-  let current_day = new Date();
-  let assessmentN = " ";
+  <script src="script.js"></script>
+  <!-- Add the link for Tippy.js here -->
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
+  <script>
+    const lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(); // getting last date of month
+    let current_day = new Date();
+    let assessmentN = " ";
 
     for (let i = 1; i <= lastDateofMonth; i++) { // creating li of all days of current month
-      current_day = new Date(currYear, currMonth,i);
-      if(current_day == `<?php $assessmentRelease ?>${[i]}`){
+      current_day = new Date(currYear, currMonth, i);
+      if (current_day == `<?php $assessmentRelease ?>${[i]}`) {
         assessmentN = "<?php $assessmentName ?>";
       }
-        
-      
+
+
       tippy(`#my_day${i}`, {
-          placement: 'right', //place tippy to the right
-          interactive: true, //allow interaction in tippy (e.g. click and select text)
-          content: `${current_day}`,
-          allowHTML: true, //allow HTML in tippy content
-          delay: 200, //delay tippy showing and hiding (in milliseconds)
-          followCursor: true //get tippy to follow mouse cursor
+        placement: 'right', //place tippy to the right
+        interactive: true, //allow interaction in tippy (e.g. click and select text)
+        content: `${current_day}`,
+        allowHTML: true, //allow HTML in tippy content
+        delay: 200, //delay tippy showing and hiding (in milliseconds)
+        followCursor: true //get tippy to follow mouse cursor
       });
       console.log(current_day);
-      
 
-  }
 
-  
-  
-
-      
+    }
   </script>
 </body>
 

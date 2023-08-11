@@ -169,7 +169,7 @@ $result->data_seek(0);
                         title: 'Delete',
                         data: null,
                         render: function(data, type, row) {
-                            return '<button onclick="confirmDel('+ row.exercise_id +')">Delete</button>';
+                            return '<button onclick="confirmDel(' + row.exercise_id + ')">Delete</button>';
                         }
                     }
                 ]
@@ -200,19 +200,56 @@ $result->data_seek(0);
                         console.log(xhr.responseText);
                     }
                 });
+            const newUrl = window.location.protocol + '//' + window.location.host + window.location.pathname;
+            window.history.pushState({}, '', newUrl);
             });
         });
+
+        // Get the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // Check if a specific parameter exists
+        if (urlParams.has('exercise_id')) {
+            // Parameter 'exercise_id' exists in the URL
+            const exercise_id = urlParams.get('exercise_id');
+            $(document).ready(function() {
+                // Desired value to select
+                const value = exercise_id;
+
+                // Select the desired option by setting the value of the select element
+                $('#pet-select').val(value);
+
+                // Add the "selected" attribute to the desired option
+                $('#pet-select option[value="' + value + '"]').prop('selected', true);
+            });
+            // Send an AJAX request to a PHP script that retrieves exercise details
+            $.ajax({
+                url: 'getExerciseDetails.php',
+                type: 'POST',
+                data: {
+                    exerciseId: exercise_id
+                },
+                success: function(response) {
+                    // Update the content of the assessmentDetailsContainer with the response
+                    $('#exerciseDetails').html(response);
+                },
+
+                error: function(xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+        }
 
         // will confirm whether admins want to delete that assessment
         function confirmDel(url) {
             var confirmation = window.confirm("Are you sure you want to delete this Exercise?");
-  
+
             if (confirmation) {
                 // If user clicked "OK", redirect to assessmentDelete.php
-                window.location.href = "exerciseDelete.php?exercise_id="+url;
+                window.location.href = "exerciseDelete.php?exercise_id=" + url;
             } else {
                 // If user clicked "Cancel", alert message appear and nothing else happen
-                alert(url+" was not deleted");
+                alert(url + " was not deleted");
             }
         }
     </script>
