@@ -36,8 +36,8 @@ $result->data_seek(0);
     <head>
         <meta charset="UTF-8">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <link rel="stylesheet" href="style.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <title>Admin</title>
     </head>
 
@@ -75,10 +75,8 @@ $result->data_seek(0);
 
         <!-- Datatable.js -->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+        
         <script>
             // Initialise DataTable
             $(document).ready(function() {
@@ -106,7 +104,7 @@ $result->data_seek(0);
                             title: 'Delete',
                             data: null,
                             render: function(data, type, row) {
-                                return '<button onclick="confirmDel('+ row.user_id +')">Delete</button>';
+                                return '<button onclick="confirmDel(\'' + row.user_id + '\')">Delete</button>';
                             }
                         }
                     ]
@@ -116,13 +114,12 @@ $result->data_seek(0);
             // will confirm whether admins want to delete that assessment
             function confirmDel(url) {
                 var confirmation = window.confirm("Are you sure you want to delete this Admin?");
-                alert("Delete button clicked for user ID: " + url);
                 if (confirmation) {
                     // If user clicked "OK", redirect to assessmentDelete.php
-                    window.location.href = "adminDelete.php?user_id="+url;
+                    window.location.href = "adminDelete.php?userid="+url;
                 } else {
                     // If user clicked "Cancel", alert message appear and nothing else happen
-                    alert(url+" was not deleted");
+                    alert("username: "+url+" was not deleted");
                 }
             }
         </script>
