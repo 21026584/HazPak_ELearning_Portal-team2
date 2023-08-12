@@ -135,8 +135,6 @@ $jsonData = json_encode($data);
       </div>
       <div class="assignments">
           <?php
-          // Include necessary files and database connection
-          include("dbFunctions.php");
 
           // Get the current date in 'Y-m-d' format
           $currentDate = date('Y-m-d');
